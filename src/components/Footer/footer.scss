@@ -1,0 +1,26 @@
+// 新版
+#footer{
+    position: fixed;
+    bottom: 0;
+    background: #F0F2F5;
+    // padding: 20px 0;
+    // bottom: 0;
+    // right: 0;
+    // left: 260px;
+    margin-left: 260px;
+    z-index: 9;
+    height: 80px;
+    text-align: center;
+    width: calc(100% - 260px);
+    .footer_text{
+        // width: 890px;
+        height: 39px;
+        padding-top: 22px;
+        .em{
+            span{
+                margin-right: 45px;
+                line-height: 20px;
+            }
+        }
+    }
+}
