@@ -25,11 +25,11 @@
           <div class="lineContent BgColorF">
             <div
               class="echartsPat"
-              :style="{height:'355px',width:'100%'}"
+              :style="{height:'305px',width:'100%'}"
               id="chinaLine"
               ref="myMap"
             ></div>
-            <div class="line">
+            <!-- <div class="line">
               <div class="inline line1">
                 <span class="line1-1"></span>
                 <span class="line1-2 inline"></span>
@@ -53,7 +53,7 @@
                 <span class="line3-2 inline"></span>
                 <span class="line1-1"></span>
               </div>
-            </div>
+            </div>-->
           </div>
         </section>
 
@@ -75,25 +75,23 @@
                   style="width:300px;"
                 >
                   <el-option label="高新技术企业" value="高新技术企业"></el-option>
-                  <el-option label="标准制定企业" value="标准制定企业"></el-option>
-                  <el-option label="专项证照企业" value="专项证照企业"></el-option>
-                  <el-option label="重大在建项目企业" value="重大在建项目企业"></el-option>
                   <el-option label="政府奖励企业" value="政府奖励企业"></el-option>
-
-
-                  <el-option label="民营产业集团" value="民营产业集团"></el-option>
-                  <el-option label="央企" value="央企"></el-option>
-                  <el-option label="国有企业" value="国有企业"></el-option>
-                  <el-option label="外商投资企业" value="外商投资企业"></el-option>
-                  <el-option label="地方融资平台" value="地方融资平台"></el-option>
-                  <el-option label="政府高新投资平台" value="政府高新投资平台"></el-option>
-
-                  <el-option label="非挂牌非上市" value="非挂牌非上市"></el-option>
                   <el-option label="A股公司" value="A股公司"></el-option>
                   <el-option label="A股拟IPO公司" value="A股拟IPO公司"></el-option>
                   <el-option label="三板公司" value="三板公司"></el-option>
                   <el-option label="四板公司" value="四板公司"></el-option>
                   <el-option label="已私募融资公司" value="已私募融资公司"></el-option>
+                  <el-option label="央企" value="央企"></el-option>
+                  <el-option label="国有企业" value="国有企业"></el-option>
+                  <el-option label="外商投资企业" value="外商投资企业"></el-option>
+                  <el-option label="专项证照企业" value="专项证照企业"></el-option>
+                  <el-option label="标准制定企业" value="标准制定企业"></el-option>
+                  <el-option label="重大在建项目企业" value="重大在建项目企业"></el-option>
+
+                  <el-option label="民营产业集团" value="民营产业集团"></el-option>
+                  <el-option label="地方融资平台" value="地方融资平台"></el-option>
+                  <el-option label="政府高新投资平台" value="政府高新投资平台"></el-option>
+                  <el-option label="非挂牌非上市" value="非挂牌非上市"></el-option>
                 </el-select>
               </el-form-item>
             </el-form>
@@ -272,35 +270,33 @@ export default {
       }).then(res => {
         // console.log(JSON.stringify(res.data.data));
         let data = res.data.data[0];
+        // console.log(data)
         self.addNum = res.data.data[1][0].value.toString().split("");
-        console.log(self.addNum);
+        // console.log(self.addNum);
         let arrayX = [];
         let arrayY = [];
         // console.log(self.chinaMap);
-        data.map(function(singleEl) {
+        data.map(function(index) {
           // console.log(singleEl.value.name)
-          singleEl.value.map(function(index) {
-            if (index.name == "A股拟IPO公司") {
-              arrayX.push(self.insertStr(index.name, 6, "\n"));
+          if (index.jcname == "A股拟IPO公司") {
+            arrayX.push(self.insertStr(index.jcname, 6, "\n"));
+          } else {
+            if (index.jcname.length > 4) {
+              arrayX.push(self.insertStr(index.jcname, 4, "\n"));
             } else {
-              if (index.name.length > 4) {
-                arrayX.push(self.insertStr(index.name, 4, "\n"));
-              } else {
-                arrayX.push(index.name);
-              }
+              arrayX.push(index.jcname);
             }
-          });
+          }
           return arrayX;
         });
         self.chinaX = arrayX;
-        data.map(function(singleEl) {
-          singleEl.value.map(function(index) {
-            // if (index.value < 10000) {
-            //   arrayY.push(index.value * 1 + 10000);
-            // } else {
-            arrayY.push(index.value);
-            // }
-          });
+        // console.log( self.chinaX)
+        data.map(function(index) {
+          // if (index.value < 10000) {
+          //   arrayY.push(index.value * 1 + 10000);
+          // } else {
+          arrayY.push(index.value);
+          // }
           return arrayY;
         });
         self.chinaY = arrayY;
@@ -415,7 +411,31 @@ export default {
       var self = this;
       this.chartLine = this.$echarts.init(document.getElementById("chinaLine"));
       this.chartLine.on("click", function(params) {
-        self.mapName = params.name.split("\n").join("");
+        var item = "";
+        if (params.name == "高企") {
+          item = "高新技术企业";
+        } else if (params.name == "政府奖励") {
+          item = "政府奖励企业";
+        } else if (params.name == "拟IPO") {
+          item = "A股拟IPO公司";
+        } else if (params.name == "已私募") {
+          item = "已私募融资公司";
+        } else if (params.name == "央企") {
+          item = params.name;
+        } else if (params.name == "国企") {
+          item = "国有企业";
+        } else if (params.name == "外企") {
+          item = "外商投资企业";
+        } else if (params.name == "专项证照") {
+          item = "专项证照企业";
+        } else if (params.name == "标企") {
+          item = "标准制定企业";
+        } else if (params.name == "重大项目") {
+          item = "重大在建项目企业";
+        } else {
+          item = params.name + "公司";
+        }
+        self.mapName = item;
         // console.log(params.name);
         self.country();
         self.drawChinaMap();
@@ -432,8 +452,32 @@ export default {
             fontSize: 18
           },
           formatter(params) {
-            //  console.log(params[0].name.split("\n").join(""))
-            const item = params[0].name.split("\n").join("");
+            //  console.log(params)
+            var item = "";
+            if (params[0].name == "高企") {
+              item = "高新技术企业";
+            } else if (params[0].name == "政府奖励") {
+              item = "政府奖励企业";
+            } else if (params[0].name == "拟IPO") {
+              item = "A股拟IPO公司";
+            } else if (params[0].name == "已私募") {
+              item = "已私募融资公司";
+            } else if (params[0].name == "央企") {
+              item = params[0].name;
+            } else if (params[0].name == "国企") {
+              item = "国有企业";
+            } else if (params[0].name == "外企") {
+              item = "外商投资企业";
+            } else if (params[0].name == "专项证照") {
+              item = "专项证照企业";
+            } else if (params[0].name == "标企") {
+              item = "标准制定企业";
+            } else if (params[0].name == "重大项目") {
+              item = "重大在建项目企业";
+            } else {
+              item = params[0].name + "公司";
+            }
+
             // const item = params[0];
             return item + "<br/>" + "企业家数：" + params[0].value;
           }
@@ -459,6 +503,7 @@ export default {
               lineStyle: { color: "#E9E9E9" }
             },
             axisLabel: {
+              interval: 0,
               nameGap: 100,
               show: true,
               padding: [8, 0, 0, 0],
@@ -562,8 +607,8 @@ export default {
       }
     }
     .lineContent {
-      height: 420px;
-      padding-top: 40px;
+      height: 320px;
+      padding-top: 30px;
       border-radius: 0 0 6px 6px;
     }
   }

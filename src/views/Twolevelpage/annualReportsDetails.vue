@@ -157,6 +157,7 @@
               <!-- <el-table-column prop="actmode" label="实缴方式" align="center"></el-table-column> -->
             </el-table>
             <el-pagination
+            v-show="total >10"
               layout="prev, pager, next"
               background
               @current-change="handleCurrentChange"
@@ -217,6 +218,7 @@
               <el-table-column prop="changedate" label="股权变更日期" align="center"></el-table-column>
             </el-table>
             <el-pagination
+            v-show="total1>10"
               layout="prev, pager, next"
               background
               @current-change="handleCurrentChange1"

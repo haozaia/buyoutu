@@ -10,7 +10,8 @@
   </div>
   <div class="hot">
     <!-- <p class="fontSize20 color53">热门搜索：<span @click="JiJian()">{{ RM1 }}</span><span @click="goSearchList(RM3)">{{ this.RM3 }}</span></p> -->
-    <p class="fontSize20 color53">热门搜索：<span @click="JiJian()">{{ RM1 }}</span>&nbsp;&nbsp;<span @click="goIndustryLeader()">{{ this.RM3 }}</span></p>
+    <!-- <p class="fontSize20 color53">热门搜索：<span @click="JiJian()">{{ RM1 }}</span>&nbsp;&nbsp;<span @click="goIndustryLeader()">{{ this.RM3 }}</span></p> -->
+    <p class="fontSize20 color53">热门搜索：<span @click="goIndustryLeader()">{{ this.RM3 }}</span></p>
   </div>
   <div class="header-r">
     <div class="HeaderRclick">

@@ -23,7 +23,36 @@
           <div class="table-wrapper">
           <el-table :data="qiyelist" stripe style="width: 100%">
             <el-table-column prop="paiming" label="排名" width="180" align="center"></el-table-column>
-            <el-table-column prop="name" label="企业名称" align="center"></el-table-column>
+            <el-table-column prop="name" label="企业名称" align="center">
+              <template slot-scope="scope">
+                <router-link
+                  target="_blank"
+                  v-if="scope.row.flag == 1"
+                  tag="a"
+                  class="toChange"
+                  style="color:#606266;text-decoration:none;"
+                  :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                >{{scope.row.name}}</router-link>
+                <!-- 有详情、无官网 -->
+                <router-link
+                  target="_blank"
+                  v-if="scope.row.flag == 2"
+                  tag="a"
+                  class="toChange"
+                  style="color:#606266;text-decoration:none;"
+                  :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                >{{scope.row.name}}</router-link>
+                <!-- 有官网、无详情 -->
+                <div v-if="scope.row.flag == 3">
+                  <a
+                    target="_blank"
+                    :href="scope.row.wangzhi"
+                  >{{scope.row.name}}</a>
+                </div>
+                <!-- 无官网无详情 -->
+                <span v-if="scope.row.flag == 0">{{scope.row.name}}</span>  
+              </template>
+            </el-table-column>
             <el-table-column prop="yangshou" label="估值(亿人民币)" align="center"></el-table-column>
             <!-- <el-table-column prop="guojia" label="国家" align="center"></el-table-column> -->
             <el-table-column prop="shengfen" label="城市" align="center"></el-table-column>
@@ -52,6 +81,15 @@ export default {
     this.enterpriselist()
   },
   methods: {
+    // toRescue(url) {
+    //   if (url) {
+    //     console.log(url.substr(0, 7).toLowerCase() == "http://", 222);
+    //     return url.substr(0, 7).toLowerCase() == "http://";
+    //   } else {
+    //     console.log(false, 33);
+    //     return false;
+    //   }
+    // },
     enterpriselist() {
       let params = {
         page:this.page,

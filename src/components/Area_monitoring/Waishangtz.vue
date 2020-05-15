@@ -8,7 +8,7 @@
             </div>
             </header>
         </div> -->
-        <div class="el-tabs">
+        <!-- <div class="el-tabs">
             <div class="form-wrapper">
                 <form class="form-inline" role="form">
                 <div class="form-group">
@@ -23,7 +23,7 @@
                         </el-option>
                     </el-select>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                   <span class="control-label"></span> 
                   <el-select v-model="zcdvalue" placeholder="请选择境外投资者国籍(或地区)/注册地">
                     <el-option label="选择所有" value></el-option>
@@ -34,48 +34,47 @@
                       :value="item"
                     ></el-option>
                   </el-select>
-                </div> -->
+                </div>
                 <div class="form-group">
                     <div class="ui-input ui-input-search PuKey">
                     <i class="el-icon-search"></i>
                     <input class="key" v-model="gongsiname" placeholder="请输入公司名称" type="text" autocomplete="off" />
                     </div>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <button class="btn btn-query btn-action" type="button" role="button">
                     <span @click="tablelist()" class="chaxun">查询</span>
                     <i class="icon-loading icon-loading-white a-spin"></i>
                     </button>
-                </div> -->
+                </div>
                 <el-button @click="tablelist()" type="primary">查询</el-button>
                 </form>
             </div>
-        </div>
+        </div> -->
         <section class="block box-shadow overviewLayer">
             <div class="el-tabs padding10">
                 <div class="query-result">
                 <div class="table-wrapper">
-                    <el-table :empty-text="tishi" stripe :data="waishanglst" v-loading="loading" style="width: 100%">
-                    <el-table-column prop="gongsiname" label="公司名称">
+                    <el-table :empty-text="tishi" stripe :data="waishanglst" v-loading="loading">
+                    <el-table-column prop="name" width="450" label="企业名称">
                         <template slot-scope="scope">
                         <router-link
                             target="_blank"
                             tag="a"
                             style="color:#606266;text-decoration:none;"
-                            :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
-                        >{{ scope.row.gongsiname }}</router-link>
+                            :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                        >{{ scope.row.name }}</router-link>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="jingwaitzz" label="投资方"></el-table-column>
-                    <el-table-column prop="suoshuhy" width="180" label="产品名称"></el-table-column>
-                    <el-table-column prop="touzixzlc" width="170" label="投资性质、轮次"></el-table-column>
-                    <el-table-column prop="touzize" width="160" label="投资金额"></el-table-column>
-                    <el-table-column prop="touzisj" width="160" label="投资时间"></el-table-column>
+                    <el-table-column prop="suoshusf" width="160" label="所属省份"></el-table-column>
+                    <el-table-column prop="gongsilx" width="400" label="公司类型"></el-table-column>
+                    <el-table-column prop="zhucezb" label="注册资本"></el-table-column>
+                    <el-table-column prop="fadingdbr" width="160" label="法人代表"></el-table-column>
                     </el-table>
                 </div>
                 </div>
                 <!-- 分页dom start -->
-                <div id="Pagination">
+                <div id="Pagination"  v-show="total > 20">
                     <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
                     <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
                 </div>
@@ -106,6 +105,7 @@ export default {
             zhucesf: '',
             suoshucs: "",
             suoshuqx: "",
+            leixing: "3",
             page: 1,
             total: 0,
             limit:20,   //分页变量2
@@ -184,10 +184,11 @@ export default {
             let params = {
                 page: this.page,
                 limit: 20,
-                zhucesf: this.zhucesf,
+                suoshusf: this.zhucesf,
                 suoshucs: self.suoshucs,
                 suoshuqx: self.suoshuqx,
                 touzixzlc:this.lcvalue,
+                leixing: self.leixing,
                 // jingwaitzzgjzcd:this.zcdvalue,
                 gongsiname: this.gongsiname,
             }

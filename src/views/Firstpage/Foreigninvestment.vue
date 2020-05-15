@@ -103,7 +103,7 @@
                   </el-table-column>
                   <el-table-column prop="suoshusf" label="所属省份" width="180"></el-table-column>
                   <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezb" label="注册资本(万元)"></el-table-column>
+                  <el-table-column prop="zhucezb" label="注册资本"></el-table-column>
                   <!-- <el-table-column prop="lianxiyx" label="联系邮箱"></el-table-column> -->
                   <el-table-column prop="fadingdbr" label="法人代表"></el-table-column>
                 </el-table>

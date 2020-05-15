@@ -33,7 +33,7 @@
                 </template>
             </div>
             <!-- 分页dom start -->
-            <div id="Pagination">
+            <div id="Pagination" v-show="total > 20">
                 <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
                 <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>

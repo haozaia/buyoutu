@@ -68,7 +68,7 @@
             </div>
           </div>
           <!-- 分页dom start -->
-          <div id="Pagination">
+          <div id="Pagination" v-show="total > 20">
             <el-pagination
               layout="prev, pager, next"
               prev-text="上一页"

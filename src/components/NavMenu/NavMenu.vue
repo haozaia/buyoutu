@@ -44,6 +44,7 @@
             高新技术企业
           </el-menu-item>
         </router-link>
+        
 
         <el-submenu index="6" class="oneNav">
           <template slot="title">
@@ -133,6 +134,11 @@
             </el-menu-item>
           </router-link>
         </el-submenu>
+
+          <el-menu-item  index="NewJJ"  @click="newjj()">
+            <img class="icons" src="../../assets/images/navIcon/icon_xinjijina.svg" />
+            新基建
+          </el-menu-item>
 
         <el-submenu index="7" class="twoNav">
           <template slot="title">
@@ -281,7 +287,8 @@ export default {
       ahlist: [],
       total: 0,
       key:0,
-      activeIndex: "home"
+      activeIndex: "home",
+      RM1: "新基建"
     };
   },
   mounted() {
@@ -310,6 +317,13 @@ export default {
     addKeyP(){
       var self=this
       this.$router.push({name: 'Pazk'})
+    },
+    newjj() {
+      var self = this
+      let RM1Search = this.$router.push({
+        path: "/NewJJ",
+        query: { name: Base64.encode(self.RM1)}
+      });
     },
   },
 };

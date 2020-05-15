@@ -39,7 +39,7 @@
               </el-select>
             </div> -->
             <div class="form-group">
-                <el-select class="Search_Down_input" placeholder="请选择一级行业" filterable clearable v-model="form.One" @change="getOneclass" style="margin-right:20px;">
+                <el-select class="Search_Down_input" placeholder="请选择一级行业" filterable clearable v-model="form_One" @change="getOneclass" style="margin-right:20px;">
                   <el-option
                     v-for="item in OneClass"
                     :key="item.yijihy"
@@ -168,7 +168,7 @@
             </template>
           </div>
           <!-- 分页dom start -->
-          <div id="Pagination">
+          <!-- <div id="Pagination" v-show="total > 20">
             <el-pagination
               layout="prev, pager, next"
               prev-text="上一页"
@@ -183,7 +183,13 @@
               class="paginationsy"
               @click="paginationsy"
             >首页</el-button>
-          </div>
+          </div> -->
+          <!-- 分页dom end -->
+          <!-- 分页dom start -->
+            <div id="Pagination" v-show="total > 20">
+              <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
+              <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
+            </div>
           <!-- 分页dom end -->
         </div>
         <el-dialog
@@ -281,9 +287,10 @@ export default {
       OneClass:{},
       TwoClass:{},
       form:{
-        One:"",
+        One:"机械",
         Two:""
       },
+      form_One: "机械",
       selectedOptions: "",
       tableData: [],
       loading: false,
@@ -316,6 +323,7 @@ export default {
   },
   mounted() {
     // this.hangyedown();
+    this.searchlist()
     this.getOneclass();
     // this.getTwoclass();
     // this.hangyelist()
@@ -431,7 +439,7 @@ export default {
     getTwoclass() {
       var self = this;
       let params = {
-        yijihy: self.form.One
+        yijihy: self.form_One
       };
       this.axios({
         url: this.api.GetTwoClass,
@@ -465,7 +473,7 @@ export default {
         rankNumber: this.paiming,
         leixing: self.form.qiyelx,
         rankRule: self.paixu,
-        suoshuhy: self.form.One,
+        suoshuhy: self.form_One,
         suoshuejhy: self.form.Two,
         minAge: self.form.styear,
         maxAge: self.form.endyear,

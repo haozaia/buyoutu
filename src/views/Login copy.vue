@@ -1,8 +1,7 @@
 <template>
   <div id="Login">
-    <div class="loginOpacity"></div>
     <div class="login">
-      <!-- <p>东方龙商务集团</p>
+      <p>东方龙商务集团</p>
       <div class="loginkind">
         <div class="span">
           <span @click="mima">密码登录</span>
@@ -23,32 +22,6 @@
           </div>
           <button @click="loginb" class="sub">登&emsp;录</button>
         </div>
-      </div> -->
-      <div class="Ulogin">
-        <div class="Ulogin_title">
-          <p>欢迎进入</p>
-          <p>招商大数据系统</p>
-        </div>
-        <!-- 账号密码登录 -->
-        <div v-if="login_c" class="Ulogin_input">
-          <input v-model="txtvalue" @keyup.enter="login" class="txt" type="text" placeholder="请输入账号" value="admin" />
-          <input v-model="passvalue" @keyup.enter="login" class="password" type="password" placeholder="请输入密码" />
-          <button @click="login" class="sub">登 录</button>
-          <p class="message">{{ this.Passmessage }}</p>
-        </div>
-        <!-- 验证码登录 -->
-        <div v-if="login_r" class="Ulogin_input">
-          <input v-model="phone" autoComplete="new-password" @keyup.enter="loginb" class="phonevalue" type="text" placeholder="请输入手机号" />
-          <div class="Get_yanzheng">
-            <input v-model="code" autoComplete="new-password" @keyup.enter="loginb" class="codevalue inline" type="text" placeholder="请输入验证码" />
-            <button v-if="hei" @click="getcode"  class="getcode inline">获取</button>
-            <button v-else class="getcode2 inline">重新发送 ({{ time }})</button>
-          </div>
-          <button @click="loginb" class="sub">登 录</button>
-          <p class="message">{{ this.Passmessage }}</p>
-        </div>
-        <span v-if="Fangshi" class="Te_login" @click="yanzhengm">选择验证码登录</span>
-        <span v-if="Passlogin" class="Te_login" @click="PassLogin">选择账户密码登录</span>
       </div>
     </div>
     <div class="login_footer">
@@ -73,10 +46,7 @@ export default {
       login_c: true, //密码登录
       login_r: "", //验证码登录
       phone: "", //手机号
-      code: "", //验证码
-      Fangshi: true, //选择登录方式
-      Passlogin: false, //选择登录方式
-      Passmessage: "", //提示信息  ！！！待修改~！！！！！！
+      code: "" //验证码
     };
   },
   created() {
@@ -124,22 +94,12 @@ export default {
       var lett = this;
       this.login_r = true;
       this.login_c = false;
-      lett.Fangshi = false;
-      lett.Passlogin = true
       document.onkeydown = function(e) {
-        var key = window.event.keyCode;
+      var key = window.event.keyCode;
       if (key == 13) {
-        lett.loginb();
+      lett.loginb();
       }
     }
-    },
-    PassLogin() {
-      var lett = this
-      this.login_r = false;
-      this.login_c = true;
-      lett.Fangshi = true;
-      lett.Passlogin = false
-
     },
 
     // 获取验证码

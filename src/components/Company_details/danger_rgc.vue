@@ -16,7 +16,29 @@
                 <el-table-column prop="anyou" label="案由"></el-table-column>
                 <el-table-column prop="anhao" label="案号"></el-table-column>
                 <el-table-column prop="anjiansf" label="案件身份"></el-table-column>
-                <el-table-column prop="anjianmc" label="案件名称"></el-table-column>
+                <el-table-column prop="anjianmc" label="案件名称">
+                  <template slot-scope="scope">
+                    <span v-if='scope.row.beizhu4 '>
+                  <a
+                    target="_blank"
+                    v-if="toRescue(scope.row.beizhu4)"
+                    :href="scope.row.beizhu4"
+                  >{{scope.row.anjianmc}}</a>
+                  <a
+                    target="_blank"
+                    v-if="toRescues(scope.row.beizhu4)"
+                    :href="scope.row.beizhu4"
+                  >{{scope.row.anjianmc}}</a>
+                  <a
+                    target="_blank"
+                    v-else
+                    :href="'http://'+scope.row.beizhu4"
+                  >{{scope.row.anjianmc}}</a>
+                  
+                    </span>
+                    <span v-else>{{scope.row.anjianmc}}</span>
+                 </template>
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -40,7 +62,11 @@
           <div class="query-result">
             <div class="table-wrapper">
               <el-table stripe :data="tableData1" style="width: 100%">
-                <el-table-column prop="kaitingrq" label="开庭日期" width="180"></el-table-column>
+                <el-table-column prop="kaitingrq" label="开庭日期" width="180">
+                  <template slot-scope="scope">
+                  {{scope.row.kaitingrq.substring(0, 11)}}
+                </template>
+                </el-table-column>
                 <el-table-column prop="anhao" label="案号"></el-table-column>
                 <el-table-column prop="yuangao/ssr" label="原告/上诉人"></el-table-column>
                 <el-table-column prop="fayuan" label="法院"></el-table-column>
@@ -139,6 +165,24 @@ export default {
     self.getList2();
   },
   methods: {
+    toRescue(url) {
+      if (url) {
+        console.log(url.substr(0, 7).toLowerCase() == "http://", 222);
+        return url.substr(0, 7).toLowerCase() == "http://";
+      } else {
+        console.log(false, 33);
+        return false;
+      }
+    },
+    toRescues(url) {
+      if (url) {
+        console.log(url.substr(0, 8).toLowerCase() == "https://", 222);
+        return url.substr(0, 8).toLowerCase() == "https://";
+      } else {
+        console.log(false, 33);
+        return false;
+      }
+    },
     handleCurrentChange(val) {
       var self = this;
       self.page = val;

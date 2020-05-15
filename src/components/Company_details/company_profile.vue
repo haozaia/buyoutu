@@ -90,9 +90,9 @@
                 <span class="inline"> <img class="inline" src="../../assets/images/companyIcon/loginloa.svg" />注册地址：{{information.zhucedz}}</span>
               </li>
               
-              <li>
+              <li style="vertical-align: top;">
                
-                <span class="inline"> <img class="inline" src="../../assets/images/companyIcon/local.svg" />联系地址：{{information.tongxindz}}</span>
+                <span class="inline"> <img class="inline" src="../../assets/images/companyIcon/local.svg" />联系地址：{{information.tongxindz?information.tongxindz:'-'}}</span>
               </li>
             </ul>
           </div>

@@ -100,12 +100,24 @@
                     >{{scope.row.name}}</router-link>
                   </template>
                 </el-table-column>
-                <el-table-column prop="chenglisj" align="center" label="成立时间"></el-table-column>
-                <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
-                <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)"></el-table-column>
-                <el-table-column prop="suoshuhy" align="center" label="所属行业">
+                <el-table-column prop="chenglisj" align="center" label="成立时间">
                   <template slot-scope="{row}">
-                    {{ row.suoshuhy || '-' }}
+                    {{ row.chenglisj || '-' }}
+                  </template>
+                </el-table-column>
+                <el-table-column prop="fadingdbr" align="center" label="法定代表人">
+                  <template slot-scope="{row}">
+                    {{ row.fadingdbr || '-' }}
+                  </template>
+                </el-table-column>
+                <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                  <template slot-scope="{row}">
+                    {{ row.zhucezbint || '-' }}
+                  </template>
+                </el-table-column>
+                <el-table-column prop="suoshuzbsc" align="center" label="所属资本市场">
+                  <template slot-scope="{row}">
+                    {{ row.suoshuzbsc || '-' }}
                   </template>
                 </el-table-column>
               </el-table>
@@ -130,7 +142,7 @@
           </div>
         </div>
         <!-- 分页dom start -->
-        <div id="Pagination">
+        <div id="Pagination" v-show="total > 20">
           <el-pagination
             layout="prev, pager, next"
             prev-text="上一页"
@@ -141,6 +153,7 @@
           ></el-pagination>
           <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
         </div>
+        <!-- <div class="FYbottom" style="height:30px;" v-if="FYbottom"></div> -->
         <!-- 分页dom end -->
         <!-- </div> -->
         <!-- 地图 -->
@@ -156,6 +169,8 @@ import "../../../node_modules/echarts/map/js/china.js";
 export default {
   data() {
     return {
+      // FenYe: true, //隐藏分页器
+      // FYbottom: false,
       parkname: "",
       parkid: "",
       gongsiname: "",
@@ -297,8 +312,9 @@ export default {
     },
     companylist() {
       var self = this;
+      // self.FenYe = true
       var right = document.getElementsByClassName("btn-next");
-      right[0].disabled = "";
+        right[0].disabled = "";
       self.loading = true;
       let params = {
         page: this.page,
@@ -319,11 +335,18 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
+        
         this.total = res.data.count;
         this.tableData = res.data.data;
         // 分页--下一页disabled
         var cot = Math.ceil(self.total / 20);
+        // 隐藏分页器 start
+        // if(cot <= 20){
+        //   self.FenYe = false
+        //   self.FYbottom = true
+        // }
+        // 隐藏分页器 end
         if (cot <= self.page) {
           right[0].disabled = "disabled";
         } else if (self.page == 1) {

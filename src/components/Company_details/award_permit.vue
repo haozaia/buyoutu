@@ -29,9 +29,10 @@
               </div>
             </div>
             <el-pagination
+            v-show="total>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChange"
-              :page-size="20"
+              :page-size="10"
               :total="total"
               background
             ></el-pagination>
@@ -59,9 +60,10 @@
               </div>
             </div>
             <el-pagination
+            v-show="totals>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChanges"
-              :page-size="20"
+              :page-size="10"
               :total="totals"
               background
             ></el-pagination>
@@ -130,9 +132,10 @@
               </div>
             </div>
             <el-pagination
+              v-show="totalss>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChangess"
-              :page-size="20"
+              :page-size="10"
               :total="totalss"
               background
             ></el-pagination>
@@ -190,7 +193,7 @@ export default {
       let params = {
         page: self.page,
         gongsiname: self.gongsiname,
-        limit: 20
+        limit: 10
       };
       this.axios({
         url: this.api.zhengfuList,
@@ -208,7 +211,7 @@ export default {
       var self = this;
       let params = {
         page: self.pages,
-        limit: 20,
+        limit: 10,
         gongsiname: self.gongsiname
       };
       this.axios({
@@ -228,7 +231,7 @@ export default {
       var self = this;
       let params = {
         page: self.pages,
-        limit: 20,
+        limit: 10,
         gongsiname: self.gongsiname
       };
       this.axios({

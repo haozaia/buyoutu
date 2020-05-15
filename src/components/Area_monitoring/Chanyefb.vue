@@ -33,8 +33,8 @@
                 </template>
               </el-table-column>
               <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="suoshuzbsc" label="所属市场" width="180" align="center"></el-table-column>
-              <el-table-column prop="suoshuhy" label="所属行业" width="180" align="center"></el-table-column>
+              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -44,8 +44,8 @@
             ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
-            <div id="Pagination">
-              <el-pagination layout="prev, pager, next" prev-text="上一页"  next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
+            <div id="Pagination" v-show="total > 10">
+              <el-pagination layout="prev, pager, next" prev-text="上一页"  next-text="下一页" @current-change="handleCurrentChange"  :page-size="10" :current-page="page"></el-pagination>
               <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>
           <!-- 分页dom end -->
@@ -68,8 +68,8 @@
                 </template>
               </el-table-column>
               <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="suoshuzbsc" label="所属市场" width="180" align="center"></el-table-column>
-              <el-table-column prop="suoshuhy" label="所属行业" width="180" align="center"></el-table-column>
+              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -79,8 +79,8 @@
             ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
-            <div id="Pagination">
-              <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
+            <div id="Pagination"  v-show="total > 10">
+              <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="10" :current-page="page"></el-pagination>
               <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>
           <!-- 分页dom end -->
@@ -103,8 +103,8 @@
                 </template>
               </el-table-column>
               <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="suoshuzbsc" label="所属市场" width="180" align="center"></el-table-column>
-              <el-table-column prop="suoshuhy" label="所属行业" width="180" align="center"></el-table-column>
+              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -114,8 +114,8 @@
             ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
-            <div id="Pagination">
-              <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
+            <div id="Pagination"  v-show="total > 10">
+              <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="10" :current-page="page"></el-pagination>
               <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>
           <!-- 分页dom end -->
@@ -138,8 +138,8 @@
                 </template>
               </el-table-column>
               <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="suoshuzbsc" label="所属市场" width="180" align="center"></el-table-column>
-              <el-table-column prop="suoshuhy" label="所属行业" width="180" align="center"></el-table-column>
+              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
             </el-table>
             <!-- <el-pagination+63
 
@@ -151,8 +151,8 @@
             ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
-              <div id="Pagination">
-                <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
+              <div id="Pagination"  v-show="total > 10">
+                <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="10" :current-page="page"></el-pagination>
                 <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
               </div>
           <!-- 分页dom end -->
@@ -298,17 +298,78 @@ export default {
       var self = this;
       var dataX = self.arrx;
       var dataY0 = self.arrx0;
+      for(let i=0;i<dataY0.length;i++){
+        if(dataY0[i] < 6){
+          dataY0[i]=dataY0[i]*1+1
+        }
+      }
       var dataY1 = self.arrx1;
+      for(let i=0;i<dataY1.length;i++){
+        if(dataY1[i] < 6){
+          dataY1[i]=dataY1[i]*1+1
+        }
+      }
       var dataY2 = self.arrx2;
+      for(let i=0;i<dataY2.length;i++){
+        if(dataY2[i] < 6){
+          dataY2[i]=dataY2[i]*1+1
+          console.log(dataY2[i],"四板为1的数量")
+        }
+      }
       var dataY3 = self.arrx3;
+      for(let i=0;i<dataY3.length;i++){
+        if(dataY3[i] < 6){
+          dataY3[i]=dataY3[i]*1+1
+        }
+      }
       var option = {
-
         backgroundColor: "#FFFFFF",
         tooltip: {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
             type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          },
+          formatter: function (params) {
+          //  console.log(params)
+           let series0;
+           let series1;
+           let series2;
+           let series3;
+            if(params[0].value){
+              if(params[0].value< 7){
+              // console.log("小于7")
+              let number1=params[0].value*1-1
+              series0 = params[0].seriesName + ' : ' + number1;
+              }else {
+              series0 = params[0].seriesName + ' : ' +params[0].value
+              }
+            }
+            if(params[1].value){
+              if(params[1].value< 7){
+              let number2=params[1].value*1-1
+                series1 = params[1].seriesName + ' : ' + number2;
+              }else {
+                series1 = params[1].seriesName + ' : ' +params[1].value
+              }
+            }
+            if(params[2].value){
+              if(params[2].value< 7){
+              let number3=params[2].value*1-1
+                series2 = params[2].seriesName + ' : ' + number3;
+              }else {
+                series2 = params[2].seriesName + ' : ' +params[2].value
+              }
+            }
+            if(params[3].value){
+              if(params[3].value< 7){
+              let number4=params[3].value*1-1
+                series3 = params[3].seriesName + ' : ' + number4;
+              }else {
+                series3 = params[3].seriesName + ' : ' +params[3].value
+              }
+            }
+            return series0 + '<br/>' + series1 + '<br/>' + series2 + '<br/>' + series3
           },
           textStyle: {
             fontSize: 20,
@@ -364,7 +425,7 @@ export default {
         yAxis: {
           type: "log",
           min: 1,
-            logBase: 10,
+          logBase: 10,
           // max: "1200",
           axisLine: {
             show: false,
@@ -522,6 +583,8 @@ export default {
       var self = this;
       self.activeName = "2";
       self.dialogVisible = true;
+      self.page = 1
+      self.qufenziduan = "2"
       this.request("2");
     },
     handleClick(tab, event) {
@@ -545,18 +608,24 @@ export default {
       // console.log(`当前页: ${val}`);
       self.page = val;
        //分页--判断当前页是否为最后一页，禁用右按钮  start
-        var cot =  Math.ceil(self.total/10)+1
+        var cot =  Math.ceil(self.total/10)
         self.suibian=false  //是否禁用首页按钮
         //分页--判断当前页是否为最后一页，禁用右按钮  end
       // console.log(self.page);
-      self.request(self.qufenziduan);
+      if(self.qufenziduan == ''){
+        self.request("2");
+      }
+      if(self.qufenziduan != ''){
+        console.log(self.qufenziduan,"字段不为空的时候")
+        self.request(self.qufenziduan);
+      }
     },
     request(suoshuzbsc) {
       var self = this;
       // console.log(right[0].getAttribute("disabled"),"right")
       // right[0].disabled=''
+      console.log(suoshuzbsc,"sszbsc")
       self.loading = true;
-      // console.log(suoshuzbsc)
       let params = {
         page: this.page,
         limit: 10,
@@ -576,6 +645,7 @@ export default {
       }).then(res => {
         // console.log(suoshuzbsc,"name")
         var right = document.getElementsByClassName('btn-next')
+        right[0].disabled=''
         self.tableData = res.data.data;
         this.total = res.data.count;
         // 下一页disabled --start
@@ -583,18 +653,26 @@ export default {
         if(suoshuzbsc == 2){
           if(cot <= self.page){
             right[0].disabled="disabled"
+          }else {
+            right[0].disabled=""
           }
         } else if(suoshuzbsc == 3){
           if(cot <= self.page){
             right[1].disabled="disabled"
+          }else {
+            right[1].disabled=""
           }
         }else if(suoshuzbsc == 4){
           if(cot <= self.page){
             right[2].disabled="disabled"
+          }else{
+            right[2].disabled=""
           }
         }else if(suoshuzbsc == 5){
           if(cot <= self.page){
             right[3].disabled="disabled"
+          }else{
+            right[3].disabled=""
           }
         }
         if(self.page==1){

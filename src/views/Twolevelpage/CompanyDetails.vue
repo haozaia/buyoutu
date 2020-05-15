@@ -175,8 +175,14 @@
               </span>
               <span v-else>{{companyList.chenglisj}}</span>
             </li>
-            <li><span class="comLxfs">{{companyList.lianxiyx ? "通信地址：":"注册地址："}}</span> <section class="comLxfsSec"> {{companyList.tongxindz?companyList.tongxindz:companyList.zhucedz}}</section></li>
-            <li>{{companyList.suoshuzbsc ? "资本市场：":"法人代表："}}{{companyList.suoshuzbsc?companyList.suoshuzbsc:companyList.fadingdbr}}</li>
+            <li><span class="comLxfs">{{companyList.tongxindz ? "通信地址：":"注册地址："}}</span> <section class="comLxfsSec"> {{companyList.tongxindz?companyList.tongxindz:companyList.zhucedz}}</section></li>
+            <li>{{companyList.suoshuzbsc ? "资本市场：":"法人代表："}}
+              <a v-if="companyList.finacelink" :href="companyList.finacelink" target="_blank"> {{companyList.suoshuzbsc?companyList.suoshuzbsc:companyList.fadingdbr}}</a>
+              <span v-else>
+              {{companyList.suoshuzbsc?companyList.suoshuzbsc:companyList.fadingdbr}}
+              </span>
+
+              </li>
             <li v-if="companyList.yingyeqx ">
               营业期限：
               {{companyList.yingyeqx}}
@@ -330,6 +336,8 @@ export default {
     self.zhengfujiangliDis();
     self.fengxianheguiDis();
     self.zhishichanquanDis();
+    self.newsDis();
+    self.kebiDis();
   },
 
   methods: {
@@ -411,6 +419,38 @@ export default {
         }
       }).then(res => {
         self.tabs[6].disFlag = res.data.data;
+      });
+    },
+    kebiDis() {
+      var self = this;
+      let params = {
+        gongsiname: self.mainid
+      };
+      this.axios({
+        url: this.api.kebiDis,
+        method: "post",
+        data: this.$qs.stringify(params),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        self.tabs[4].disFlag = res.data.data;
+      });
+    },
+    newsDis() {
+      var self = this;
+      let params = {
+        gongsiname: self.mainid
+      };
+      this.axios({
+        url: this.api.newsDis,
+        method: "post",
+        data: this.$qs.stringify(params),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        self.tabs[8].disFlag = res.data.data;
       });
     },
     nainbaoDh() {

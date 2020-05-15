@@ -1,116 +1,166 @@
 <template>
   <div slot="danger_rgc">
     <div class="companyContent">
-      <div class="table-list" v-if="tableData2 != 0">
+
+     <section class="table-list" v-if="total !=0">
         <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>法律诉讼</span>
-          </div>
+          <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">A股公司</span>
+            </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
-          <div class="query-result">
             <div class="table-wrapper">
-              <el-table stripe :data="tableData2" style="width: 100%">
-                <el-table-column prop="riqi" label="日期" width="180"></el-table-column>
-                <el-table-column prop="anyou" label="案由"></el-table-column>
-                <el-table-column prop="anhao" label="案号"></el-table-column>
-                <el-table-column prop="anjiansf" label="案件身份"></el-table-column>
-                <el-table-column prop="anjianmc" label="案件名称"></el-table-column>
-              </el-table>
+              <el-table stripe :data="tableData" style="width: 100%">
+                  <el-table-column prop="name" label="企业名称" align="center">
+                <template slot-scope="scope">
+                  <router-link
+                    target="_blank"
+                    tag="a"
+                    class="toChange"
+                    style="color:#606266;text-decoration:none;"
+                    :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                  >
+                    <p size="medium" v-html="scope.row.name"></p>
+                  </router-link>
+                </template>
+              </el-table-column>
+              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
+              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+                </el-table>
             </div>
-          </div>
-          <el-pagination
+            <el-pagination
+            v-show="total>10"
           layout="prev, pager, next"
-          @current-change="handleCurrentChange2"
-          :page-size="20"
-          :total="total2"
+          @current-change="handleCurrentChange"
+          :page-size="10"
+          :total="total"
           background
         ></el-pagination>
         </div>
-      </div>
-      <div class="table-list" v-if="tableData1 != 0">
+      </section>
+     <section class="table-list" v-if="tableData1 !=''">
         <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>开庭公告</span>
-          </div>
+          <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">三板公司</span>
+            </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
-          <div class="query-result">
             <div class="table-wrapper">
               <el-table stripe :data="tableData1" style="width: 100%">
-                <el-table-column prop="kaitingrq" label="开庭日期" width="180"></el-table-column>
-                <el-table-column prop="anhao" label="案号"></el-table-column>
-                <el-table-column prop="yuangao/ssr" label="原告/上诉人"></el-table-column>
-                <el-table-column prop="fayuan" label="法院"></el-table-column>
-                <el-table-column prop="beigao/ssr" label="被告/上诉人"></el-table-column>
-              </el-table>
+                  <el-table-column prop="name" label="企业名称" align="center">
+                <template slot-scope="scope">
+                  <router-link
+                    target="_blank"
+                    tag="a"
+                    class="toChange"
+                    style="color:#606266;text-decoration:none;"
+                    :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                  >
+                    <p size="medium" v-html="scope.row.name"></p>
+                  </router-link>
+                </template>
+              </el-table-column>
+              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
+              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+                </el-table>
             </div>
-          </div>
-          <el-pagination
+            <el-pagination
+            v-show="total1>10"
           layout="prev, pager, next"
           @current-change="handleCurrentChange1"
-          :page-size="20"
+          :page-size="10"
           :total="total1"
           background
         ></el-pagination>
         </div>
-      </div>
-      
-      <div class="table-list" v-if="tableData != 0">
+      </section>
+     <section class="table-list" v-if="tableData2 !=''">
         <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>金融监管处罚</span>
-          </div>
+          <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">四板公司</span>
+            </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
-          <div class="query-result">
             <div class="table-wrapper">
-              <el-table stripe :data="tableData" style="width: 100%">
-                <el-table-column prop="faburq" label="发布日期" width="180"></el-table-column>
-                <el-table-column prop="jianguancflx" label="监管处罚类型"></el-table-column>
-                <el-table-column prop="jianguanjg" label="监管机构"></el-table-column>
-                <el-table-column prop="shejidx" label="涉及对象"></el-table-column>
-                <el-table-column prop="jianguancfwj" label="监管处罚文件"></el-table-column>
-              </el-table>
+              <el-table stripe :data="tableData2" style="width: 100%">
+                  <el-table-column prop="name" label="企业名称" align="center">
+                <template slot-scope="scope">
+                  <router-link
+                    target="_blank"
+                    tag="a"
+                    class="toChange"
+                    style="color:#606266;text-decoration:none;"
+                    :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                  >
+                    <p size="medium" v-html="scope.row.name"></p>
+                  </router-link>
+                </template>
+              </el-table-column>
+              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
+              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+                </el-table>
             </div>
             <el-pagination
+            v-show="total2>10"
           layout="prev, pager, next"
-          @current-change="handleCurrentChange"
-          :page-size="20"
-          :total="total"
+          @current-change="handleCurrentChange2"
+          :page-size="10"
+          :total="total2"
           background
         ></el-pagination>
-          </div>
         </div>
-      </div>
-      
-      <!-- <div class="table-list">
+      </section>
+
+     <section class="table-list" v-if="tableData3 !=''">
         <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>法院公告</span>
-          </div>
+          <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">已私募公司</span>
+            </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
-          <div class="query-result">
             <div class="table-wrapper">
-              <el-table stripe :data="tableData" style="width: 100%">
-                <el-table-column prop="date" label="序号" width="50"></el-table-column>
-                <el-table-column prop="name" label="批准日期" width="180"></el-table-column>
-                <el-table-column prop="address" label="软件全称"></el-table-column>
-                <el-table-column prop="money" label="软件简称"></el-table-column>
-                <el-table-column prop="years" label="登记号"></el-table-column>
-                <el-table-column prop="types" label="分类号"></el-table-column>
-                <el-table-column prop="types" label="版本号"></el-table-column>
-              </el-table>
+              <el-table stripe :data="tableData3" style="width: 100%">
+                  <el-table-column prop="name" label="企业名称" align="center">
+                <template slot-scope="scope">
+                  <router-link
+                    target="_blank"
+                    tag="a"
+                    class="toChange"
+                    style="color:#606266;text-decoration:none;"
+                    :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
+                  >
+                    <p size="medium" v-html="scope.row.name"></p>
+                  </router-link>
+                </template>
+              </el-table-column>
+              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
+              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+                </el-table>
             </div>
-          </div>
-          <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+            <el-pagination
+            v-show="total3>10"
+          layout="prev, pager, next"
+          @current-change="handleCurrentChange3"
+          :page-size="10"
+          :total="total3"
+          background
+        ></el-pagination>
         </div>
-      </div> -->
+      </section>
+
+
     </div>
   </div>
 </template>  
@@ -123,12 +173,15 @@ export default {
       total: 0,
       total1: 0,
       total2: 0,
+      total3: 0,
       page: 1,
       page1: 1,
       page2: 1,
+      page3: 1,
       tableData: [],
       tableData1: [],
       tableData2: [],
+      tableData3: [],
     };
   },
   mounted() {
@@ -137,6 +190,7 @@ export default {
     self.getList();
     self.getList1();
     self.getList2();
+    self.getList3();
   },
   methods: {
     handleCurrentChange(val) {
@@ -147,20 +201,22 @@ export default {
     getList() {
       var self = this;
       let params = {
-        page: self.page,
+        pageNumber: self.page,
         gongsiname: self.gongsiname,
-        limit: 20
+        pageSize: 10,
+        zibenscdy:2
       };
       this.axios({
-        url: this.api.jrjgcflistapi,
+        url: this.api.ComKebilist,
         method: "post",
         data: this.$qs.stringify(params),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.tableData = res.data.data;
-        self.total = res.data.count;
+        self.tableData = res.data.data.list;
+        self.total = res.data.data.totalRow;
+        console.log(res.data.data.totalRow)
       });
     },
     handleCurrentChange1(val) {
@@ -169,22 +225,24 @@ export default {
       self.getList1(val, 20);
     },
     getList1() {
-      var self = this;
+     var self = this;
       let params = {
-        page: self.page1,
+        pageNumber: self.page1,
         gongsiname: self.gongsiname,
-        limit: 20
+        pageSize: 10,
+        zibenscdy:3
       };
       this.axios({
-        url: this.api.ktgglistapi,
+        url: this.api.ComKebilist,
         method: "post",
         data: this.$qs.stringify(params),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.tableData1 = res.data.data;
-        self.total1 = res.data.count;
+        self.tableData1 = res.data.data.list;
+        self.total1 = res.data.data.totalRow;
+        console.log(res.data.data.totalRow)
       });
     },
     handleCurrentChange2(val) {
@@ -193,22 +251,49 @@ export default {
       self.getList2(val, 20);
     },
     getList2() {
-      var self = this;
+     var self = this;
       let params = {
-        page: self.page2,
+        pageNumber: self.page2,
         gongsiname: self.gongsiname,
-        limit: 20
+        pageSize: 10,
+        zibenscdy:4
       };
       this.axios({
-        url: this.api.flsslistapi,
+        url: this.api.ComKebilist,
         method: "post",
         data: this.$qs.stringify(params),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.tableData2 = res.data.data;
-        self.total2 = res.data.count;
+        self.tableData2 = res.data.data.list;
+        self.total2 = res.data.data.totalRow;
+        console.log(res.data.data.totalRow)
+      });
+    },
+    handleCurrentChange3(val) {
+      var self = this;
+      self.page3 = val;
+      self.getList3(val, 20);
+    },
+    getList3() {
+     var self = this;
+      let params = {
+        pageNumber: self.page3,
+        gongsiname: self.gongsiname,
+        pageSize: 10,
+        zibenscdy:5
+      };
+      this.axios({
+        url: this.api.ComKebilist,
+        method: "post",
+        data: this.$qs.stringify(params),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        self.tableData3 = res.data.data.list;
+        self.total3 = res.data.data.totalRow;
       });
     },
   }

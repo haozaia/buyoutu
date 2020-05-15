@@ -10,7 +10,7 @@
     </div>
     <div class="OneclassList">
       <!-- <a :href="'#active'+index" class="OneClass color3 fontSize20" v-for="(item,index) in arr" :key="index">{{ item }}</a> -->
-      <a @click="changeHash('#active'+index)" class="OneClass color3 fontSize20" v-for="(item,index) in arr" :key="index">{{ item }}</a>
+      <a @click="changeHash('#active'+index)" class="OneClass color3 fontSize22" v-for="(item,index) in arr" :key="index">{{ item }}</a>
     </div>
     <div class="cylx" v-if="hhh">
       <!-- <ul class="cylx_ul">
@@ -253,6 +253,7 @@ export default {
     display: inline-block;
     margin: 0 12px;
     line-height: 36px;
+    font-weight: 600;
   }
   .OneClass:hover{
     color: #CF111B;

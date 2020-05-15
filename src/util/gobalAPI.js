@@ -50,7 +50,7 @@ const globalAPI = {
   biaozhunlst: http + "/touzhijiazhi/Standard/listapi1.json",    //区域监控--标准制定企业列表
   waishanglc: http + "/agency/foreign/typeapi.json",    //区域监控--外商投资--轮次
   waishangzcd: http + "/agency/foreign/zhuceapi.json",    //区域监控--外商投资--境外投资者国籍(或地区)/注册地
-  waishanglst: http + "/agency/foreign/listapi.json",    //区域监控--外商投资列表
+  waishanglst: http + "/agency/foreign/dtcompaniesapi.json",    //区域监控--外商投资列表
   VIPphonelist: http + "/svip/companycontactway/downloadexcelapi.json",    //VIP电话导出
   VIPphone1: http + "/svip/companycontactway/uploadexcelapi.json",    //VIP电话文件上传
   VIPphone2: http + "/svip/companycontactway/downloadtemplateapi.json",    //VIP电话模板下载
@@ -184,6 +184,11 @@ const globalAPI = {
   zhengfujiangliDis: http + "/companyinfo/zhengfujiangli/isshowapi.json",//1.3政府奖励模块是否展示接口
   fengxianheguiDis: http + "/companyinfo/fengxianhegui/isshowapi.json",//1.4风险合规模块是否展示接口
   zhishichanquanDis: http + "/companyinfo/zhishichanquan/isshowapi.json",//1.5知识产权模块是否展示接口
+  kebiDis: http + "/companyinfo/kebi/isshowapi.json",//1.6可比公司是否置灰接口
+  newsDis: http + "/companyinfo/news/isshowapi.json",//1.7新闻
+  fengxianheguiNew: http + "/fengxianhegui/newsapi.json",//1.7qiye新闻
+  ComKebilist: http + "/kebilist.json",//1.7qiye相似公司
+
 
   
   exportlistjingpingapi: http + "/touzhijiazhi/Export/exportlistjingpingapi.json",//竞品导出

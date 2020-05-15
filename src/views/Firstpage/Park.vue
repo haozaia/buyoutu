@@ -14,14 +14,8 @@
         <div class="form-wrapper">
           <form class="form-inline" role="form">
             <div class="form-group Search_Down_input">
-              <!-- <span class="control-label"></span>
               <el-cascader
-                size="large"
-                :options="options"
-                v-model="selectedOptions"
-                @change="handleChange"
-              ></el-cascader> -->
-              <el-cascader
+                clearable
                 ref="refHandle"
                 :options="options1"
                 :props="{ checkStrictly: true }"
@@ -100,7 +94,7 @@
             </template>
           </div>
           <!-- 分页dom start -->
-            <div id="Pagination">
+            <div id="Pagination" v-show="total > 20">
               <el-pagination layout="prev, pager, next" prev-text="上一页" next-text="下一页" @current-change="handleCurrentChange"  :page-size="20" :current-page="page"></el-pagination>
               <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>
@@ -220,7 +214,7 @@ export default {
       self.page = val;
 
        //分页--判断当前页是否为最后一页，禁用右按钮  start
-        var cot =  parseInt(self.total/20)+1
+        var cot =  Math.ceil(self.total/20)
         self.suibian=false  //是否禁用首页按钮
         //分页--判断当前页是否为最后一页，禁用右按钮  end
       // console.log(self.page);
@@ -242,8 +236,6 @@ export default {
     },
     yuanqulist() {
       var self = this
-      var right = document.getElementsByClassName('btn-next')
-      right[0].disabled=''
       self.loading = true;
       if(self.city_sheng === '全部'){
         self.city_sheng = ''
@@ -272,13 +264,15 @@ export default {
       }).then(res =>{
         // console.log(res)
         self.loading = false;
+        var right = document.getElementsByClassName('btn-next')
+        right[0].disabled=''
         self.tableData = res.data.data;
         if(res.data.count == 0) {
           self.tishi = "暂无数据"
         }
         self.total = res.data.count;
         // 分页--下一页disabled
-        var cot =  parseInt(self.total/20)+1
+        var cot =  Math.ceil(self.total/20)
         if(cot <= self.page){
             right[0].disabled="disabled"
         }
@@ -314,6 +308,8 @@ export default {
 
 <style lang="scss">
 @import "../../styles/css/Park.scss";
-
+.el-tabs{
+  margin: 0 !important;
+}
 
 </style>
