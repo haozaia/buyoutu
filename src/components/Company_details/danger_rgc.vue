@@ -26,7 +26,7 @@
                   >{{scope.row.anjianmc}}</a>
                   <a
                     target="_blank"
-                    v-if="toRescues(scope.row.beizhu4)"
+                    v-else-if="toRescues(scope.row.beizhu4)"
                     :href="scope.row.beizhu4"
                   >{{scope.row.anjianmc}}</a>
                   <a

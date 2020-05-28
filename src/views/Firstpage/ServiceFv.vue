@@ -70,6 +70,11 @@
                 <span v-if="scope.row.flag == 0">{{scope.row.name}}</span>  
               </template>
             </el-table-column>
+            <el-table-column prop="shengfen" label="省份" align="center">
+              <template slot-scope="{row}">
+                {{ row.shengfen || '-' }}
+              </template>
+            </el-table-column>
             <el-table-column prop="yangshou" label="营收(万元)" align="center"></el-table-column>
           </el-table>
           </div>

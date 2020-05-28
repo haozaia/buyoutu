@@ -2,10 +2,11 @@
   <div id="C_content_hyxq">
     <div class="C_container">
       <div class="C_title">
-        <span class="ctspan">
+        <span class="ctspan" style="font-size:24px;">
           企业数量总数为
           <i class="cti">{{ this.allTotal }}</i>家
         </span>
+
         <!-- <el-button
           v-if="suoshuocss|| xianqus"
           size="mini"
@@ -13,7 +14,8 @@
           @click="sendMsg"
           style="background-color: #c03532;
     border-color: #c03532;"
-        >查看全省</el-button> -->
+        >查看全省</el-button>-->
+
       </div>
       <el-collapse accordion v-model="activeName" @change="handleChange">
         <!-- A股公司 -->
@@ -31,7 +33,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData2" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -42,38 +44,41 @@
                     </template>
                   </el-table-column>
                   <!-- <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column> -->
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
             <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total2 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,2)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <div id="Pagination" v-loading="loading" v-show="total2 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,2)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
             <!-- <el-pagination
               layout="prev, pager, next"
               @current-change="handleCurrentChange($event,2)"
               :page-size="10"
               :total="total2"
               background
-            ></el-pagination> -->
+            ></el-pagination>-->
           </section>
         </el-collapse-item>
         <!-- 三板公司 -->
@@ -91,7 +96,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData3" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -101,41 +106,44 @@
                       >{{ scope.row.name }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
             <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total3 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,3)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <div id="Pagination" v-loading="loading" v-show="total3 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,3)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
             <!-- <el-pagination
               layout="prev, pager, next"
               @current-change="handleCurrentChange($event,3)"
               :page-size="10"
               :total="total3"
               background
-            ></el-pagination> -->
+            ></el-pagination>-->
           </section>
         </el-collapse-item>
-       
+
         <!-- 四版公司 -->
         <el-collapse-item v-show="total4" name="4">
           <template slot="title">
@@ -151,7 +159,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData4" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -163,31 +171,34 @@
                   </el-table-column>
 
                   <!-- <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column> -->
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
             <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total4 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,4)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <div id="Pagination" v-loading="loading" v-show="total4 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,4)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
           </section>
         </el-collapse-item>
         <!-- 以私募融资公司 -->
@@ -205,7 +216,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData5" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -215,31 +226,34 @@
                       >{{ scope.row.name }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
             <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total5 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,5)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <div id="Pagination" v-loading="loading" v-show="total5 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,5)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
           </section>
         </el-collapse-item>
         <!-- 非挂牌非上市公司 -->
@@ -257,7 +271,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData6" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -269,35 +283,38 @@
                   </el-table-column>
 
                   <!-- <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column> -->
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
             <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total6 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,6)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <div id="Pagination" v-loading="loading" v-show="total6 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,6)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
           </section>
         </el-collapse-item>
 
-         <!-- 海外上市公司 -->
+        <!-- 海外上市公司 -->
         <el-collapse-item v-show="total7" name="7">
           <template slot="title">
             <div class="ind-title">
@@ -312,7 +329,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData7" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" align="center" label="公司名称">
+                  <el-table-column prop="name" align="left" label="公司名称" width="400">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -324,31 +341,34 @@
                   </el-table-column>
 
                   <!-- <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column> -->
-                  <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)" width="200"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" label="法定代表人" width="150"></el-table-column>
+                  <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                    <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="chenglisj" align="center" label="成立时间">
+                    <template slot-scope="{row}">{{ row.chenglisj || '-' }}</template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
-           <!-- 分页dom start -->
-          <div id="Pagination" v-loading="loading" v-show='total7 > 10'>
-            
-            <el-pagination
-              layout="prev, pager, next"
-              prev-text="上一页"
-              next-text="下一页"
-              @current-change="handleCurrentChange($event,7)"
-              :page-size="10"
-              :current-page="page"
-            ></el-pagination>
-            <el-button
-              size="small"
-              :disabled="suibian"
-              class="paginationsy"
-              @click="paginationsy"
-            >首页</el-button>
-          </div>
-          <!-- 分页dom end -->
+            <!-- 分页dom start -->
+            <div id="Pagination" v-loading="loading" v-show="total7 > 10">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange($event,7)"
+                :page-size="10"
+                :current-page="page"
+              ></el-pagination>
+              <el-button
+                size="small"
+                :disabled="suibian"
+                class="paginationsy"
+                @click="paginationsy"
+              >首页</el-button>
+            </div>
+            <!-- 分页dom end -->
           </section>
         </el-collapse-item>
       </el-collapse>
@@ -358,7 +378,7 @@
 
 <script>
 export default {
-  props: ["titles", "suoshusf", "suoshuocs", "xianqu","parkId"],
+  props: ["titles", "suoshusf", "suoshuocs", "xianqu", "parkId"],
   data() {
     return {
       activeName: "",
@@ -379,39 +399,38 @@ export default {
       title: "",
       loading: true,
       isCountData: true,
-      suoshuocss:'',
-      xianqus:'',
-      suibian:true,
+      suoshuocss: "",
+      xianqus: "",
+      suibian: true
     };
   },
   mounted() {
     var self = this;
     self.title = self.titles;
-    self.suoshuocss=self.suoshuocs
-    self.xianqus=self.xianqu
-    console.log(self.parkId)
-    if(!self.parkId){
+    self.suoshuocss = self.suoshuocs;
+    self.xianqus = self.xianqu;
+    console.log(self.parkId);
+    if (!self.parkId) {
       self.tableList("2");
     }
-    
   },
   created() {},
   methods: {
-       // 分页--回到首页按钮  start
+    // 分页--回到首页按钮  start
     paginationsy() {
       var self = this;
       if (self.page === 1) {
       } else {
         // this.page = 1
-        self.handleCurrentChange(1,self.inswx);
+        self.handleCurrentChange(1, self.inswx);
       }
     },
     // 分页--回到首页按钮  end
     sendMsg(event) {
-      let self=this
-      this.suoshuocss=''
-      this.xianqus=''
-      this.$emit('childByValue', this.suoshusf, this.titles)
+      let self = this;
+      this.suoshuocss = "";
+      this.xianqus = "";
+      this.$emit("childByValue", this.suoshusf, this.titles);
       self.tableList("2");
     },
     addNum() {
@@ -429,8 +448,8 @@ export default {
     handleCurrentChange(val, index) {
       var self = this;
       self.page = val;
-       self.suibian = false; //是否禁用首页按钮
-       self.inswx=index
+      self.suibian = false; //是否禁用首页按钮
+      self.inswx = index;
       self.tableList(index);
     },
 
@@ -438,11 +457,11 @@ export default {
       var self = this;
       // // 分页--调用没数据的接口后，重置分页 start
       var right = document.getElementsByClassName("btn-next");
-      
+
       // right[0].disabled =  "disabled";
       // // 分页--调用没数据的接口后，重置分页 end
       self.loading = true;
-      
+
       let params = {
         pageNumber: self.page,
         pageSize: 10,
@@ -485,13 +504,13 @@ export default {
           });
           // console.log(self.allTotal)
         } else {
-           right[0].disabled=""
+          right[0].disabled = "";
           //分页--总条数<=20，禁用右按钮  start
           var cot = Math.ceil(res.data.data.totalRow / 10);
           if (cot <= self.page) {
             right[index - 2].disabled = "disabled";
           } else if (self.page == 1) {
-             right[index - 2].disabled = "";
+            right[index - 2].disabled = "";
             self.suibian = true;
           } else {
             right[index - 2].disabled = "";
@@ -526,6 +545,7 @@ export default {
     border-bottom: 2px solid #e9edef;
     padding: 5px 10px;
     font-weight: 600;
+    font-size: 24px;
     .ctspan {
       // font-size: 14px;
       margin-left: 10px;
@@ -562,6 +582,14 @@ export default {
     border-radius: 4px;
     margin-left: 10px;
     font-weight: 400;
+  }
+}
+#chainMAPS{
+    .el-dialog__header {
+    padding: 16px 20px 10px;
+    font-size: 24px;
+    background: #eee !important;
+    border-radius: 6px 6px 0 0;
   }
 }
 </style>

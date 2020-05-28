@@ -399,7 +399,7 @@ export default {
       self.charts.resize();
     },
     drawChinaMap() {
-            var self = this;
+      var self = this;
 
       let max = Math.max.apply(
         Math,

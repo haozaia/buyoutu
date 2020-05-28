@@ -91,7 +91,7 @@
                   <el-table-column prop="suoshuhy" label="产品名称"></el-table-column>
                 </el-table> -->
                 <el-table stripe :data="tableData" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" width="480">
+                  <el-table-column prop="name" label="公司名称" width="480">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -102,21 +102,36 @@
                     </template>
                   </el-table-column>
                   <el-table-column prop="suoshusf" label="所属省份" width="180"></el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhucezb" label="注册资本"></el-table-column>
+                  <el-table-column prop="fadingdbr" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhucezbint" label="注册资本(万元)"></el-table-column>
+                  <el-table-column prop="chenglisj" label="成立时间">
+                    <template slot-scope="{row}">
+                      {{ row.chenglisj || '-' }}
+                    </template>
+                  </el-table-column>
                   <!-- <el-table-column prop="lianxiyx" label="联系邮箱"></el-table-column> -->
-                  <el-table-column prop="fadingdbr" label="法人代表"></el-table-column>
                 </el-table>
               </div>
             </div>
-            <el-pagination
+            <!-- <el-pagination
               layout="prev, pager, next"
               @current-change="handleCurrentChange"
               :page-size="20"
               :total="total"
               background
                :current-page="page"
-            ></el-pagination>
+            ></el-pagination> -->
+            <div id="Pagination" v-show="total > 20">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange"
+                :page-size="20"
+                :current-page="page"
+              ></el-pagination>
+              <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
+            </div>
           <!-- </el-tab-pane> -->
         </el-tabs>
       </div>
@@ -157,6 +172,7 @@ export default {
       worldX: [],
       worldY: [],
       loading:true,
+      suibian: true, //分页变量3
       suoshusf:'',
       // suoshuhy: '',
       // hyoptions: [],
@@ -228,6 +244,26 @@ export default {
     //     self.hyoptions = res.data.data
     //   })
     // },
+    // 分页--回到首页按钮  start
+    paginationsy() {
+      if (this.page === 1) {
+      } else {
+        // this.page = 1
+        this.handleCurrentChange(1);
+      }
+    },
+    // 分页--回到首页按钮  end
+    handleCurrentChange(val) {
+      var self = this;
+      // console.log(`当前页: ${val}`);
+      self.page = val;
+      //分页--判断当前页是否为最后一页，禁用右按钮  start
+      // var cot =  parseInt(self.total/10)+1
+      self.suibian = false; //是否禁用首页按钮
+      //分页--判断当前页是否为最后一页，禁用右按钮  end
+      // console.log(self.page);
+      self.tableList(val, 20);
+    },
     getOneclass() {
       var self = this;
       self.form.Two = ""
@@ -263,6 +299,8 @@ export default {
     },
     tableList() {
       var self = this;
+      var right = document.getElementsByClassName("btn-next");
+        right[0].disabled = "";
       self.loading=true
       let params = {
         leixing:"3",
@@ -284,14 +322,21 @@ export default {
         self.loading=false
         self.tableData = res.data.data;
         self.total = res.data.count;
+
+        var cot = Math.ceil(self.total / 20)
+        if (cot <= self.page) {
+          right[0].disabled = "disabled";
+        } else if (self.page == 1) {
+          self.suibian = true;
+        }
       });
     },
-    handleCurrentChange(val) {
-      var self = this;
-      self.page = val;
-      // console.log(self.page);
-      self.tableList(val, 20);
-    },
+    // handleCurrentChange(val) {
+    //   var self = this;
+    //   self.page = val;
+    //   // console.log(self.page);
+    //   self.tableList(val, 20);
+    // },
     handleClick(tab, event) {
       var self = this;
       if (tab.index == 0) {

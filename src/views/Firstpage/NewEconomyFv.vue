@@ -56,7 +56,7 @@
             <el-table-column prop="yangshou" label="估值(亿人民币)" align="center"></el-table-column>
             <!-- <el-table-column prop="guojia" label="国家" align="center"></el-table-column> -->
             <el-table-column prop="shengfen" label="城市" align="center"></el-table-column>
-            <el-table-column prop="hangye" label="行业" align="center"></el-table-column>
+            <el-table-column prop="hangye" label="注册资本(万元)" align="center"></el-table-column>
           </el-table>
           </div>
           <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange"  :page-size="20"  :total="total"></el-pagination>

@@ -2,6 +2,7 @@
 // html{
 //     overflow-y: overlay;
 // }
+
 #C_content {
     background: #f0f2f5;
     // padding: 15px 20px 20px 20px;
@@ -17,10 +18,6 @@
         padding: 0 10px 0 0;
         font-size: 28px;
         font-weight: 600;
-        // span{
-        //     font-size: 20px !important;
-        // }
-        // <span class="Title_left"></span>
         .Title_left {
             display: inline-block;
             height: 36px;
@@ -45,13 +42,15 @@
     margin: 10px 0;
 }
 
-#Tag {
+#TagPag {
     padding: 3px 12px;
-    background: #CF111B;
-    color: #fff;
-    font-size: 12px;
-    border-radius: 4px;
-    margin: 10px 10px;
+            background: #f5cfd1;
+            color: #cf111b;
+            font-size: 18px;
+            border-radius: 4px;
+            margin: 0 10px 10px 0;
+            line-height: 24px;
+            font-weight: 400;
 }
 hangyenull
 // 标题(带图标)
@@ -288,6 +287,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 .el-dialog__title {
     font-size: 22px;
 }
+.el-table__header{
+    tr{
+        th{
+            text-align: center;
+        }
+    }
+}
+// .el-table__body-wrapper tbody tr td{
+//     text-align: left;
+// }
 .el-dialog__body {
     font-size: 20px;
 }
@@ -395,6 +404,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
         color: #E2E2E2;
         height: 36px;
     }
+    
     // 禁用后点击与经过
     .el-button.is-disabled:hover{
         background-color: #ffffff;
@@ -428,6 +438,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 }
 // 分页样式 End
 // 表格
+.query-result .table-wrapper .el-table__body-wrapper tbody tr td .cell a:hover {
+        color: #CF111B !important;
+        text-decoration: underline !important;
+    }
 
 .query-result {
     padding: 0 30px !important;

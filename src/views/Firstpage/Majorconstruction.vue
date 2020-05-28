@@ -1,4 +1,5 @@
 <template>
+<div id="majorconstruction">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>重大在建项目企业 </div>
@@ -67,6 +68,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -195,4 +197,9 @@ right[0].disabled=""
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
+#majorconstruction{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>

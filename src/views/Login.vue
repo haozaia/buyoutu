@@ -42,7 +42,7 @@
           <div class="Get_yanzheng">
             <input v-model="code" autoComplete="new-password" @keyup.enter="loginb" class="codevalue inline" type="text" placeholder="请输入验证码" />
             <button v-if="hei" @click="getcode"  class="getcode inline">获取</button>
-            <button v-else class="getcode2 inline">重新发送 ({{ time }})</button>
+            <button v-else class="getcode2 inline">{{ time }}</button>
           </div>
           <button @click="loginb" class="sub">登 录</button>
           <p class="message">{{ this.Passmessage }}</p>

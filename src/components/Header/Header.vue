@@ -15,9 +15,9 @@
   </div>
   <div class="header-r">
     <div class="HeaderRclick">
+    <a class="colorH HeaderRteaHot fontSize20" @click="fxbaobiao">地图搜索</a>
+    <span class="color9 TeSpan"></span>
     <a class="color3 HeaderRtea fontSize20" @click="qydaochu">企业导出</a>
-    <span class="color3 TeSpan">|</span>
-    <a class="color3 HeaderRtea fontSize20" @click="fxbaobiao">分析报表</a>
     </div>
     <span class="color3 fontSize20"><span>{{ this.userName }}</span></span>
     <div class="header-hover">
@@ -116,7 +116,7 @@ export default {
       this.$router.push("/VipData")
     },
     fxbaobiao() {
-      this.$router.push("/VipReport")
+      this.$router.push("/mapSearch")
     },
     // 新基建
     JiJian() {

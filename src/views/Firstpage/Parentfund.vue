@@ -91,4 +91,9 @@ export default {
 </script>
 
 <style lang="scss">
+#Parentfund{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 </style>

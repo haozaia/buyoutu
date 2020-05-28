@@ -24,7 +24,7 @@
           <el-table :data="qiyelist" stripe style="width: 100%">
             <el-table-column prop="paiming" label="排名" width="180" align="center"></el-table-column>
             <!-- 跳转是这个 -->
-            <el-table-column prop="name" label="公司名称(中文)" align="center">
+            <el-table-column prop="name" label="公司名称(中文)" align="left">
               <!-- <template slot-scope="scope" >
                 <router-link
                   target="_blank"

@@ -77,7 +77,11 @@
 <style lang="scss">
 @import "../../styles/Monitor/region/css/container/container.scss";
 @import "../../styles/Monitor/region/css/container/Yongyouzz.scss";
-
+#Yongyouzz{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 
 <script>

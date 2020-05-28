@@ -25,7 +25,7 @@
                         <el-table-column prop="zhucedz" label="注册地址" align="center"> </el-table-column>
                         <el-table-column prop="fadingdbr" label="法定代表人" align="center"> </el-table-column>
                         <el-table-column prop="zhucezb" label="注册资本" align="center"> </el-table-column>
-                        <el-table-column prop="zhucesj" label="注册时间" align="center"> </el-table-column>
+                        <el-table-column prop="chenglisj" label="成立时间" align="center"> </el-table-column>
                     </el-table>
                     <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange"  :page-size="20"  :total="total"></el-pagination>
                 </template>

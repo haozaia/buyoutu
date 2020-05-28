@@ -1,4 +1,5 @@
 <template>
+<div id="specializedenterprises">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>专项证照企业</div>
@@ -71,6 +72,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -183,4 +185,9 @@ export default {
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
+#specializedenterprises{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>

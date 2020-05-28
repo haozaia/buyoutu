@@ -1,4 +1,5 @@
 <template>
+<div id="Privateindustry">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>民营产业集团</div>
@@ -40,6 +41,7 @@
       </section>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -95,6 +97,11 @@ export default {
 </script>
 
 <style lang="scss">
+#Privateindustry{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 .overviewLayer {
   background: #fff;
   margin-bottom: 10px;

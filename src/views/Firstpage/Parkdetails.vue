@@ -2,8 +2,12 @@
   <div id="Parkdetails">
     <div id="C_content">
       <div class="C_title">
-        <span class="Title_left"></span>园区详情
-        <!-- <button class="rtPark" @click="rtPark">返回</button> -->
+        <span class="Title_left"></span>园区详情 - {{this.parkname}}
+        <!-- <div class="container_message fontSize20"> -->
+            <!-- <img src="../../assets/images/Hangye_tishi.svg" alt /> -->
+            <p style="display:inline-block;font-size:20px;color:#000;margin-left:10px;"> 共为您查询到企业<span class="colorH"> {{ this.total }} </span>家
+            <span class="GoMap" @click="GoMap" v-show="location != 'null'">点击进入地图版</span></p>
+          <!-- </div> -->
         <el-button class="rtPark" @click="rtPark" type="primary">返回</el-button>
       </div>
       <!-- 搜索、查询 -->
@@ -21,13 +25,20 @@
       </div>
       </div>-->
       <div class="park-content">
-        <div class="ind-title">
+        <!-- <div class="ind-title">
           <p>
             <i class="icon icon-tips"></i>
             <span>{{this.parkname}}</span> 为您查询到企业
             <span id="Tag">{{ this.total }}</span> 个
           </p>
-        </div>
+        </div> -->
+        <!-- <div class="container_top">
+          <div class="container_message fontSize20">
+            <img src="../../assets/images/Hangye_tishi.svg" alt />
+            共为您查询到企业<span class="colorH"> {{ this.total }} </span>家
+            <span class="GoMap" @click="GoMap" v-show="location != 'null'">点击进入地图版</span>
+          </div>
+        </div> -->
         <div class="chaxun">
           <div class="form-wrapper">
             <div class="form-group ChaXun">
@@ -40,10 +51,6 @@
                 <input v-model="zhucezj_S" class="Num input_k" type="text" oninput="value=value.replace(/[^\d]/g,'')"/> -
                 <input v-model="zhucezj_E" class="Num input_k" type="text" oninput="value=value.replace(/[^\d]/g,'')"/>
               </div>
-              <!-- <div class="form-group">
-                  <span class="control-label">成立时间 :</span>
-                  <input class="Num" type="text"> - <input class="Num" type="text">
-              </div>-->
               <div class="block">
                 <span class="demonstration fontSize20">成立日期(始)：</span>
                 <el-date-picker
@@ -68,16 +75,6 @@
                 <span class="control-label jyfw">经营范围：</span>
                 <input class="input_k" v-model="jingyingfw" type="text" placeholder="计算机/电子设备/制造" />
               </div>
-              <!-- <div class="form-group">
-                  <button
-                    class="btn btn-query btn-action"
-                    @click="searchlist(1,20)"
-                    type="button"
-                    role="button"
-                  >
-                    <span class="chaxun search_CHaxun">查询</span>
-                  </button>
-              </div>-->
               <el-button @click="searchlist(1,20)" type="primary">查询</el-button>
               <el-button @click="Ex_port()" type="primary">导出</el-button>
             </div>
@@ -89,7 +86,7 @@
           <div class="query-result">
             <div class="table-wrapper">
               <el-table stripe :data="tableData">
-                <el-table-column prop="name" label="企业名称" width="500" align="center">
+                <el-table-column prop="name" label="企业名称" width="400" align="center">
                   <template slot-scope="scope">
                     <router-link
                       target="_blank"
@@ -100,11 +97,11 @@
                     >{{scope.row.name}}</router-link>
                   </template>
                 </el-table-column>
-                <el-table-column prop="chenglisj" align="center" label="成立时间">
+                <!-- <el-table-column prop="suoshuzbsc" align="center" label="所属资本市场">
                   <template slot-scope="{row}">
-                    {{ row.chenglisj || '-' }}
+                    {{ row.suoshuzbsc || '-' }}
                   </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column prop="fadingdbr" align="center" label="法定代表人">
                   <template slot-scope="{row}">
                     {{ row.fadingdbr || '-' }}
@@ -115,29 +112,13 @@
                     {{ row.zhucezbint || '-' }}
                   </template>
                 </el-table-column>
-                <el-table-column prop="suoshuzbsc" align="center" label="所属资本市场">
+                <el-table-column prop="chenglisj" align="center" label="成立时间">
                   <template slot-scope="{row}">
-                    {{ row.suoshuzbsc || '-' }}
+                    {{ row.chenglisj || '-' }}
                   </template>
                 </el-table-column>
+                
               </el-table>
-              <!-- <el-table stripe :data="tableData" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" align="center">
-                    <template slot-scope="scope">
-                      <router-link
-                        target="_blank"
-                        tag="a"
-                        class="toChange"
-                        style="color:#606266;text-decoration:none;"
-                        :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.name) }}"
-                      >{{scope.row.name}}</router-link>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="chenglisj" align="center" width="100" label="成立时间"></el-table-column>
-                  <el-table-column prop="fadingdbr" align="center" width="90" label="法定代表人"></el-table-column>
-                  <el-table-column prop="zhucezb" align="center" width="150" label="注册资本"></el-table-column>
-                  <el-table-column prop="tongxindz" align="center" label="通讯地址"></el-table-column>
-              </el-table>-->
             </div>
           </div>
         </div>
@@ -189,12 +170,17 @@ export default {
       yidao: "",
       username: "",
       telphone: "",
+      location: "",
+      // MapHidden: true,
     };
   },
   mounted() {
     var self = this
+    this.location = Base64.decode(this.$route.query.location);
+    console.log(this.location);
     var yuanquname = this.$route.query.yuanquname;
     this.parkname = Base64.decode(yuanquname);
+    // this.blockY();
     self.username = localStorage.getItem("userName");
     self.telphone = localStorage.getItem("mobile");
     this.parkid = this.$route.query.park; 
@@ -211,6 +197,13 @@ export default {
     }
   },
   methods: {
+    // blockY() {
+    //   var self = this
+    //   if(self.location === null){
+    //     console.log("运行了")
+    //     self.MapHidden = false
+    //   }
+    // },
     map() {
       var map = new AMap.Map("container", {
         resizeEnable: true,
@@ -362,6 +355,14 @@ export default {
     },
     rtPark() {
       window.history.go(-1);
+    },
+    
+    GoMap() {
+      var self = this
+      this.$router.push({
+        path: '/parkMap',
+        query: { parkname: Base64.encode(self.parkname),location: Base64.encode(self.location)}
+      })
     }
   }
 };
@@ -370,6 +371,9 @@ export default {
 <style lang="scss">
 @import "../../styles/css/Parkdetails.scss";
 #Parkdetails {
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
   .rtPark {
     float: right;
     margin-top: 12px;
@@ -406,7 +410,37 @@ export default {
     //   min-height: 666px;
     // }
   }
+  .GoMap{
+        cursor: pointer;
+        font-weight: 600;
+        color: #cf111b;
+        margin-left: 5px;
+      }
+  .container_top {
+    padding: 20px 30px;
+    .container_message {
+      img {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        margin-left: 10px;
+        margin-bottom: 5px;
+      }
+      .GoMap{
+        cursor: pointer;
+        font-weight: 600;
+        color: #cf111b;
+        margin-left: 10px;
+      }
+      height: 40px;
+      background: rgba(207, 17, 27, 0.1);
+      border: 1px solid rgba(241, 104, 111, 1);
+      border-radius: 4px;
+      line-height: 40px;
+    }
+  }
   .chaxun {
+    padding-top: 5px;
     .ChaXun {
       display: flex;
       flex-wrap: wrap;
@@ -461,6 +495,7 @@ export default {
     .search_CHaxun {
       margin-left: 10px;
     }
+    
   }
 }
 </style>

@@ -34,7 +34,9 @@
               <li>
                 <img class="inline" src="../../assets/images/companyIcon/hangye.svg" />
                 <span class="inline">行业：</span>
-                <span class="inline">{{information.suoshuhy?information.suoshuhy:'-'}}</span>
+                <span class="inline" v-if='information.suoshuejhy && information.youxiandj>95 '>{{information.suoshuhy}}<span class="hangyeGang">-</span><span id="TagPag">主营：{{information.suoshuejhy}}</span></span>
+                <span class="inline" v-else-if='information.suoshuhy'>{{information.suoshuhy}}</span>
+                <span class="inline" v-else>-</span>
               </li>
               <li>
                 <img class="inline" src="../../assets/images/companyIcon/xinyong.svg" />
@@ -65,10 +67,15 @@
                 <img class="inline" src="../../assets/images/companyIcon/web.svg" />
                 <span class="inline">网址：</span>
                 <!-- <span>{{information.gongsiwz}}</span> -->
-                <span class="inline" v-if="information.gongsiwz">
+                <span class="inline" v-if="information.gongsiwz!='暂无'">
                   <a
                     target="_blank"
                     v-if="toRescue(information.gongsiwz)"
+                    :href="information.gongsiwz"
+                  >{{information.gongsiwz}}</a>
+                   <a
+                    target="_blank"
+                    v-else-if="toRescues(information.gongsiwz)"
                     :href="information.gongsiwz"
                   >{{information.gongsiwz}}</a>
                   <a
@@ -77,22 +84,24 @@
                     :href="'http://'+information.gongsiwz"
                   >{{information.gongsiwz}}</a>
                 </span>
-                <span v-else>-</span>
+                <span v-else>{{information.gongsiwz}}</span>
               </li>
               <li>
                 <img class="inline" src="../../assets/images/companyIcon/phone.svg" />
                 <span class="inline">电话：</span>
-                <span class="inline">{{information.dianhua?information.dianhua:'-'}}</span>
+                <span class="inline" v-if='information.dianhua'>{{information.dianhua}}</span>
+                <span class="inline"  v-else-if='information.lianxidh'>{{information.lianxidh}}</span>
+                <span class="inline" v-else>-</span>
               </li>
 
               <li>
                
-                <span class="inline"> <img class="inline" src="../../assets/images/companyIcon/loginloa.svg" />注册地址：{{information.zhucedz}}</span>
+                <span class="inline inlinezcdzWapper"> <img class="inline" src="../../assets/images/companyIcon/loginloa.svg" />注册地址：<span class="inlinezcdz" :title="information.zhucedz">{{information.zhucedz}}</span></span>
               </li>
               
               <li style="vertical-align: top;">
                
-                <span class="inline"> <img class="inline" src="../../assets/images/companyIcon/local.svg" />联系地址：{{information.tongxindz?information.tongxindz:'-'}}</span>
+                <span class="inline inlinezcdzWapper"> <img class="inline" src="../../assets/images/companyIcon/local.svg" />联系地址：<span class="inlinezcdz" :title="information.tongxindz?information.tongxindz:'-'">{{information.tongxindz?information.tongxindz:'-'}}</span></span>
               </li>
             </ul>
           </div>
@@ -187,10 +196,18 @@ export default {
   methods: {
     toRescue(url) {
       if (url) {
-        console.log(url.substr(0, 7).toLowerCase() == "http://", 222);
-        return url.substr(0, 7).toLowerCase() == "http://";
+        console.log(url.replace(/\s+/g,"").substr(0, 7) , 111);
+        console.log(url.substr(0, 7).replace(/\s+/g,"").toLowerCase() == "http://", 111);
+        return url.replace(/\s+/g,"").substr(0, 7).toLowerCase() == "http://";
       } else {
-        console.log(false, 33);
+        return false;
+      }
+    },
+        toRescues(url) {
+      if (url) {
+        console.log(url.substr(0, 8).toLowerCase() == "https://", 222);
+        return url.replace(/\s+/g,"").substr(0, 8).toLowerCase() == "https://";
+      } else {
         return false;
       }
     },
@@ -302,5 +319,23 @@ export default {
   font-weight: 700;
   line-height: 56px;
   padding-top: 8px;
+}
+.basic{
+  .inlinezcdzWapper{
+    width: 100%;
+  }
+  .inlinezcdz{
+      display: inline-block;width: calc(100% - 184px);white-space: nowrap;overflow: hidden; text-overflow: ellipsis; vertical-align: bottom;
+  }
+}
+.hangyeGang{
+  width:16px;
+height:2px;
+font-size:20px;
+font-family:Source Han Sans SC;
+font-weight:400;
+color:#999;
+line-height:24px;
+padding: 0 10px;
 }
 </style>

@@ -111,9 +111,9 @@ export default {
 
 <style lang="scss">
 .container {
-  // padding: 0 30px;
+  padding: 0 30px;
   .container_top {
-    padding: 30px 0;
+    padding: 30px 30px;
     .container_message {
       img {
         width: 20px;
@@ -131,6 +131,7 @@ export default {
     }
   }
   .container_bottom {
+    padding: 0 30px;
     .Hangye_box {
       padding: 0 30px 15px 30px;
       box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);

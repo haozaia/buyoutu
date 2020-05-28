@@ -213,7 +213,7 @@
           </template>
           <el-submenu index="8-1">
             <template slot="title">
-              <span class="whiteBall"></span>投资机构
+              <span class="whiteBall"></span>投资基金
             </template>
             <router-link to="/privateOfferingFund">
               <el-menu-item index="8-1-1">

@@ -29,7 +29,7 @@
               v-loading="loading"
               style="width: 100%"
             >
-              <el-table-column prop="name" label="企业名称" align="center">
+              <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -42,10 +42,15 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-              <el-table-column prop="zhucezb" align="center" label="注册资本(万元)"></el-table-column>
-              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
-              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center"  label="所属省份">
+              </el-table-column>
+              <el-table-column prop="fadingdbr" align="center"  label="法人代表"></el-table-column>
+              <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+              </el-table-column>
+              <el-table-column prop="chenglisj" align="center" label="成立时间">
+                 <template slot-scope="{row}">{{ row.chenglisj?row.chenglisj.substring(0, 10) : '-' }}</template>
+              </el-table-column>
             </el-table>
           </div>
         </div>
@@ -302,6 +307,7 @@ export default {
       });
     },
     handleChange(value) {
+
       var self=this
       self.sheng = value[0] ? value[0] : "";
       self.shi = value[1] ? value[1] : "";

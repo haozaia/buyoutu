@@ -56,7 +56,7 @@
                 <div class="query-result">
                 <div class="table-wrapper">
                     <el-table :empty-text="tishi" stripe :data="waishanglst" v-loading="loading">
-                    <el-table-column prop="name" width="450" label="企业名称">
+                    <el-table-column prop="name" width="350" label="企业名称">
                         <template slot-scope="scope">
                         <router-link
                             target="_blank"
@@ -66,10 +66,14 @@
                         >{{ scope.row.name }}</router-link>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="suoshusf" width="160" label="所属省份"></el-table-column>
-                    <el-table-column prop="gongsilx" width="400" label="公司类型"></el-table-column>
-                    <el-table-column prop="zhucezb" label="注册资本"></el-table-column>
-                    <el-table-column prop="fadingdbr" width="160" label="法人代表"></el-table-column>
+                    <el-table-column prop="suoshusf" label="所属省份"></el-table-column>
+                    <el-table-column prop="fadingdbr" label="法人代表"></el-table-column>
+                    <el-table-column prop="zhucezbint" label="注册资本(万元)"></el-table-column>
+                    <el-table-column prop="chenglisj" label="成立时间">
+                        <template slot-scope="{row}">
+                            {{ row.chenglisj || '-' }}
+                        </template>
+                    </el-table-column>
                     </el-table>
                 </div>
                 </div>
@@ -87,7 +91,11 @@
 <style lang="scss">
 @import "../../styles/Monitor/region/css/container/container.scss";
 @import "../../styles/Monitor/region/css/container/Waishangtz.scss";
-
+#Waishangtz{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 
 <script>

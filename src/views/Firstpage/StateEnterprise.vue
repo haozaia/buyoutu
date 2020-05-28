@@ -47,14 +47,15 @@
                 </el-select>
             </div>
         <div class="query">
-          <button @click="tablelist()">查询</button>
+          <!-- <button @click="tablelist()">查询</button> -->
         </div>
+          <el-button @click="tablelist()" type="primary">查询</el-button>
       </div>
       <div class="el-tabs">
         <div class="query-result">
           <template>
             <el-table :data="qiyelist" stripe style="width: 100%">
-              <el-table-column prop="name" label="公司名称(中英文)" align="center">
+              <el-table-column prop="name" label="公司名称" align="center">
                 <template slot-scope="scope">
                 <router-link
                   target="_blank"
@@ -64,19 +65,26 @@
                 >{{ scope.row.name }}</router-link>
               </template>
               </el-table-column>
-              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
-              <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
               <el-table-column prop="suoshusf" label="所属省份" align="center"></el-table-column>
-              <el-table-column prop="gongsilx" label="公司类型" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
+              <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+              <el-table-column prop="chenglisj" label="成立时间" align="center">
+              <template slot-scope="{row}">
+                {{ row.chenglisj || '-' }}
+              </template>
+              </el-table-column>
             </el-table>
-            <el-pagination
-              layout="prev, pager, next"
-              @current-change="handleCurrentChange"
-              :page-size="20"
-              :total="total"
-              background
-               :current-page="page"
-            ></el-pagination>
+            <div id="Pagination" v-show="total > 20">
+              <el-pagination
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange"
+                :page-size="20"
+                :current-page="page"
+              ></el-pagination>
+              <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
+            </div>
           </template>
         </div>
         <!-- gongsiwz -->
@@ -95,6 +103,7 @@ export default {
       total: 0,
       page: 1,
       options: [],
+      suibian: true, //分页变量3
       suoshusf: '',
       // hyoptions: [],
       // suoshuhy: '',
@@ -159,6 +168,26 @@ export default {
         // self.getTwoclass()
       })
     },
+    // 分页--回到首页按钮  start
+    paginationsy() {
+      if (this.page === 1) {
+      } else {
+        // this.page = 1
+        this.handleCurrentChange(1);
+      }
+    },
+    // 分页--回到首页按钮  end
+    handleCurrentChange(val) {
+      var self = this;
+      // console.log(`当前页: ${val}`);
+      self.page = val;
+      //分页--判断当前页是否为最后一页，禁用右按钮  start
+      // var cot =  parseInt(self.total/10)+1
+      self.suibian = false; //是否禁用首页按钮
+      //分页--判断当前页是否为最后一页，禁用右按钮  end
+      // console.log(self.page);
+      self.enterpriselist(val, 20);
+    },
     tablelist() {
       var self = this
       self.page=1
@@ -177,6 +206,8 @@ export default {
     },
     enterpriselist() {
       var self = this
+      var right = document.getElementsByClassName("btn-next");
+        right[0].disabled = "";
       let params = {
         page: self.page,
         limit: 20,
@@ -196,13 +227,20 @@ export default {
         console.log(res);
         this.qiyelist = res.data.data;
         this.total = res.data.count;
+
+        var cot = Math.ceil(self.total / 20);
+        if (cot <= self.page) {
+          right[0].disabled = "disabled";
+        } else if (self.page == 1) {
+          self.suibian = true;
+        }
       });
     },
-    handleCurrentChange(val) {
-      var self = this;
-      self.page = val;
-      self.enterpriselist(val, 20);
-    },
+    // handleCurrentChange(val) {
+    //   var self = this;
+    //   self.page = val;
+    //   self.enterpriselist(val, 20);
+    // },
     
   }
 };

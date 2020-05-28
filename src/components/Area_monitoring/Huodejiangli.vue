@@ -49,7 +49,7 @@
           <div class="query-result">
             <div class="table-wrapper">
               <el-table :empty-text="tishi" stripe :data="jllist" style="width: 100%"  v-loading="loading">
-                <el-table-column prop="gongsiname" label="奖励企业">
+                <el-table-column prop="gongsiname" label="企业名称">
                   <template slot-scope="scope">
                     <router-link
                       target="_blank"
@@ -59,11 +59,15 @@
                     >{{ scope.row.gongsiname }}</router-link>
                   </template>
                 </el-table-column>
-                <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
                 <el-table-column prop="jianglimc" label="奖励名称"></el-table-column>
                 <el-table-column prop="jianglixm" label="奖励项目"></el-table-column>
-                <el-table-column prop="zhuczb" width="180" label="注册资本(万元)"></el-table-column>
                 <el-table-column prop="suoshudy" width="160" label="所属地域"></el-table-column>
+                <el-table-column prop="zhuczb" width="180" label="注册资本(万元)"></el-table-column>
+                <el-table-column prop="beizhu4" width="170" label="成立时间">
+                  <template slot-scope="{row}">
+                    {{ row.beizhu4 || '-' }}
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -93,6 +97,11 @@
 <style lang="scss">
 @import "../../styles/Monitor/region/css/container/container.scss";
 @import "../../styles/Monitor/region/css/container/Huodejiangli.scss";
+#Huodejiangli{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 <script>
 export default {

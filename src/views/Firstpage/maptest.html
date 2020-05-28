@@ -9,7 +9,9 @@
 		p{margin-left:5px; font-size:14px;}
 	</style>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Zvo6pvyeuddGxjFy7FPDEyeYZBCKzYhY"></script>
-	<title>添加自定义控件</title>
+	<!--加载鼠标绘制工具-->
+	<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
 </head>
 <body>
     <div id="allmap"></div>
@@ -88,6 +90,27 @@
 	  // 将DOM元素返回
 	  return div;
 	}
+	  //实例化鼠标绘制工具
+	  var drawingManager = new BMapLib.DrawingManager(map, {
+        isOpen: false, //是否开启绘制模式
+        enableDrawingTool: true, //是否显示工具栏
+        drawingToolOptions: {
+            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+            offset: new BMap.Size(5, 5), //偏离值
+          drawingModes:[
+                BMAP_DRAWING_CIRCLE
+            ]
+        },
+       
+    });  
+	 //添加鼠标绘制工具监听事件，用于获取绘制结果
+    drawingManager.addEventListener('circlecomplete', function(e, overlay) {
+      		map.clearOverlays();
+      circleLay = overlay;
+            map.addOverlay(circleLay);
+            drawingManager.close();
+            //zhugeTrack('千寻地图-画圈');
+    });
 	// 创建控件
 	var myZoomCtrl = new ZoomControl();
 	// 添加到地图当中

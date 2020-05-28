@@ -1,4 +1,5 @@
 <template>
+<div id="standardsetting">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>标准制定企业</div>
@@ -66,7 +67,7 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人" width="120"></el-table-column>
                   <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
                   <el-table-column prop="zhuguanbm" label="主管单位"></el-table-column>
                   <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
@@ -159,7 +160,7 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人" width="120"></el-table-column>
                   <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
                   <el-table-column prop="zhuguanbm" label="主管单位"></el-table-column>
                   <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
@@ -253,7 +254,7 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人" width="120"></el-table-column>
                   <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
                   <el-table-column prop="zhuguanbm" label="主管单位"></el-table-column>
                   <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
@@ -346,7 +347,7 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人" width="120"></el-table-column>
                   <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
                   <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
                   <el-table-column prop="biaozhunh" label="标准编号"></el-table-column>
@@ -438,7 +439,7 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人" width="120"></el-table-column>
                   <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
                   <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
                   <el-table-column prop="faburq" width="200" label="发布日期"></el-table-column>
@@ -469,6 +470,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -627,5 +629,9 @@ right[0].disabled=""
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
-
+#standardsetting{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>

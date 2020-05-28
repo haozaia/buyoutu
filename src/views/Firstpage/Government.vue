@@ -1,4 +1,5 @@
 <template>
+<div id="Govemment">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>政府奖励企业</div>
@@ -55,17 +56,21 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData" style="width: 100%">
-                  <el-table-column prop="gongsiname" label="奖励企业" width>
+                  <el-table-column prop="gongsiname" width="360" label="奖励企业" align="left">
                     <template slot-scope="scope">
                       <router-link target="_blank" tag="a" style="color:#606266;text-decoration:none;" :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="suoshudy" label="所属地域"></el-table-column>
                   <el-table-column prop="jianglimc" label="奖励名称"></el-table-column>
                   <el-table-column prop="jianglixm" label="奖励项目"></el-table-column>
-                  <el-table-column prop="suoshudy" label="所属地域" width="100"></el-table-column>
-                  <el-table-column prop="zhuczb" label="注册资本(万元)" width="170"></el-table-column>
+                  <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
+                  <el-table-column prop="beizhu4" label="成立时间">
+                    <template slot-scope="{row}">
+                      {{ row.beizhu4 || '-' }}
+                    </template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
@@ -127,17 +132,21 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData" style="width: 100%">
-                  <el-table-column prop="gongsiname" label="奖励企业" width>
+                  <el-table-column prop="gongsiname" width="500" label="奖励企业">
                     <template slot-scope="scope">
                       <router-link target="_blank" tag="a" style="color:#606266;text-decoration:none;" :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="suoshudy" label="所属地域"></el-table-column>
                   <el-table-column prop="jianglimc" label="奖励名称"></el-table-column>
                   <el-table-column prop="jianglixm" label="奖励项目"></el-table-column>
-                  <el-table-column prop="suoshudy" label="所属地域" width="100"></el-table-column>
-                  <el-table-column prop="zhuczb" label="注册资本(万元)" width="170"></el-table-column>
+                  <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
+                  <el-table-column prop="beizhu4" label="成立时间">
+                    <template slot-scope="{row}">
+                      {{ row.beizhu4 || '-' }}
+                    </template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
@@ -199,17 +208,21 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData" style="width: 100%">
-                  <el-table-column prop="gongsiname" label="奖励企业" width>
+                  <el-table-column prop="gongsiname" width="500" label="奖励企业">
                     <template slot-scope="scope">
                       <router-link target="_blank" tag="a" style="color:#606266;text-decoration:none;" :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                  <el-table-column prop="suoshudy" label="所属地域"></el-table-column>
                   <el-table-column prop="jianglimc" label="奖励名称"></el-table-column>
                   <el-table-column prop="jianglixm" label="奖励项目"></el-table-column>
-                  <el-table-column prop="suoshudy" label="所属地域" width="100"></el-table-column>
-                  <el-table-column prop="zhuczb" label="注册资本(万元)" width="170"></el-table-column>
+                  <el-table-column prop="zhuczb" label="注册资本(万元)"></el-table-column>
+                  <el-table-column prop="beizhu4" label="成立时间">
+                    <template slot-scope="{row}">
+                      {{ row.beizhu4 || '-' }}
+                    </template>
+                  </el-table-column>
                 </el-table>
               </div>
             </div>
@@ -224,6 +237,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -369,7 +383,11 @@ export default {
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
-
+#Govemment{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 .el-tabs .PuKey{
   padding: 0 23px !important;
   .key{

@@ -18,7 +18,7 @@
                     <div style="padding-top:25px;"></div>
                     <div class="table-wrapper">
                       <el-table stripe :data="tableData1" style="width: 100%">
-                        <el-table-column prop="jijinname" label="基金名称"></el-table-column>
+                        <el-table-column prop="jijinname" label="基金名称" width="480"></el-table-column>
                         <el-table-column prop="shifouba" label="是否备案"></el-table-column>
                         <el-table-column prop="zhucezb" label="注册资本(万元)"></el-table-column>
                         <el-table-column prop="guanlir" label="管理人">
@@ -58,7 +58,7 @@
                   <div class="query-result">
                     <div class="table-wrapper">
                       <el-table stripe :data="tableData2" style="width: 100%">
-                        <el-table-column prop="simujjglr" label="私募基金管理人">
+                        <el-table-column prop="simujjglr" label="私募基金管理人" width="480">
                           <template slot-scope="scope">
                             <router-link
                               target="_blank"
@@ -99,7 +99,7 @@
                   <div class="query-result">
                     <div class="table-wrapper">
                       <el-table stripe :data="tableData3" style="width: 100%">
-                        <el-table-column prop="simujjglr" label="私募基金管理人">
+                        <el-table-column prop="simujjglr" label="私募基金管理人" width="360">
                           <template slot-scope="scope">
                             <router-link
                               target="_blank"
@@ -476,6 +476,9 @@ export default {
 
 <style lang="scss">
 #PrivateOfferingFund {
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
   .sub-block-group {
     background: #fff;
     border-bottom: 10px solid #f5f8fa;

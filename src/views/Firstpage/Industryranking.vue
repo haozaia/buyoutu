@@ -158,9 +158,9 @@
                     >{{ scope.row.name }}</router-link>
                   </template>
                 </el-table-column>
-                <el-table-column prop="gongsilx" label="公司类型" align="center"></el-table-column>
-                <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-                <el-table-column prop="fadingdbr" width="160" label="公司法人" align="center"></el-table-column>
+                <el-table-column prop="chenglisj" label="成立时间" align="center"></el-table-column>
+                <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+                <el-table-column prop="fadingdbr" label="公司法人" align="center"></el-table-column>
                 <!-- <el-table-column v-if="yinshou" prop="rankweight" label="营业收入（万元）" align="center"></el-table-column> -->
                 <!-- <el-table-column v-if="tax" prop="tax" label="税收（万元）" align="center"></el-table-column> -->
               </el-table>

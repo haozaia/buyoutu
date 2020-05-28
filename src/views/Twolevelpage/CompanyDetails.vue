@@ -122,24 +122,25 @@
                     </tr>
                   </table>
                   <div colspan="1" rowspan="1">
-                    <div class="cell" v-if="companyList.lianxidh||companyList.dianhua||nianbaoDh">
+                    <div class="cell" v-if="companyList.lianxidh||companyList.dianhua|| companyList.dianhuanb">
                       <b>其它联系方式</b>
-                      ： {{companyList.lianxidh}}
+                      ：<b>{{companyList.dianhuanb?companyList.dianhuanb:''}} </b>
+                      <span v-if="companyList.dianhuanb">;</span>
+                       {{companyList.lianxidh}}
                       <span v-if="companyList.lianxidh">;</span>
                       {{companyList.dianhua }}
-                      <!-- {{ nianbaoDh.telephone}} <span v-if="nianbaoDh.telephone">;</span>  -->
-                      <!-- {{nianbaoDh.email}} -->
                     </div>
                   </div>
                 </div>
 
                 <div v-if="tableData.length ==0">
-                  <div v-if="companyList.lianxidh||companyList.dianhua ||nianbaoDh">
-                    <b></b>
+                  <div v-if="companyList.lianxidh||companyList.dianhua || companyList.dianhuanb">
+                     <b>{{companyList.dianhuanb?companyList.dianhuanb:''}} </b>
+                     <span v-if="companyList.dianhuanb">;</span>
                     {{companyList.lianxidh}}
                     <span v-if="companyList.lianxidh">;</span>
                     {{companyList.dianhua }}
-                    {{nianbaoDh.telephone?nianbaoDh.telephone:''}} 
+                   
                   </div>
                   <div v-else>
                     <p style="text-align:center;">暂无数据~</p>
@@ -160,13 +161,18 @@
             </li>
             <li>{{companyList.lianxiyx?"联系邮箱：":"注册资本："}}{{companyList.lianxiyx?companyList.lianxiyx:companyList.zhucezb}}</li>
             <li>
-              {{companyList.gongsiwz?"公司网址：":"成立时间："}}
-              <span v-if="companyList.gongsiwz">
+              {{companyList.gongsiwz!='暂无'?"公司网址：":"成立时间："}}
+              <span v-if="companyList.gongsiwz!='暂无'" class="companyListGongsiwz" :title="companyList.gongsiwz">
                 <a
                   target="_blank"
                   v-if="toRescue(companyList.gongsiwz)"
                   :href="companyList.gongsiwz"
                 >{{companyList.gongsiwz}}</a>
+                <a
+                    target="_blank"
+                    v-else-if="toRescues(companyList.gongsiwz)"
+                    :href="companyList.gongsiwz"
+                  >{{companyList.gongsiwz}}</a>
                 <a
                   target="_blank"
                   v-else
@@ -175,7 +181,7 @@
               </span>
               <span v-else>{{companyList.chenglisj}}</span>
             </li>
-            <li><span class="comLxfs">{{companyList.tongxindz ? "通信地址：":"注册地址："}}</span> <section class="comLxfsSec"> {{companyList.tongxindz?companyList.tongxindz:companyList.zhucedz}}</section></li>
+            <li><span class="comLxfs">{{companyList.tongxindz ? "通信地址：":"注册地址："}}</span> <section class="comLxfsSec" :title="companyList.tongxindz?companyList.tongxindz:companyList.zhucedz"> {{companyList.tongxindz?companyList.tongxindz:companyList.zhucedz}}</section></li>
             <li>{{companyList.suoshuzbsc ? "资本市场：":"法人代表："}}
               <a v-if="companyList.finacelink" :href="companyList.finacelink" target="_blank"> {{companyList.suoshuzbsc?companyList.suoshuzbsc:companyList.fadingdbr}}</a>
               <span v-else>
@@ -477,7 +483,16 @@ export default {
 
     toRescue(url) {
       if (url) {
-        return url.substr(0, 7).toLowerCase() == "http://";
+        return url.replace(/\s+/g,"").substr(0, 7).toLowerCase() == "http://";
+      }else {
+        return false;
+      }
+    },
+    toRescues(url) {
+      if (url) {
+        return url.replace(/\s+/g,"").substr(0, 8).toLowerCase() == "https://";
+      } else {
+        return false;
       }
     },
     tabChange: function(tab) {
@@ -571,4 +586,14 @@ export default {
 #CompanyDetails .Company_ctr .company_t .company_center .center_tag p{
    width: calc(98.2% + 2px);
 }
+#CompanyDetails{
+  .companyListGongsiwz{
+  display: inline-block;width: calc(100% - 150px);white-space: nowrap;overflow: hidden; text-overflow: ellipsis; vertical-align: bottom;
+}
+.comLxfsSec{
+  display: inline-block;width: calc(100% - 150px);white-space: nowrap;overflow: hidden; text-overflow: ellipsis; vertical-align: bottom;
+}
+
+} 
+
 </style>

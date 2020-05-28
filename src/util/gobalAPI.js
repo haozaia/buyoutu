@@ -1,7 +1,7 @@
-﻿﻿const http = 'https://www.buyoutu.com:8080/rest/api/v1'
+﻿﻿// const http = 'https://www.buyoutu.com:8080/rest/api/v1'
 // const http = 'https://10.10.20.199:8080/rest/api/v1'
 // const http = 'https://10.10.30.118:8080/rest/api/v1'
-// const http = '/api1'
+const http = '/api3'
 
 const globalAPI = {
   GongxinjsqyTe: http + '/touzhijiazhi/Gongxinjsqy/listapi.json',
@@ -175,6 +175,10 @@ const globalAPI = {
   NewList: http + "/newinfrastructure/listapi.json",//新基建折叠面板列表
   Home_export: http + "/touzhijiazhi/Export/exportshouyesearchapi.json",//首页导出
   Park_export: http + "/touzhijiazhi/Export/exportyuanquqiyeapi.json",//园区详情导出
+  Park_MapList: http + "/park/industry/searchnearbylistapi.json",//园区地图列表
+  Park_MapBiao: http + "/park/industry/searchnearbyapi.json",//园区地图标注坐标
+  Park_leftBing: http + "/park/industry/industrystatistics.json",//园区地图饼状图左
+  Park_rightBing: http + "/park/industry/registeredstatistical.json",//园区地图饼状图右
 
   Eschanyelianlistapi: http + "/hangyejk/jiankong/chanyelianlistapi.json",//产业链监控一级
   Eserjichanyelianlistapi: http + "/hangyejk/jiankong/erjichanyelianlistapi.json",//产业链监控二级
@@ -188,7 +192,8 @@ const globalAPI = {
   newsDis: http + "/companyinfo/news/isshowapi.json",//1.7新闻
   fengxianheguiNew: http + "/fengxianhegui/newsapi.json",//1.7qiye新闻
   ComKebilist: http + "/kebilist.json",//1.7qiye相似公司
-
+  CokeywordsearchapimKebilist: http + "/park/industry/keywordsearchapi.json",//地圖搜索
+  Industrysapi: http + "/park/industry/industrysapi.json",//行业二级联动
 
   
   exportlistjingpingapi: http + "/touzhijiazhi/Export/exportlistjingpingapi.json",//竞品导出

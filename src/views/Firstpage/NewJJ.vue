@@ -1,4 +1,5 @@
 <template>
+<div id="Newjj">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title">
@@ -25,7 +26,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table :empty-text="tishi" stripe :data="tableData2" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="name" label="公司名称" align="center">
+                  <el-table-column prop="name" label="公司名称" width="360" align="center">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -36,7 +37,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column prop="gongsilx" label="公司类型" align="center"></el-table-column>
-                  <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
+                  <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
                   <el-table-column prop="fadingdbr" label="法定代表人" width="160" align="center"></el-table-column>
                   <el-table-column prop="suoshusf" label="所属省份" width="160" align="center"></el-table-column>
                 </el-table>
@@ -64,6 +65,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -202,9 +204,11 @@ export default {
 </script>
 
 <style scoped lang="scss" >
+
 // html{
 //   overflow-y: overlay;
 // }
+
 #C_content {
   .C_title {
     background: #fff;
@@ -251,6 +255,13 @@ export default {
 
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+#Newjj{
+  .el-table__row>td:first-child{
+    text-align: left !important;
   }
 }
 </style>

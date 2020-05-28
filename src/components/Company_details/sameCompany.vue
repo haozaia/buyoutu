@@ -12,7 +12,7 @@
         <div class="licenceTable lineTable el-tabs">
             <div class="table-wrapper">
               <el-table stripe :data="tableData" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" align="center">
+                  <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -25,10 +25,14 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
-              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
-              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+              <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+              </el-table-column>
+              <el-table-column prop="chenglisj" align="center" label="成立时间">
+                 <template slot-scope="{row}">{{row.chenglisj || '-' }}</template>
+              </el-table-column>
                 </el-table>
             </div>
             <el-pagination
@@ -51,7 +55,7 @@
         <div class="licenceTable lineTable el-tabs">
             <div class="table-wrapper">
               <el-table stripe :data="tableData1" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" align="center">
+                  <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -64,10 +68,14 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
-              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
-              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+              <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+              </el-table-column>
+              <el-table-column prop="chenglisj" align="center" label="成立时间">
+                 <template slot-scope="{row}">{{row.chenglisj || '-' }}</template>
+              </el-table-column>
                 </el-table>
             </div>
             <el-pagination
@@ -90,7 +98,7 @@
         <div class="licenceTable lineTable el-tabs">
             <div class="table-wrapper">
               <el-table stripe :data="tableData2" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" align="center">
+                  <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -103,10 +111,14 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
-              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
-              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+              <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+              </el-table-column>
+              <el-table-column prop="chenglisj" align="center" label="成立时间">
+                 <template slot-scope="{row}">{{row.chenglisj || '-' }}</template>
+              </el-table-column>
                 </el-table>
             </div>
             <el-pagination
@@ -130,7 +142,7 @@
         <div class="licenceTable lineTable el-tabs">
             <div class="table-wrapper">
               <el-table stripe :data="tableData3" style="width: 100%">
-                  <el-table-column prop="name" label="企业名称" align="center">
+                  <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -143,10 +155,14 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="gongsilx" align="center" label="公司类型"></el-table-column>
-              <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
-              <el-table-column prop="suoshusf" align="center" width="150" label="所属省份"></el-table-column>
-              <el-table-column prop="fadingdbr" align="center" width="100" label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
+              <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
+                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+              </el-table-column>
+              <el-table-column prop="chenglisj" align="center" label="成立时间">
+                 <template slot-scope="{row}">{{row.chenglisj || '-' }}</template>
+              </el-table-column>
                 </el-table>
             </div>
             <el-pagination

@@ -81,7 +81,8 @@
                   <el-switch
                    style="margin-top:-4px;"
                     v-model="IsZz"
-                    inactive-text="制造业 :"
+                    inactive-text="证监会行业 :"
+                    @change="handleCHANGEradio"
                     active-color="#CF111B">
                   </el-switch>
               </div>
@@ -125,10 +126,16 @@
                 </el-table-column>
                 <!-- <el-table-column prop="lianxidh" align="center" label="联系电话"></el-table-column>
                 <el-table-column prop="dianhuas" align="center" label="联系人电话"></el-table-column> -->
-                <el-table-column prop="suoshuhy" align="center" label="所属行业"></el-table-column>
+                <el-table-column prop="suoshuhy" align="center" label="所属行业">
+                   <template slot-scope="scope">
+                    {{IsZz?scope.row.oldhangye:scope.row.suoshuhy}}
+                  </template>
+                </el-table-column>
                 <!-- <el-table-column prop="suoshuejhy" align="center" label="所属二级行业"></el-table-column> -->
                 <el-table-column prop="zhucezb" align="center" label="注册资本"></el-table-column>
-                <el-table-column prop="lianxiyx" align="center" label="联系邮箱"></el-table-column>
+                <el-table-column prop="lianxiyx" align="center" label="联系邮箱">
+                   <template slot-scope="{row}">{{row.lianxiyx || '-' }}</template>
+                </el-table-column>
                 <el-table-column prop="fadingdbr" align="center" label="法定代表人"></el-table-column>
               </el-table>
             </div>
@@ -230,29 +237,41 @@ export default {
             self.chains = res.data.data;
       });
     },
+    handleCHANGEradio(){
+      var self = this
+      self.tableData=[]
+      self.total=0
+      self.getChain()
+      var right = document.getElementsByClassName("btn-next");
+    right[0].disabled = "disabled";
+
+    },
     //查询一级 
     getChain() {
       var self = this;
-      // let params = {
-      //   chanyelain: self.tagname
-      // };
+      let params = {
+        oldhangye: self.IsZz?'1':''
+      };
       this.axios({
         url: this.api.EsExporyijihyapi,
-        // data: this.$qs.stringify(params),
+        data: this.$qs.stringify(params),
         method: "post",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
             self.chain = res.data.data;
+            self.suoshuhy=''
            self.tag=''
+           self.chainChild=[]
       });
     },
     getErn() {
       var self = this;
       self.tag=''
       let params = {
-        yijihy: self.suoshuhy
+        yijihy: self.suoshuhy,
+        oldhangye: self.IsZz?'1':''
       };
       this.axios({
         url: this.api.ESerjihyapi,

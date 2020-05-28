@@ -15,7 +15,7 @@
             <template>
                 <div class="table-wrapper">
                     <el-table :empty-text="tishi" :data="tableData" v-loading="loading" stripe style="width: 100%">
-                        <el-table-column prop="name" label="公司名称" align="center">
+                        <el-table-column prop="name" label="公司名称" width="300" align="left">
                             <template slot-scope="scope">
                                 <router-link
                                 target="_blank"
@@ -28,7 +28,11 @@
                         <!-- <el-table-column prop="zhucedz" label="注册地址" align="center"> </el-table-column> -->
                         <el-table-column prop="fadingdbr" label="法定代表人" align="center"> </el-table-column>
                         <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"> </el-table-column>
-                        <el-table-column prop="zhucesj" label="注册时间" align="center"> </el-table-column>
+                        <el-table-column prop="chenglisj" label="成立时间" align="center">
+                            <template slot-scope="{row}">
+                            {{ row.chenglisj || '-' }}
+                            </template>
+                        </el-table-column>
                     </el-table>
                 </div>
                 </template>
@@ -46,7 +50,11 @@
 <style lang="scss">
 @import "../../styles/Monitor/region/css/container/container.scss";
 @import "../../styles/Monitor/region/css/container/Sanban.scss";
-
+#Sanban{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 
 <script>

@@ -25,7 +25,7 @@
           </div>
         </div>-->
         <!-- //基本信息 -->
-        <div id="annualReportHidden" >
+        <div id="annualReportHidden">
           <div class="annual_primary details clearfix" v-if="recruitTable">
             <div class="classify" id="annualBaseInfoColor1">
               <div class="block"></div>基本信息
@@ -45,7 +45,7 @@
                     class="result"
                     id="webIsOrNot"
                   >{{recruitTable.isweb? recruitTable.isweb : "否"}}</dd>
-                </dl> -->
+                </dl>-->
                 <dl>
                   <dt class="item">是否有对外提供担保信息：</dt>
                   <dd
@@ -63,12 +63,12 @@
                 <!-- <dl style="width:100%">
                   <dt class="item">企业主营业务活动:</dt>
                   <dd class="result" id="mainBusiAct">{{recruitTable.businessscope}}</dd>
-                </dl> -->
+                </dl>-->
               </div>
             </div>
           </div>
-           <!-- 产业资产状况信息 -->
-          <div class="annual_assert" id="oneAss"  v-if="NBasse">
+          <!-- 产业资产状况信息 -->
+          <div class="annual_assert" id="oneAss" v-if="NBasse">
             <div class="classify" id="annualAssetsColor1">
               <div class="block"></div>企业资产状况信息(万元)
             </div>
@@ -136,9 +136,9 @@
                 </li>
               </ul>
             </div>
-          </div> -->
+          </div>-->
           <!-- 股东出资信息 -->
-          <div class="annual_share"  v-if="tableData.length !=0">
+          <div class="annual_share" v-if="tableData.length !=0">
             <div class id="annualSponColor">
               <div class="classify" style="float:left;margin-bottom:10px;">
                 <div class="block"></div>股东及出资信息
@@ -157,7 +157,7 @@
               <!-- <el-table-column prop="actmode" label="实缴方式" align="center"></el-table-column> -->
             </el-table>
             <el-pagination
-            v-show="total >10"
+              v-show="total >10"
               layout="prev, pager, next"
               background
               @current-change="handleCurrentChange"
@@ -167,7 +167,7 @@
             ></el-pagination>
           </div>
           <!-- 对外投资情况 -->
-          <div class="annual_invest"  v-if="NBinve.length !=0">
+          <div class="annual_invest" v-if="NBinve.length !=0">
             <div class="classify rel" id="annualToOutAll">
               <span id="annualToOutColor">
                 <div class="block"></div>对外投资信息
@@ -179,13 +179,13 @@
 
             <div id="needPaging_inv" class="clearfix">
               <ul class="webSite-list" style="float: left;" id="forInvsmentList">
-
                 <li v-for="(item,index) in NBinve" :key="index">
                   <a>
                     <div
                       style="color:#333333;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"
                       :title="item.investname"
-                    ><router-link
+                    >
+                      <router-link
                         target="_blank"
                         tag="a"
                         style="color:#606266;text-decoration:none;"
@@ -204,21 +204,21 @@
               </ul>
             </div>
           </div>
-         
+
           <!-- 股权变更信息 -->
-          <div class="annual_guarantee" id="oneForGua"  v-if="tableData1.length !=0">
+          <div class="annual_guarantee" id="oneForGua" v-if="tableData1.length !=0">
             <div class="classify" id="annualGuaranteeColor">
               <div class="block"></div>股权变更信息
             </div>
 
             <el-table stripe :data="tableData1" style="width: 100%">
               <el-table-column prop="stockname" label="股东" align="center"></el-table-column>
-              <el-table-column prop="ratiobefore" label="变更前股权比例" align="center"></el-table-column>
-              <el-table-column prop="ratioafter" label="变更后股权比例" align="center"></el-table-column>
+              <el-table-column prop="ratiobefore" label="变更前股权比例(%)" align="center"></el-table-column>
+              <el-table-column prop="ratioafter" label="变更后股权比例(%)" align="center"></el-table-column>
               <el-table-column prop="changedate" label="股权变更日期" align="center"></el-table-column>
             </el-table>
             <el-pagination
-            v-show="total1>10"
+              v-show="total1>10"
               layout="prev, pager, next"
               background
               @current-change="handleCurrentChange1"
@@ -228,7 +228,7 @@
             ></el-pagination>
           </div>
           <!-- 社保信息 -->
-          <div class="annual_AnnPbBase" id="annSocsecinfo_container"  v-if="NBsecur.length !=0">
+          <div class="annual_AnnPbBase" id="annSocsecinfo_container" v-if="NBsecur.length !=0">
             <div class="classify" id="annualSocsecColor">
               <div class="block"></div>社保信息
             </div>
@@ -277,15 +277,14 @@
               :total="total2"
               :current-page="page2"
             ></el-pagination>
-          </div> -->
+          </div>-->
         </div>
-       
       </div>
     </div>
   </div>
-   <div v-else style="padding:40px 0; background:#fff;">
-          <p style="text-align:center; color:#666;font-size:14px">暂无数据~</p>
-        </div>
+  <div v-else style="padding:40px 0; background:#fff;">
+    <p style="text-align:center; color:#666;font-size:14px">暂无数据~</p>
+  </div>
 </template>  
   
 <script>
@@ -298,7 +297,7 @@ export default {
         id: 271,
         pid: "",
         entname: "",
-        reportyear:'' ,
+        reportyear: "",
         contactaddress: "",
         creditcode: "",
         email: "@sxdinfo.com.cn",
@@ -339,7 +338,6 @@ export default {
     var self = this;
     self.gongsiname = this.$route.query.name;
     self.getList();
-    
   },
   methods: {
     toRescue(url) {
@@ -393,34 +391,16 @@ export default {
         if (res.data.data[0]) {
           self.recruitTable = res.data.data[0];
           self.hidden = false;
-           self.getNBwebsitelistapi();
-    self.getNBsharelistapi();
-    self.getNBinvestlistapi();
-    self.getNBassetlistapi();
-    self.getNBstocklistapi();
-    self.getNBsecuritylistapi();
-    self.getNBchangerecordlistapi();
+          self.getNBsharelistapi();
+          self.getNBinvestlistapi();
+          self.getNBassetlistapi();
+          self.getNBstocklistapi();
+          self.getNBsecuritylistapi();
+          self.getNBchangerecordlistapi();
         } else {
           self.hidden = true;
         }
-        console.log(self.hidden)
-      });
-    },
-
-    getNBwebsitelistapi() {
-      var self = this;
-      let params = {
-        entname: self.gongsiname
-      };
-      this.axios({
-        url: this.api.NBwebsitelistapi,
-        method: "post",
-        data: this.$qs.stringify(params),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }).then(res => {
-        self.NBweb = res.data.data;
+        console.log(self.hidden);
       });
     },
 
@@ -512,7 +492,7 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.NBsecur = res.data.data[0]?res.data.data[0]:[];
+        self.NBsecur = res.data.data[0] ? res.data.data[0] : [];
       });
     },
 

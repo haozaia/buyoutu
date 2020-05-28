@@ -1,4 +1,5 @@
 <template>
+<div id="IpoDe">
   <div id="C_content">
     <div class="C_title"><span class="Title_left"></span>申报IPO公司</div>
     <div class="search">
@@ -57,6 +58,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -101,6 +103,11 @@ export default {
 </script>
 
 <style lang="scss">
+#IpoDe{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 #Declareipo {
   .el-tabs {
     margin-bottom: 10px;

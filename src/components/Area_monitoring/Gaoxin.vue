@@ -14,7 +14,7 @@
                 <template>
                     <div class="table-wrapper">
                     <el-table :empty-text="tishi" :data="tableData" v-loading="loading" stripe style="width: 100%">
-                        <el-table-column prop="gongsiname" label="企业名称" align="center">
+                        <el-table-column prop="gongsiname" label="公司名称" align="center">
                             <template slot-scope="scope">
                                 <router-link
                                 target="_blank"
@@ -24,9 +24,13 @@
                                 >{{ scope.row.gongsiname }}</router-link>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="gongsilx" label="公司类型" align="center"> </el-table-column>
-                        <el-table-column prop="zhuczb" label="注册资本" width="300" align="center"> </el-table-column>
-                        <el-table-column prop="huogxrzdnf" label="资质年份" width="160" align="center"> </el-table-column>
+                        <el-table-column prop="huogxrzdnf" label="获高新认证的年份" align="center"> </el-table-column>
+                        <el-table-column prop="zhuczb" label="注册资本(万元)" align="center"> </el-table-column>
+                        <el-table-column prop="beizhu5" label="成立时间" align="center">
+                            <template slot-scope="{row}">
+                                {{ row.beizhu5 || '-' }}
+                            </template>
+                        </el-table-column>
                     </el-table>
                     </div>
                 </template>
@@ -52,6 +56,11 @@
 //     background: #fff;
 //     padding-bottom: 10px
 // }
+#Gaoxin{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 
 <script>

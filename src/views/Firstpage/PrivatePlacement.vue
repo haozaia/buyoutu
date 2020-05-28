@@ -62,7 +62,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="simulist" style="width: 100%">
-                  <el-table-column prop="gongsiname" label="公司名称" width="400">
+                  <el-table-column prop="gongsiname" label="公司名称" width="460">
                     <template slot-scope="scope">
                       <router-link
                         v-if="scope.row.beizhu4 == '1'"
@@ -160,6 +160,9 @@ export default {
 
 <style lang="scss">
 #PrivatePlacement {
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
   .el-tabs {
     margin-bottom: 10px;
     background: #fff;

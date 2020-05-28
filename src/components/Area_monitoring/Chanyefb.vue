@@ -13,16 +13,16 @@
       <div v-else><p class="flag_p">暂无数据</p></div>
     </div>
     <el-dialog :visible.sync="dialogVisible" width="30%">
+      <div class="title_h">
+        <!-- <i class="icon icon-tips"></i> -->
+        <span class="fontSize20">{{ this.suoshusf }} {{ this.suoshucs }} {{ this.suoshuqx }}&nbsp;&nbsp;&nbsp;{{ this.paramsName }}</span>
+      </div>
       <div class="close" @click="dialog_close">×</div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="A股公司" name="2">
-          <div class="title_h">
-            <i class="icon icon-tips"></i>
-            <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;A股公司列表</span>
-          </div>
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
-              <el-table-column prop="name" label="公司名称" align="center">
+              <el-table-column prop="name" label="公司名称" width="500" align="center">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -32,9 +32,13 @@
                   >{{ scope.row.name }}</router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
-              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" align="center"></el-table-column>
+              <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+              <el-table-column prop="chenglisj" label="成立时间" align="center">
+                <template slot-scope="{row}">
+                  {{ row.chenglisj || '-' }}
+                </template>
+              </el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -51,13 +55,13 @@
           <!-- 分页dom end -->
         </el-tab-pane>
         <el-tab-pane label="三板公司" name="3">
-          <div class="title_h">
+          <!-- <div class="title_h">
             <i class="icon icon-tips"></i>
             <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;三板公司列表</span>
-          </div>
+          </div> -->
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
-              <el-table-column prop="name" label="公司名称" align="center">
+              <el-table-column prop="name" label="公司名称" width="500" align="center">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -67,9 +71,13 @@
                   >{{ scope.row.name }}</router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
-              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" align="center"></el-table-column>
+              <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+              <el-table-column prop="chenglisj" label="成立时间" align="center">
+                <template slot-scope="{row}">
+                  {{ row.chenglisj || '-' }}
+                </template>
+              </el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -86,13 +94,13 @@
           <!-- 分页dom end -->
         </el-tab-pane>
         <el-tab-pane label="四板公司" name="4">
-          <div class="title_h">
+          <!-- <div class="title_h">
             <i class="icon icon-tips"></i>
             <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;四板公司列表</span>
-          </div>
+          </div> -->
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
-              <el-table-column prop="name" label="公司名称" align="center">
+              <el-table-column prop="name" label="公司名称" width="500" align="center">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -102,9 +110,13 @@
                   >{{ scope.row.name }}</router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
-              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" align="center"></el-table-column>
+              <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+              <el-table-column prop="chenglisj" label="成立时间" align="center">
+                <template slot-scope="{row}">
+                  {{ row.chenglisj || '-' }}
+                </template>
+              </el-table-column>
             </el-table>
             <!-- <el-pagination
               layout="prev, pager, next"
@@ -121,13 +133,13 @@
           <!-- 分页dom end -->
         </el-tab-pane>
         <el-tab-pane label="已私募融资公司" name="5">
-          <div class="title_h">
+          <!-- <div class="title_h">
             <i class="icon icon-tips"></i>
             <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;私募公司列表</span>
-          </div>
+          </div> -->
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
-              <el-table-column prop="name" label="公司名称" align="center">
+              <el-table-column prop="name" label="公司名称" width="500" align="center">
                 <template slot-scope="scope">
                   <router-link
                     target="_blank"
@@ -137,9 +149,13 @@
                   >{{ scope.row.name }}</router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="zhucezb" label="注册资本" align="center"></el-table-column>
-              <el-table-column prop="gongsilx" label="公司类型" width="180" align="center"></el-table-column>
-              <el-table-column prop="fadingdbr" label="法定代表人" width="180" align="center"></el-table-column>
+              <el-table-column prop="fadingdbr" label="法定代表人" align="center"></el-table-column>
+              <el-table-column prop="zhucezbint" label="注册资本(万元)" align="center"></el-table-column>
+              <el-table-column prop="chenglisj" label="成立时间" align="center">
+                <template slot-scope="{row}">
+                  {{ row.chenglisj || '-' }}
+                </template>
+              </el-table-column>
             </el-table>
             <!-- <el-pagination+63
 
@@ -313,7 +329,7 @@ export default {
       for(let i=0;i<dataY2.length;i++){
         if(dataY2[i] < 6){
           dataY2[i]=dataY2[i]*1+1
-          console.log(dataY2[i],"四板为1的数量")
+          // console.log(dataY2[i],"四板为1的数量")
         }
       }
       var dataY3 = self.arrx3;
@@ -624,7 +640,10 @@ export default {
       var self = this;
       // console.log(right[0].getAttribute("disabled"),"right")
       // right[0].disabled=''
-      console.log(suoshuzbsc,"sszbsc")
+      if(self.paramsName){
+        self.paramsName = self.paramsName.replace("\n","")
+      }
+      // console.log(this.paramsName,"sszbsc")
       self.loading = true;
       let params = {
         page: this.page,
@@ -632,7 +651,7 @@ export default {
         suoshusf: this.suoshusf,
         suoshucs: this.suoshucs,
         suoshuqx: this.suoshuqx,
-        suoshucyl: this.paramsName,
+        suoshucyl: self.paramsName,
         zibenscdy: suoshuzbsc
       };
       this.axios({

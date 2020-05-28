@@ -73,6 +73,8 @@ import Fellowtownsman from "./views/Firstpage/Fellowtownsman.vue";
 import Industryranking from "./views/Firstpage/Industryranking.vue";
 import distributionMap from "./views/Firstpage/distributionMap.vue";
 import Parkdetails from "./views/Firstpage/Parkdetails.vue";
+import mapSearch from "./views/Firstpage/mapSearch.vue";
+import ParkMap from "./views/Firstpage/ParkMap.vue";
 
 
 Vue.use(Router);
@@ -85,6 +87,11 @@ export default new Router({
       path: "/home",
       name: "home",
       component: Home
+    },
+    {
+      path: "/mapSearch",
+      name: "mapSearch",
+      component: mapSearch
     },
     {
       path: "/",
@@ -425,6 +432,11 @@ export default new Router({
       path: "/Parkdetails",
       name: "Parkdetails",
       component: Parkdetails
+    },
+    {
+      path: "/parkMap",
+      name: "parkMap",
+      component: ParkMap
     },
   ]
 });

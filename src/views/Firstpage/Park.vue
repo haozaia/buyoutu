@@ -1,7 +1,8 @@
 <template>
   <div id="Park">
     <div id="C_content">
-      <div class="C_title"><span class="Title_left"></span>产业园区</div>
+      <div class="C_title"><span class="Title_left"></span>产业园区<span> - <i>{{this.NowPark}}</i> 共为您查询到<i id="Tag">{{ this.total }}</i></span>个</div>
+      <!-- <div class="C_title"><span class="Title_left"></span>产业园区</div> -->
       <div class="park-content">
         <!-- <div class="ind-title">
           <p >
@@ -16,6 +17,7 @@
             <div class="form-group Search_Down_input">
               <el-cascader
                 clearable
+                placeholder="请选择地区"
                 ref="refHandle"
                 :options="options1"
                 :props="{ checkStrictly: true }"
@@ -66,12 +68,12 @@
             <template>
               <div class="table-wrapper">
               <el-table  :empty-text="tishi" stripe :data="tableData" v-loading="loading" style="width: 100%">
-                <el-table-column prop="name" label="园区名称" align="center" width="500">
+                <el-table-column prop="name" label="园区名称" width="380" align="left">
                   <template slot-scope="scope">
                     <router-link
                       tag="a"
                       style="color:#606266;text-decoration:none;"
-                      :to="{ path:'/Parkdetails', query: { yuanquname: Base64.encode(scope.row.name),park:scope.row.parkId}}"
+                      :to="{ path:'/Parkdetails', query: { yuanquname: Base64.encode(scope.row.name),park:scope.row.parkId,location: Base64.encode(scope.row.location)}}"
                     >{{ scope.row.name }}</router-link>
                     </template>
                     <!-- city_sheng: Base64.encode(this.city_sheng),paiming: Base64.encode(this.paiming),gongsiname: Base64.encode(this.gongsiname),city_shi: Base64.encode(this.city_shi),city_qu: Base64.encode(this.city_qu) -->
@@ -123,6 +125,7 @@ export default {
       page:1,
       tishi: "正在查询...",
       suibian:true,    //分页变量3
+      NowPark: "国家级、省级园区",
       paimingOptions: [{
         value: '全部园区',
         lable: 'T',
@@ -280,6 +283,13 @@ export default {
             self.suibian=true
         }
         // 分页--下一页disabled
+        if(self.paiming == "6"){
+          self.NowPark = "国家级园区"
+        }else if(self.paiming == "4"){
+          self.NowPark = "省级园区"
+        }else if(self.paiming == "T" || self.paiming == ""){
+          self.NowPark = "国家级、省级园区"
+        }
       })
     },
     searchlist() {
@@ -291,7 +301,6 @@ export default {
       if(self.gongsiname != '') {
         localStorage.setItem('YuanQuname',self.gongsiname)
       }
-      
       this.yuanqulist()
     },
     yuanquLv() {
@@ -308,8 +317,13 @@ export default {
 
 <style lang="scss">
 @import "../../styles/css/Park.scss";
+
 .el-tabs{
   margin: 0 !important;
 }
-
+#Park{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 </style>

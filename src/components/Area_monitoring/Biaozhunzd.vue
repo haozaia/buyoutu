@@ -56,7 +56,7 @@
                 <div class="query-result">
                 <div class="table-wrapper">
                     <el-table :empty-text="tishi" stripe :data="bzlist" v-loading="loading" style="width: 100%">
-                    <el-table-column prop="gongsiname" label="起草单位">
+                    <!-- <el-table-column prop="gongsiname" label="起草单位" width="400" align="left">
                         <template slot-scope="scope">
                         <router-link
                             target="_blank"
@@ -65,9 +65,19 @@
                             :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
                         >{{ scope.row.gongsiname }}</router-link>
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
+                    <el-table-column prop="gongsiname" label="起草单位" width="340" align="left">
+                    <template slot-scope="scope">
+                      <router-link
+                        target="_blank"
+                        tag="a"
+                        style="color:#606266;text-decoration:none;"
+                        :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
+                      >{{ scope.row.gongsiname }}</router-link>
+                    </template>
+                  </el-table-column>
                     <!-- <el-table-column prop="xukezbh" label="许可证编号"></el-table-column> -->
-                    <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
+                    <el-table-column prop="beizhu1" label="法定代表人"></el-table-column>
                     <el-table-column prop="zhuguanbm" label="主管单位"></el-table-column>
                     <el-table-column prop="biaozhunmc" label="标准名称"></el-table-column>
                     <el-table-column prop="zhuczb" label="注册资本"></el-table-column>
@@ -90,7 +100,11 @@
 <style lang="scss">
 @import "../../styles/Monitor/region/css/container/container.scss";
 @import "../../styles/Monitor/region/css/container/Biaozhunzd.scss";
-
+#Biaozhunzd{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>
 
 <script>

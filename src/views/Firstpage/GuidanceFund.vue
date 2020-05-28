@@ -1,4 +1,5 @@
 <template>
+<div id="GuidanceFund">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>政府产业引导基金</div>
@@ -14,7 +15,7 @@
               <div style="padding-top:25px;"></div>
               <div class="table-wrapper">
                 <el-table stripe :data="chanyelist" style="width: 100%" :default-sort = "{}" @sort-change="formatter">
-                  <el-table-column prop="gongsimc" label="公司/基金名称" width="420">
+                  <el-table-column prop="gongsimc" label="公司/基金名称" width="480">
                   <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -37,6 +38,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -92,4 +94,9 @@ export default {
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
+#GuidanceFund{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 </style>

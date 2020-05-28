@@ -28,28 +28,38 @@
         line-height: 25px;
     }
     .el-tabs__header{
-        margin: 0 0 15px !important;
+        // margin: 0 0 15px !important;
+        // padding-top: 20px;
     }
     .title_h{
-        height: 40px;
-        line-height: 40px;
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
         color: black;
+        background: #eee;
+        font-weight: 600;
+        border-radius: 8px 8px 0 0;
     }
     .el-table th{
-        background: #fbe1e0 !important;
+        // background: #fbe1e0 !important;
         color: black !important;
     }
+    // 点击title边框
     .el-tabs__item.is-active{
-        background: #c03532;
-        color: #fff;
-        border: 1px solid #c03532;
+        // background: #c03532;
+        color: #CF111B;
+        font-weight: 600;
+        // border: 1px solid #c03532;
     }
 .el-dialog__header{
-    padding:10px 0;
+    padding:0;
     position: relative;
 }
+.el-dialog__headerbtn{
+    display: none;
+}
 .el-dialog__body{
-    padding: 0 20px !important;
+    padding: 0 !important;
 }
 .el-dialog{
     width: 60% !important;
@@ -59,16 +69,33 @@
 .el-tabs__active-bar{
     display: none !important;
 }
+
+// 带边框
+// .el-tabs__item{
+//     // border: 1px solid #eee;
+//     padding: 0 !important;
+//     width: 174px !important;
+//     background: #fff;
+//     color: #000 ;
+//     font-size: 20px;
+//     height: 40px;
+//     line-height: 40px;
+// }
+// 不带边框
 .el-tabs__item{
-    border: 1px solid #eee;
+    // border: 1px solid #eee;
+    margin: 22px 0;
     padding: 0 !important;
-    width: 174px !important;
+    width: 25%;
     background: #fff;
     color: #000 ;
     font-size: 20px;
-    height: 40px;
-    line-height: 40px;
+    // height: 40px;
+    // line-height: 40px;
 }
+
+
+
 // .el-tabs__active-bar{
 //     height: 0 !important;
 // }
@@ -78,20 +105,21 @@
 // .el-dialog__body{
 //     padding: 0 0 10px 0 !important;
 // }
-// .el-tabs .el-tabs__content{
-//     margin-top: 2px;
-//     border-top: 2px solid #e9edef !important;
-//     padding-bottom: 10px;
-// }
+.el-tabs .el-tabs__content{
+    border: 1px solid #e9edef;
+    background-color: #fff;
+    margin:0 20px;
+}
 // .el-tabs .el-tabs__header{
 //     margin: 0 0 -2px !important;
 // }
 // .title_h{
 //     height: 40px;
 // }
-// .el-tabs__nav {
-//     background: #fbe1e0 !important;
-//     background: #ccc;
-//     padding: 8px 0;
-// }
+.el-tabs__nav {
+    display: block;
+    .el-tabs__item {
+        border-right: 2px solid #eee;
+    }
+}
 }

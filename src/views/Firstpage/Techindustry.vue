@@ -1,4 +1,5 @@
 <template>
+<div id="Techindustry">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"> <span class="Title_left"></span>高新技术企业</div>
@@ -59,7 +60,7 @@
             <div class="query-result">
               <div class="table-wrapper">
                 <el-table stripe :data="tableData" v-loading="loading" style="width: 100%">
-                  <el-table-column prop="gongsiname" label="企业名称" width="400">
+                  <el-table-column prop="gongsiname" label="企业名称" width="400" align="left">
                     <template slot-scope="scope">
                       <router-link
                         target="_blank"
@@ -69,10 +70,12 @@
                       >{{ scope.row.gongsiname }}</router-link>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="gongsilx" label="公司类型"></el-table-column>
-                  <el-table-column prop="zhuczb" label="注册资本"></el-table-column>
-                  <el-table-column prop="suoshusf" label="所属省份" width="180"></el-table-column>
-                  <el-table-column prop="huogxrzdnf" label="获高新认证的年份" width="200"></el-table-column>
+                  <el-table-column prop="suoshusf" label="所属省份" ></el-table-column>
+                  <el-table-column prop="beizhu1" label="法定代表人"></el-table-column>
+                  <el-table-column prop="zhuczb" label="注册资本(万元)">
+                     <template slot-scope="{row}">{{ row.zhuczb || '-' }}</template>
+                  </el-table-column>
+                  <el-table-column prop="huogxrzdnf" label="获高新认证的年份"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -103,6 +106,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -365,4 +369,9 @@ export default {
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
+#Techindustry{
+    .el-table__row>td:first-child{
+        text-align: left !important;
+    }
+}
 </style>

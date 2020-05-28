@@ -4,8 +4,10 @@
     height: 100px;
     line-height: 100px;
     box-shadow:0px 0px 8px 0px rgba(0, 0, 0, 0.12);
-    background: #fff;
     min-width: 1460px;
+    // background: #fff;
+    // background: #e8e6e6;
+    background: #fdf9f9;
     // position: fixed;
     // display: flex;
     position: sticky;
@@ -75,8 +77,6 @@
     }
     @media screen and(max-width:1550px) {
 
-
-        
         .hot{
             display: none;
             // flex-shrink:0;
@@ -104,11 +104,21 @@
             }
             .HeaderRtea:hover{
                 color:#CF111B;
+
+            }
+            .HeaderRteaHot{
+                cursor: pointer;
+                margin: 0 13px;
+            }
+            .HeaderRteaHot:hover{
+                color:#CF111B;
+                font-weight: 600;
             }
             .TeSpan{
                 display: inline-block;
                 width: 1px;
-                height: 16px;
+                height: 10px;
+                border-right: 1px solid #999;
             }
         }
 

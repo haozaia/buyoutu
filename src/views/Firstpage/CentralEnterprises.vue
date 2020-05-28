@@ -38,7 +38,7 @@
                 <a :href="scope.row.yangshou" target="_blank" style="color:#606266;text-decoration:none;">{{ scope.row.name }}</a>
               </template>
             </el-table-column> -->
-            <el-table-column prop="name" label="公司名称(中英文)" align="center">
+            <el-table-column prop="name" label="公司名称" width="500" align="center">
               <template slot-scope="scope">
                 <router-link
                   target="_blank"
@@ -50,11 +50,27 @@
                 <span v-else>{{scope.row.name}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="guojia" label="法定代表人" align="center"></el-table-column>
-            <el-table-column prop="hangye" label="注册资本" align="center"></el-table-column>
-            <el-table-column prop="shengfen" label="所属省份" align="center"></el-table-column>
+            <el-table-column prop="shengfen" label="所属省份" align="center">
+              <template slot-scope="{row}">
+                {{ row.shengfen || '-' }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="guojia" label="法定代表人" align="center">
+              <template slot-scope="{row}">
+                {{ row.guojia || '-' }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="hangye" label="注册资本(万元)" width="300" align="center">
+              <template slot-scope="{row}">
+                {{ row.hangye || '-' }}
+              </template>
+            </el-table-column>
             <!-- <el-table-column prop="yangshou" label="联系邮箱" align="center"></el-table-column> -->
-            <el-table-column prop="lirun" label="公司类型" align="center"></el-table-column>
+            <el-table-column prop="lirun" label="成立时间" width="300" align="center">
+              <template slot-scope="{row}">
+                {{ row.lirun || '-' }}
+              </template>
+            </el-table-column>
           </el-table>
           <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange"  :page-size="20"  :total="total"></el-pagination>
         </template>

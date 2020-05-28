@@ -113,7 +113,7 @@
                 <!-- <el-table-column prop="zhucezb" align="center" label="注册资本(万元)"></el-table-column> -->
                 <el-table-column prop="suoshuhy" align="center" label="所属行业"></el-table-column>
                 <!-- <el-table-column prop="zhucezb" align="center" label="企业状态"></el-table-column> -->
-                <el-table-column prop="zhucesj" align="center" label="注册日期"></el-table-column>
+                <el-table-column prop="chenglisj" align="center" label="注册日期"></el-table-column>
               </el-table>
             </div>
           </div>

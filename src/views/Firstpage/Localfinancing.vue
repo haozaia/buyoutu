@@ -1,4 +1,5 @@
 <template>
+<div id="Localfinancing">
   <div id="C_content">
     <div class="C_container">
       <div class="C_title"><span class="Title_left"></span>地方投融资平台</div>
@@ -11,6 +12,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -87,6 +89,11 @@ export default {
 <style lang="scss" >
 @import "../../assets/css/Public_style.scss";
 @import "../../styles/css/Techindustry.scss";
+#Localfinancing{
+  .el-table__row>td:first-child{
+    text-align: left !important;
+  }
+}
 .el-tabs__content{
     .cityBuild{
         border-bottom: 10px solid #f5f8fa;
