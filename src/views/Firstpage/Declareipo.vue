@@ -35,7 +35,7 @@
                         target="_blank"
                         tag="a"
                         style="color:#606266;text-decoration:none;"
-                        :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.gongsiname) }}"
+                        :to="{ path:'/CompanyDetails', query: { name: Base64.encode(scope.row.baojianjg) }}"
                         >{{ scope.row.baojianjg }}</router-link>
                     </template>
             </el-table-column>

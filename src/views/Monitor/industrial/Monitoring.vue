@@ -1,94 +1,90 @@
+<!--  -->
 <template>
-  <div id="C_content" class="Monitoring">
+  <div class="Monitoring">
     <div class="C_title">
       <span class="Title_left"></span>产业链监控
     </div>
-    <section class="MonitoringChildWapper">
-      <div class="innerWapper">
+    <el-collapse v-model="activeName" @change="handleChange" accordion>
+      <el-collapse-item title="上游" name="1">
         <div class="inline contentLeft">
-          <div class="inline chainWapper" v-for="(item,index) in monitorChild" :key="index">
-            <header class="chainHeader inline fontSize22">{{item.yijibiaoqian}}</header>
+          <section class="inline MonitoringChild">
+            <div class="content" v-for="(itemChild,index) in monitorChild[0].yijilist" :key="index">
+              <header class="erjibiaoqianWapper">
+                <span class="erjibiaoqianBlock inline"></span>
 
-            <section class="inline MonitoringChild">
-              <div class="content" v-for="(itemChild,index) in item.yijilist" :key="index">
-                <header class="erjibiaoqianWapper">
-                  <span class="erjibiaoqianBlock inline"></span>
-                  <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
-                </header>
+                <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
+              </header>
 
-                <ul class="chinaChildWapper">
-                  <li
-                    class="chain"
-                    v-for="(itemChilds,index) in itemChild.chanyelian"
-                    :key="index"
-                    @click="chainChild(itemChilds.chanyelian)"
-                  >
-                    {{itemChilds.chanyelian}}
-                  </li>
-                </ul>
-              </div>
-            </section>
-          </div>
+              <ul class="chinaChildWapper">
+                <li
+                  class="chain"
+                  v-for="(itemChilds,index) in itemChild.chanyelian"
+                  :key="index"
+                  @click="chainChild(itemChilds.chanyelian)"
+                >{{itemChilds.chanyelian}}</li>
+              </ul>
+            </div>
+          </section>
         </div>
+      </el-collapse-item>
+      <el-collapse-item title="中游" name="2">
+        <section class="inline MonitoringChild">
+          <div class="content" v-for="(itemChild,index) in monitorChild[1].yijilist" :key="index">
+            <header class="erjibiaoqianWapper">
+              <span class="erjibiaoqianBlock inline"></span>
+              <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
+            </header>
 
-        <!-- <div class="inline contentCenter">
-          <div class="inline contentCenterImgWapper">
-            <img src="../../../assets/images/chainIcon/zhichi.svg" />
+            <ul class="chinaChildWapper">
+              <li
+                class="chain"
+                v-for="(itemChilds,index) in itemChild.chanyelian"
+                :key="index"
+                @click="chainChild(itemChilds.chanyelian)"
+              >{{itemChilds.chanyelian}}</li>
+            </ul>
           </div>
-        </div>-->
+        </section>
+      </el-collapse-item>
+      <el-collapse-item title="下游" name="3">
+        <section class="inline MonitoringChild">
+          <div class="content" v-for="(itemChild,index) in monitorChild[2].yijilist" :key="index">
+            <header class="erjibiaoqianWapper">
+              <span class="erjibiaoqianBlock inline"></span>
+              <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
+            </header>
 
-        <div class="inline contentRight">
-          <div class="inline chainWapper">
-            <header class="chainHeader inline fontSize22">上游</header>
-            <section class="inline MonitoringChild">
-              <div class="content" v-for="(itemChild,index) in upperMonitor.yijilist" :key="index">
-                <header class="erjibiaoqianWapper">
-                  <span class="erjibiaoqianBlock inline"></span>
-                  <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
-                </header>
-                <ul class="chinaChildWapper">
-                  <li
-                    class="chain"
-                    v-for="(itemChilds,index) in itemChild.chanyelian"
-                    :key="index"
-                    @click="chainChild(itemChilds.chanyelian)"
-                  >
-                    <span>
-                      {{itemChilds.chanyelian}}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </section>
+            <ul class="chinaChildWapper">
+              <li
+                class="chain"
+                v-for="(itemChilds,index) in itemChild.chanyelian"
+                :key="index"
+                @click="chainChild(itemChilds.chanyelian)"
+              >{{itemChilds.chanyelian}}</li>
+            </ul>
           </div>
-          <div class="inline chainWapper">
-            <header class="chainHeader inline fontSize22">支持</header>
-            <section class="inline MonitoringChild">
-              <div class="content" v-for="(itemChild,index) in monitorChilds.yijilist" :key="index">
-                <header class="erjibiaoqianWapper">
-                  <span class="erjibiaoqianBlock inline"></span>
-                  <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
-                </header>
-                <ul class="chinaChildWapper">
-                  <li
-                    class="chain"
-                    v-for="(itemChilds,index) in itemChild.chanyelian"
-                    :key="index"
-                    @click="chainChild(itemChilds.chanyelian)"
-                  >
-                    <span>
-                      {{itemChilds.chanyelian}}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </section>
-            <img class="toMiddle" src="../../../assets/images/chainIcon/zhichi.svg" />
-            <img class="toUpper" src="../../../assets/images/chainIcon/zhichi.svg" />
+        </section>
+      </el-collapse-item>
+      <el-collapse-item title="支持" name="4">
+        <section class="inline MonitoringChild">
+          <div class="content" v-for="(itemChild,index) in monitorChild[3].yijilist" :key="index">
+            <header class="erjibiaoqianWapper">
+              <span class="erjibiaoqianBlock inline"></span>
+              <span class="inline childTitle fontSize22">{{itemChild.erjibiaoqian}}</span>
+            </header>
+
+            <ul class="chinaChildWapper">
+              <li
+                class="chain"
+                v-for="(itemChilds,index) in itemChild.chanyelian"
+                :key="index"
+                @click="chainChild(itemChilds.chanyelian)"
+              >{{itemChilds.chanyelian}}</li>
+            </ul>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -96,27 +92,41 @@
 export default {
   data() {
     return {
-      monitorChild: [],
+      activeName: "2",
+      monitorChild: [{yijilist:''},{yijilist:''},{yijilist:''},{yijilist:''},],
       monitorChilds: [],
       upperMonitor: []
     };
   },
 
-  mounted() {
+  components: {},
+
+  computed: {},
+  created(){
     var self = this;
     self.getMonitor();
   },
+
+  mounted() {
+    
+  },
+
   methods: {
+    handleChange(val) {
+      console.log(val);
+    },
     chainChild(title) {
       this.$router.push({
         path: "/monitor",
         query: { title: Base64.encode(title) }
       });
     },
+
     sum(m, n) {
       var num = Math.floor(Math.random() * (m - n) + n);
       return num;
     },
+
     getMonitor() {
       var self = this;
       this.axios({
@@ -126,9 +136,7 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.monitorChilds = res.data.data[3];
-        self.upperMonitor = res.data.data[0];
-        self.monitorChild = res.data.data.slice(1, 3);
+        self.monitorChild = res.data.data
       });
     },
 
@@ -146,35 +154,99 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
+<style lang='scss' >
 @import "../../../styles/Monitor/industrial/css/Monitoring.scss";
 .Monitoring {
+  .el-collapse-item__header {
+    height: 80px;
+    line-height: 80px;
+    font-size: 20px;
+    padding-left: 37px;
+    padding-right: 30px;
+    color: #fff;
+    background: url("../../../assets/images/Collection/iconB.svg") no-repeat
+      20px 20px;
+    background-size: 100px 40px;
+  }
+  .el-collapse {
+    .el-collapse-item:nth-child(1) {
+      .el-collapse-item__header {
+        background: url("../../../assets/images/Collection/iconY.svg") no-repeat
+          20px 20px;
+        background-size: 100px 40px;
+      }
+      .chain:hover {
+        background: #F8B65B;
+      }
+      .erjibiaoqianBlock{
+           background: url("../../../assets/images/Collection/smallTitleY.svg") no-repeat;
+        background-size: 20px 20px;
+      }
+    }
+    .el-collapse-item:nth-child(2) {
+      .el-collapse-item__header {
+        background: url("../../../assets/images/Collection/iconO.svg") no-repeat
+          20px 20px;
+        background-size: 100px 40px;
+      }
+      .chain:hover {
+        background: #DF5F2A;
+      }
+       .erjibiaoqianBlock{
+           background: url("../../../assets/images/Collection/smallTitleO.svg") no-repeat;
+        background-size: 20px 20px;
+      }
+    }
+    .el-collapse-item:nth-child(3) {
+         .erjibiaoqianBlock{
+           background: url("../../../assets/images/Collection/smallTitleB.svg") no-repeat;
+        background-size: 20px 20px;
+      }
+    }
+    .el-collapse-item:nth-child(4) {
+      .el-collapse-item__header {
+        background: url("../../../assets/images/Collection/iconG.svg") no-repeat
+          20px 20px;
+        background-size: 100px 40px;
+      }
+      .chain:hover {
+        background: #50C764;
+      }
+       .erjibiaoqianBlock{
+           background: url("../../../assets/images/Collection/smallTitleG.svg") no-repeat;
+        background-size: 20px 20px;
+      }
+    }
+  }
+
+  .el-collapse-item__arrow {
+    font-weight: 600;
+    color: #000;
+  }
+  .el-collapse-item__content {
+    padding-left: 20px;
+    padding-right: 30px;
+  }
   .chain {
     display: inline-block;
     font-size: 20px;
-    padding: 0 14px 0 16px;
+    padding: 11px 15px;
     cursor: pointer;
-    margin: 5px 5px 5px 0;
-    height: 32px;
-    line-height: 32px;
+    margin: 10px 20px 10px 0;
+    height: 28px;
+    line-height: 28px;
+    background: #F3F3F3;
+    border-radius: 4px;
   }
   .chain:hover {
-    display: inline-block;
-    font-size: 20px;
-    background: #cf111b;
+    background: #5e9bf5;
     color: #fff;
-    padding: 0 14px 0 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin: 5px 5px 5px 0;
-      height: 32px;
-    line-height: 32px;
   }
   .erjibiaoqianBlock {
-    width: 12px;
+    width: 20px;
     height: 20px;
-    background: rgba(207, 17, 27, 1);
+     background: url("../../../assets/images/Collection/smallTitleR.svg") no-repeat;
+        background-size: 20px 20px;
     margin-right: 8px;
   }
   .MonitoringChildWapper {
@@ -182,26 +254,6 @@ export default {
     padding: 30px 30px 50px;
     .contentLeft {
       width: 50%;
-    }
-    .contentLeft {
-      .chainWapper:nth-child(1) {
-        .chainHeader:first-child {
-          background: url("../../../assets/images/chainIcon/middleReaches.png")
-            no-repeat;
-          background-size: 90px 100px;
-        }
-      }
-      .chainWapper:nth-child(2) {
-        .chainHeader:first-child {
-          background: url("../../../assets/images/chainIcon/downstream.png")
-            no-repeat;
-          background-size: 90px 100px;
-        }
-      }
-
-      .chainWapper:nth-child(-n + 2) {
-        margin-bottom: 30px;
-      }
     }
     .contentLeft,
     .contentRight {
@@ -259,23 +311,6 @@ export default {
       .chainWapper {
         width: calc(100% - 60px);
         margin-left: 138px;
-      }
-
-      .chainWapper:first-child {
-        .chainHeader:first-child {
-          background: url("../../../assets/images/chainIcon/upperReaches.png")
-            no-repeat;
-          background-size: 90px 100px;
-        }
-      }
-
-      .chainWapper:nth-child(2) {
-        margin-top: 80px;
-        .chainHeader:first-child {
-          background: url("../../../assets/images/chainIcon/support.png")
-            no-repeat;
-          background-size: 90px 100px;
-        }
       }
     }
   }

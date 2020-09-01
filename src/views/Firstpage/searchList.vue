@@ -1,22 +1,25 @@
 <template>
   <div id="C_content">
     <div class="C_container" id="zjyy">
-      <div class="C_title" v-if="loading"><span class="Title_left"></span>正在搜索...</div>
-      <div class="C_title search" v-else><span class="Title_left"></span>
+      <div class="C_title" v-if="loading">
+        <span class="Title_left"></span>正在搜索...
+      </div>
+      <div class="C_title search" v-else>
+        <span class="Title_left"></span>
         共搜索到
         <span id="Tag">{{ this.total }}</span> 条符合筛选条件的企业
         <div class="inline search_header_select">
-          <span class="control-label ">选择地区 ：</span>
-              <el-cascader
-                ref="refHandle"
-                style="width:240px;"
-                v-model="city_search"
-                :options="city_data"
-                :props="{ checkStrictly: true }"
-                @change="handleChange"
-                clearable
-              ></el-cascader>
-              <el-button @click="Ex_port" class="Mg10" type="primary">导出</el-button>
+          <span class="control-label">选择地区 ：</span>
+          <el-cascader
+            ref="refHandle"
+            style="width:240px;"
+            v-model="city_search"
+            :options="city_data"
+            :props="{ checkStrictly: true }"
+            @change="handleChange"
+            clearable
+          ></el-cascader>
+          <el-button @click="Ex_port" v-if="unitCode==3" class="Mg10" type="primary">导出</el-button>
         </div>
       </div>
       <div class="el-tab">
@@ -28,6 +31,7 @@
               id="toChange"
               v-loading="loading"
               style="width: 100%"
+             
             >
               <el-table-column prop="name" label="企业名称" width="400" align="left">
                 <template slot-scope="scope">
@@ -42,14 +46,15 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column prop="suoshusf" align="center"  label="所属省份">
-              </el-table-column>
-              <el-table-column prop="fadingdbr" align="center"  label="法人代表"></el-table-column>
+              <el-table-column prop="suoshusf" align="center" label="所属省份"></el-table-column>
+              <el-table-column prop="fadingdbr" align="center" label="法人代表"></el-table-column>
               <el-table-column prop="zhucezbint" align="center" label="注册资本(万元)">
-                 <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
+                <template slot-scope="{row}">{{ row.zhucezbint || '-' }}</template>
               </el-table-column>
               <el-table-column prop="chenglisj" align="center" label="成立时间">
-                 <template slot-scope="{row}">{{ row.chenglisj?row.chenglisj.substring(0, 10) : '-' }}</template>
+                <template
+                  slot-scope="{row}"
+                >{{ row.chenglisj?row.chenglisj.substring(0, 10) : '-' }}</template>
               </el-table-column>
             </el-table>
           </div>
@@ -82,6 +87,7 @@ export default {
       year: "",
       suoshusf: "",
       value3: "",
+      unitCode:'',
       name: "",
       // radio: '',
       page: 1,
@@ -99,7 +105,7 @@ export default {
       sheng: "",
       shi: "",
       city_data: [],
-      city_search: '',
+      city_search: "",
       shengyu: "",
       yidao: "",
       username: "",
@@ -109,21 +115,22 @@ export default {
   },
   mounted() {
     var self = this;
+    this.unitCode = localStorage.getItem("unitCode");
     self.name = Base64.decode(this.$route.query.name);
     self.username = localStorage.getItem("userName");
     self.telphone = localStorage.getItem("mobile");
     self.Exportcount();
     self.Gongxinjsqy(1, 20);
-    self.citylist()
+    self.citylist();
   },
   watch: {
     "$store.state.name": function() {
       var self = this;
       //你需要执行的代码
-      self.page = 1
-      self.city_search = ''
-      self.shi = ''
-      self.sheng = ''
+      self.page = 1;
+      self.city_search = "";
+      self.shi = "";
+      self.sheng = "";
       self.name = Base64.decode(this.$route.query.name);
       self.Gongxinjsqy(1, 20);
     },
@@ -134,34 +141,34 @@ export default {
       }
     },
     sheng() {
-      if (this.$refs.refHandle) { 
-        this.$refs.refHandle.dropDownVisible = false; 
-      } 
+      if (this.$refs.refHandle) {
+        this.$refs.refHandle.dropDownVisible = false;
+      }
     },
     shi() {
-      if (this.$refs.refHandle) { 
-        this.$refs.refHandle.dropDownVisible = false; 
-      } 
-    },
-    
+      if (this.$refs.refHandle) {
+        this.$refs.refHandle.dropDownVisible = false;
+      }
+    }
   },
   methods: {
+
     Ex_port() {
-      var self= this
+      var self = this;
       this.$prompt(
         "请输入导出条数(剩余额度" + this.shengyu + "条)",
         "导出向导",
         {
           confirmButtonText: "导出",
           cancelButtonText: "取消",
-          showCancelButton:false,
+          showCancelButton: false,
           inputPattern: /^(0\.0[1-9]|0\.[1-9]\d|[1-9]\d?(\.\d\d)?|[1-4]\d\d(\.\d\d)?|500)$/,
           inputErrorMessage: "请输入1-500之间的整数"
         }
       )
         .then(({ value }) => {
           if (value > self.shengyu) {
-             this.$message.error('导出数量超出今日额度');
+            this.$message.error("导出数量超出今日额度");
           } else {
             self.count = value;
             let url =
@@ -181,10 +188,9 @@ export default {
               "&count=" +
               self.count;
             window.location.href = url; //  跳转链接
-            setTimeout(function(){
-                self.Exportcount()
-            },2000)
-            
+            setTimeout(function() {
+              self.Exportcount();
+            }, 2000);
           }
         })
         .catch(() => {
@@ -257,21 +263,6 @@ export default {
       // 分页--调用没数据的接口后，重置分页 start
       var right = document.getElementsByClassName("btn-next");
       right[0].disabled = "";
-      // // 分页--调用没数据的接口后，重置分页 end
-      // self.loading = true;
-      //  if(self.radio == "3"){
-      //    self.gongsiname = self.name
-      //    self.jingyingfw = ''
-      //  }else if(self.radio == "6"){
-      //    self.jingyingfw = self.name
-      //    self.gongsiname = ''
-      //  }
-      // if (self.sheng == "全部") {
-      //   self.sheng = "";
-      //   self.shi = "";
-      // } else if (self.shi == "全部" || self.shi == "市辖区") {
-      //   self.shi = "";
-      // }
       let params = {
         page: self.page,
         size: 20,
@@ -288,32 +279,32 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        console.log(res.data.data,"datadata")
+        // console.log(res.data.data,"datadata")
         self.loading = false;
-        self.tableData = res.data.data.content?res.data.data.content:[];
-        self.total = res.data.data.totalElements?res.data.data.totalElements:0;
+        self.tableData = res.data.data.content ? res.data.data.content : [];
+        self.total = res.data.data.totalElements
+          ? res.data.data.totalElements
+          : 0;
         // self.total = res.data.data.totalElements
-        console.log(self.total)
-         // 分页--下一页disabled
-          var cot =  Math.ceil(self.total/20)
-          // console.log(cot)
-          // console.log(self.page)
-          if(cot <= self.page){
-              right[0].disabled="disabled"
-          }else if(self.page==1){
-              self.suibian=true
-          }
+        // console.log(self.total)
+        // 分页--下一页disabled
+        var cot = Math.ceil(self.total / 20);
+        // console.log(cot)
+        // console.log(self.page)
+        if (cot <= self.page) {
+          right[0].disabled = "disabled";
+        } else if (self.page == 1) {
+          self.suibian = true;
+        }
         // 分页--下一页disabled
       });
     },
     handleChange(value) {
-
-      var self=this
+      var self = this;
       self.sheng = value[0] ? value[0] : "";
       self.shi = value[1] ? value[1] : "";
-      this.page = 1
-      this.Gongxinjsqy()
-      
+      this.page = 1;
+      this.Gongxinjsqy();
     }
   }
 };
@@ -324,37 +315,35 @@ export default {
 @import "../../styles/css/Techindustry.scss";
 .C_container {
   // padding: 0 20px;
-  .search{
-    .el-input__inner{
+  .search {
+    .el-input__inner {
       height: 30px;
       border: 1px solid #ccc !important;
       margin-left: 10px;
     }
-    .el-cascader{
+    .el-cascader {
       // margin-left: 90px !important;
     }
   }
 }
-#C_content{
+#C_content {
   #zjyy {
-  margin: 0 auto;
-  .C_title{
-    // padding-left: 20px;
-    padding-right: 38px;
-    .control-label{
-      font-size: 20px; 
-      font-weight:500;
-      color: #000;
+    margin: 0 auto;
+    .C_title {
+      // padding-left: 20px;
+      padding-right: 38px;
+      .control-label {
+        font-size: 20px;
+        font-weight: 500;
+        color: #000;
+      }
+      .search_header_select {
+        float: right;
+      }
     }
-    .search_header_select{
-      float: right;
+    .Mg10 {
+      margin-left: 20px;
     }
   }
-  .Mg10{
-    margin-left: 20px;
-  }
 }
-}
-
-
 </style>

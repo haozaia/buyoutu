@@ -6,7 +6,8 @@
           企业数量总数为
           <i class="cti">{{ this.allTotal }}</i>家
         </span>
-
+      <!-- 导出按钮 -->
+      <el-button   type="primary" class="download" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button>
         <!-- <el-button
           v-if="suoshuocss|| xianqus"
           size="mini"
@@ -14,7 +15,7 @@
           @click="sendMsg"
           style="background-color: #c03532;
     border-color: #c03532;"
-        >查看全省</el-button>-->
+        >查看全省</el-button> -->
 
       </div>
       <el-collapse accordion v-model="activeName" @change="handleChange">
@@ -413,9 +414,18 @@ export default {
     if (!self.parkId) {
       self.tableList("2");
     }
+    //条数查询
+    this.$Export()
   },
   created() {},
   methods: {
+      //导出
+    download(){
+      var self=this
+      let url = self.api.exporthangye +
+              "?capitalMarketMark="+self.title +"&suoshusf="+self.suoshusf+"&suoshuocs="+self.suoshuocss+"&xianqu="+self.xianqus+"&"
+      this.$download(url)
+    },
     // 分页--回到首页按钮  start
     paginationsy() {
       var self = this;

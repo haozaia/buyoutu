@@ -3,67 +3,59 @@
     <div class="companyContent">
       <div id="developmentHistory" class="tab-target active">
         <section class="Profile" style="padding-top:0 " v-if="MgaoguanttList.length!=[]">
-         <header>
-          <div class="block-titles fontSize20">
+          <header>
+            <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">高管人员</span>
+              <span class="inline colorH fontSize18">&nbsp;{{MgaoguanttList.length}}</span>
             </div>
-        </header>
+          </header>
           <div class="basic_senior">
             <div class="senior inline" v-for="(item,index) in MgaoguanttList" :key="index">
               <div class="senior_top">
-                <span>{{item.xingming}}</span>
+                <!-- <span>{{item.xingming}}</span> -->
+                <a @click="MgaoguanttCompany(item.xingming)">{{item.xingming}}</a>
               </div>
-              <div class="senior_bottom" >
-                <p v-if="item.xiangxixx == null " >{{item.zhiwei}}</p>
+              <div class="senior_bottom">
+                <p v-if="item.xiangxixx == null ">{{item.zhiwei}}</p>
                 <a v-else @click="getInfo(index)">{{item.zhiwei}}</a>
               </div>
             </div>
           </div>
-            <!-- <div class="senior_right">
-                <el-button
-                  type="text"
-                  @click="getInfo(index)"
-                  style="font-size:16px;"
-                  :disabled="item.xiangxixx == null "
-                >详情</el-button>
-              </div> -->
         </section>
 
         <section class="table-list" v-if="recruitTable !=''">
-        <header>
-          <div class="block-titles fontSize20">
+          <header>
+            <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">招聘信息</span>
+              <span class="inline colorH fontSize18">&nbsp;{{total}}</span>
             </div>
-        </header>
-        <div class="licenceTable lineTable el-tabs">
+          </header>
+          <div class="licenceTable lineTable el-tabs">
             <div class="table-wrapper">
               <el-table stripe :data="recruitTable" style="width: 100%">
-                  <el-table-column align="center" prop="xuhao" label="序号" width="80">
-                    <template slot-scope="scope">{{scope.$index +1}}</template>
-                  </el-table-column>
-                  <el-table-column align="center" prop="zhaopinzw" label="招聘职位"></el-table-column>
-                  <el-table-column align="center" prop="xinzi" label="薪资"></el-table-column>
-                  <el-table-column align="center" prop="gongzuojy" label="工作经验">
-                     <template slot-scope="{row}">
-                    {{ row.gongzuojy || '-' }}
-                  </template>
-                  </el-table-column>
-                  <el-table-column align="center" prop="suozaics" label="所在城市"></el-table-column>
-                </el-table>
+                <el-table-column align="center" prop="xuhao" label="序号" width="80">
+                  <template slot-scope="scope">{{scope.$index +1}}</template>
+                </el-table-column>
+                <el-table-column align="center" prop="zhaopinzw" label="招聘职位"></el-table-column>
+                <el-table-column align="center" prop="xinzi" label="薪资"></el-table-column>
+                <el-table-column align="center" prop="gongzuojy" label="工作经验">
+                  <template slot-scope="{row}">{{ row.gongzuojy || '-' }}</template>
+                </el-table-column>
+                <el-table-column align="center" prop="suozaics" label="所在城市"></el-table-column>
+              </el-table>
             </div>
             <el-pagination
-            v-show="total>10"
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange"
-          :page-size="10"
-          :total="total"
-          background
-        ></el-pagination>
-        </div>
-      </section>
-
+              v-show="total>10"
+              layout="prev, pager, next"
+              @current-change="handleCurrentChange"
+              :page-size="10"
+              :total="total"
+              background
+            ></el-pagination>
+          </div>
+        </section>
 
         <section>
           <header class="block-header">
@@ -82,6 +74,7 @@
             <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">最近变更记录</span>
+              <span class="inline colorH fontSize18">&nbsp;{{timeAxis.length}}</span>
             </div>
           </header>
           <section class="cd-container" id="cd-timeline">
@@ -118,13 +111,26 @@
                     <div>{{key?MgaoguanttList[gaoguanIndex].xingming:''}}简介</div>
                   </td>
                   <td class="td-data">
-                    <div style="padding:10px 20px;">{{key?MgaoguanttList[gaoguanIndex].xiangxixx:''}}</div>
+                    <div
+                      style="padding:10px 20px;"
+                    >{{key?MgaoguanttList[gaoguanIndex].xiangxixx:''}}</div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </el-dialog>
         </div>
+
+        <el-dialog
+          :title="GXname+'相关公司'"
+          center
+          v-if="TimeVisible"
+          :visible.sync="TimeVisible"
+          width="600px"
+        >
+          <proMeetingTime :userName="GXname"></proMeetingTime>
+        </el-dialog>
+
       </div>
     </div>
   </div>
@@ -132,11 +138,13 @@
   
 <script>
 import echarts from "echarts";
+import proMeetingTime from "./GSGGDialog";
 export default {
   data() {
     return {
       timeAxis: [],
       gongsiname: "",
+      TimeVisible:"",
       dialogVisible: false,
       key: "",
       MgaoguanttList: [],
@@ -144,8 +152,13 @@ export default {
       page: 1,
       total: 0,
       JibenxxA: "",
-      recruitTable: []
+      GXname: "",
+      recruitTable: [],
+      
     };
+  },
+  components:{
+      proMeetingTime,
   },
   mounted() {
     var self = this;
@@ -156,6 +169,12 @@ export default {
     self.Mgaoguantt();
   },
   methods: {
+    //高管相关公司
+    MgaoguanttCompany(name){
+      var self= this
+      self.GXname= name
+      self.TimeVisible=true
+    },
     //获取高管信息
     getInfo(index) {
       var self = this;

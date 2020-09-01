@@ -4,13 +4,14 @@
     <div class="C_container">
       <div class="C_title">
         <span class="Title_left"></span>
-        {{Base64.decode(this.$route.query.name)}}
-        <el-button class="park_F" @click="rtPark" type="primary">返回</el-button>
+        {{Base64.decode(this.$route.query.name)}}<!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button>
+        <!-- <el-button class="park_F" @click="rtPark" type="primary">返回</el-button> -->
         <el-cascader
           clearable
           class="input_F"
           size="large"
-          style="width:174px;height：35px;margin-left:20px;"
+          style="width:174px;height：35px;margin-left:20px;margin-top: 12px;"
           :options="options"
           v-model="selectedOptions"
           @change="handleChangeCity"
@@ -91,6 +92,8 @@ export default {
     this.titleList();
     this.NewjjList();
     this.CtiyDown()
+    //条数查询
+    this.$Export()
   },
   created() {},
   //监测页数变化start
@@ -98,6 +101,15 @@ export default {
   },
   //end
   methods: {
+     //导出
+    download(){
+      var self=this
+      let url = self.api.exportzonglan
+      +'?tip='+self.next
+      +'&suoshusf='+self.suoshusf
+      +'&suoshucs='+self.suoshucs+'&'
+      this.$download(url)
+    },
     // 分页--回到首页按钮  start
     paginationsy() {
       if (this.page === 1) {
@@ -107,7 +119,7 @@ export default {
       }
     },
     CtiyDown(){
-      console.log(this.options,"options")
+      // console.log(this.options,"options")
       var Downoptions = this.options
       Downoptions.splice(32,3)
       // console.log(Downoptions,"截取后")
@@ -124,6 +136,8 @@ export default {
       this.NewjjList(self.next);
     },
     handleChange(tip) {
+      var self = this
+      self.page = 1
       if (tip != "") {
         this.next = tip;
         this.NewjjList(tip);
@@ -146,7 +160,7 @@ export default {
       var self = this;
       var right = document.getElementsByClassName("btn-next");
       // console.log(right)
-      // right[0].disabled= ""
+      right[0].disabled= ""
       if(self.suoshusf == '全部'){
         self.suoshusf = ''
       }else if(self.suoshucs == '全部'){
@@ -190,9 +204,9 @@ export default {
       });
     },
     // 返回
-    rtPark() {
-      window.history.go(-1);
-    },
+    // rtPark() {
+    //   window.history.go(-1);
+    // },
     handleChangeCity(value) {
       var self = this
       this.suoshusf = CodeToText[value[0]]

@@ -1,12 +1,17 @@
 <template>
   <div id="Parentfund">
     <section class="block box-shadow overviewLayer">
-      <header class="block-header">
+      <!-- <header class="block-header">
         <div class="block-title">
           <i class="icon icon-tips unset"></i>
           <span>母基金列表</span>
         </div>
-      </header>
+      </header> -->
+      <div id="C_content">
+      <div class="C_title">
+        <span class="Title_left"></span>母基金列表
+      </div>
+      </div>
       <div class="el-tabs padding10">
         
         <div class="query-result">

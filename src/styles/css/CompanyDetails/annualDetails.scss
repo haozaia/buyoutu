@@ -1,154 +1,189 @@
 #annualReportsDetails {
-    .cellWapper {
-      margin: 0 auto;
-      .content {
-        margin-top: 10px;
-        margin-bottom: 40px;
-        background-color: #fff;
-        box-shadow: 2px 3px 5px #ccc;
-        .report_title {
-          margin: 20px !important;
-          border-bottom: 1px solid #bbb;
-          .tc {
+  .cellWapper {
+    margin: 0 auto;
+    .content {
+      margin-top: 10px;
+      // margin-bottom: 40px;
+      background-color: #fff;
+      box-shadow: 2px 3px 5px #ccc;
+      .report_title {
+        margin: 20px !important;
+        border-bottom: 1px solid #bbb;
+        .tc {
+          text-align: center;
+          p {
             text-align: center;
-            p {
-              text-align: center;
-              font-size: 13px;
-              color: #ed1d4a;
-              padding: 13px;
-            }
+            font-size: 13px;
+            color: #ed1d4a;
+            padding: 13px;
           }
         }
-        #annualReportHidden {
-          border: 0 none;
-          padding: 0;
-          .classify {
-            color: #ca7976 !important;
-            font-size: 22px;
-            margin-bottom: 10px;
-            padding-left: 11px;
-          }
-          .overview {
-            dl {
-              display: inline-block;
-              margin: 2px 0;
-              width: 33%;
-              vertical-align: top;
-            }
-            dt {
-              display: inline-block;
-              font-weight: bold !important;
-              line-height: 25px;
-              padding-left: 10px;
-              position: relative;
-            }
-            dt::before {
-              content: ".";
-              left: 0;
-              line-height: 14px;
-              position: absolute;
-              top: 0;
-            }
-            dd {
-              display: inline;
-              line-height: 25px;
-              margin-left: 10px;
-            }
-          }
-          .personCount {
-            position: absolute;
-            right: 20px;
-            font-size: 20px;
-            color: #666;
-          }
-          .rel {
-            position: relative;
-          }
-          #webSiteList li {
-            width: 230px;
-            height: 86px;
-            padding: 7px;
-            margin: 14px;
-            background: #f6f9f9;
-            border: solid 1px #ddd;
-            display: inline-block;
-            text-align: left;
-            vertical-align: middle;
-            margin-right: 20px;
-            line-height: 28px;
-            margin-bottom: 5px;
-          }
-          #webSiteList div span:last-child {
-            position: relative;
-            top: 9px;
-            display: inline-block;
-            width: 170px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
+      }
+      #oneAss {
+        td {
+          border: solid #e8eaf3;
+          border-width: 0px 1px 1px 0px;
+        }
+        th {
+          border: solid #e8eaf3;
+          border-width: 0px 1px 1px 0px;
+          padding: 14px 0;
+          background: #fafafa;
+        }
+        table {
+          border: solid #e8eaf3;
+          border-width: 1px 0 0 1px;
+          border-collapse: separate;
+          border-spacing: 0;
+          border-radius: 4px;
+        }
+      }
+      #annSocsecinfo_container {
+        td {
+          border: solid #e8eaf3;
+          border-width: 0px 1px 1px 0px;
+        }
+        th {
+          border: solid #e8eaf3;
+          border-width: 0px 1px 1px 0px;
+          padding: 14px 0;
+          background: #fafafa;
+        }
+        table {
+          border: solid #e8eaf3;
+          border-width: 1px 0 0 1px;
+          border-collapse: separate;
+          border-spacing: 0;
+          border-radius: 4px;
+        }
+      }
+      #annualReportHidden {
+        border: 0 none;
+        padding: 0 30px 30px;
+        .classify {
+          color: #ca7976 !important;
+          font-size: 22px;
+          margin-bottom: 10px;
+          padding-left: 11px;
+        }
+        .item {
+          line-height: 21px;
+        }
+        .overview {
+          display: flex;
+          justify-content: space-between;
+          background: rgba(250, 250, 250, 1);
+          border: 1px solid rgba(232, 234, 243, 1);
+          border-radius: 4px;
+          padding: 19px 17px 16px 21px;
+          .result {
+            line-height: 20px;
+            margin-left: 21px;
+            margin-top: 18px;
           }
         }
-        #forInvsmentList li {
-          width: 337px;
-          height: 80px;
-          padding: 10px;
-          margin: 7px;
+        .personCount {
+          font-size: 20px;
+          color: #333;
+          font-weight: 400;
+          margin-left: 28px;
+        }
+        .rel {
+          position: relative;
+        }
+        #webSiteList li {
+          width: 230px;
+          height: 86px;
+          padding: 7px;
+          margin: 14px;
           background: #f6f9f9;
           border: solid 1px #ddd;
           display: inline-block;
           text-align: left;
           vertical-align: middle;
+          margin-right: 20px;
           line-height: 28px;
-          font-style: normal;
-          margin-bottom: 15px;
+          margin-bottom: 5px;
         }
-  
-        #annualReportHidden > div {
-          border: 1px solid #efefef;
-          border-top: 0 none;
-          padding: 20px 20px 40px;
+        #webSiteList div span:last-child {
+          position: relative;
+          top: 9px;
+          display: inline-block;
+          width: 170px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
+      #forInvsmentList {
+        border: #ddd solid;
+        border-width: 1px 0 0 1px;
+        width: 100%;
+        li {
+          box-sizing: border-box;
+          width: 50%;
+          padding: 16px 0 16px 20px;
+          background: #fafafa;
+          border: solid  #ddd;
+          border-width: 0 1px 1px 0;
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+          line-height: 28px;
+          font-style: normal;
+        }
+        li:nth-child(4n-1) {
+          background: #ffffff;
+        }
+        li:nth-child(4n) {
+          background: #fff;
+        }
+      }
+
+      #annualReportHidden > div {
+        border-top: 0 none;
+      }
     }
-    .clearfix:after {
-      clear: both;
-    }
-    .clearfix:before,
-    .clearfix:after {
-      content: " ";
-      display: table;
-    }
-    // th {
-    //   border: 1px solid #efefef;
-    //   background-color: #fbe1e0;
-    //   color: #333;
-    //   padding: 8px 10px;
-    //   box-sizing: border-box;
-    // }
-    table#needPaging_assert {
-      border-collapse: collapse;
-      width: 100% !important;
-      table-layout: fixed;
-      box-sizing: border-box;
-    }
-    td {
-      border: 1px solid #efefef;
-      padding: 8px 10px;
-      text-align: center;
-      background-color: #f9f9f9;
-    }
-    .block {
-      width: 7px;
-      background: #ca7976;
-      height: 12px;
-      display: inline-block;
-      margin-right: 6px;
-    }
-    table.dataTable {
-      border-collapse: collapse;
-      width: 100%;
-      table-layout: fixed;
-      box-sizing: border-box;
-    }
-    font-size: 20px;
   }
+  .clearfix:after {
+    clear: both;
+  }
+  .clearfix:before,
+  .clearfix:after {
+    content: " ";
+    display: table;
+  }
+  // th {
+  //   border: 1px solid #efefef;
+  //   background-color: #fbe1e0;
+  //   color: #333;
+  //   padding: 8px 10px;
+  //   box-sizing: border-box;
+  // }
+  table#needPaging_assert {
+    border-collapse: collapse;
+    width: 100% !important;
+    table-layout: fixed;
+    box-sizing: border-box;
+  }
+  td {
+    padding: 14px 0;
+    text-align: center;
+  }
+
+  .block {
+    width: 12px;
+    background: #cf111b;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 9px;
+  }
+  table.dataTable {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    // box-sizing: border-box;
+  }
+  font-size: 20px;
+}

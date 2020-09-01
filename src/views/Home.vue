@@ -1,26 +1,22 @@
 <template>
   <div id="HOME_H">
+    <div :class="[longleftrotateY==0?'imgblock':'imgnone']" class="long_left"><img src="../assets/images/Login/login_left.png" alt=""></div>
+    <div :class="[longleftrotateY==0?'imgblock':'imgnone']" class="long_right"><img src="../assets/images/Login/login_right.png" alt=""></div>
     <div class="HOME_PMD">
-      <!-- <div class="PMD">
-        <marquee behavior="behavior" width="100%" loop="-1" onMouseOut="this.start()" onMouseOver="this.stop()">
-          <ul >
-            <li  v-for="(item,index) in newsDate" :key="index" style="display:inline-block;padding: 0 20px;">
-             <a style="display:list-item;list-style-type: disc;"  target="_blank" :href="item.beizhu1">{{item.xiangmubt+ '在' + item.luodidq +'落地！'}}</a>
-           </li>
-          </ul>
-        </marquee>
-      </div> -->
       <div id="LB_PMD" class="LB_PMD" data-appended="appended">
         <ul id="LB_PMD_ul" class="LB_PMD_ul">
           <li v-for="(item,index) in arr1" :key="index" :class="item.zhangdie <= 0 ? 'bg1': 'bg2'">
-            <p class="fontSize22">{{ item.zhishu }}</p>
-            <span class="fontSize20">{{ item.dianshu }}&nbsp;&nbsp;</span>
-            <span class="fontSize20">{{ item.zhangdie }}%</span>
+            <p @click="godetails(item.name)" class="fontSize22">{{ item.name }}</p>
+            <span class="fontSize20">{{ item.tag }}&nbsp;&nbsp;</span>
+            <!-- <span class="fontSize20">{{ item.zhangdie }}%</span> -->
           </li>
         </ul>
       </div>
       <div id="copy_LBPMD"></div>
-      <div id="Home">
+      <keep-alive>
+        <component v-bind:is="tabView"></component>
+      </keep-alive>
+      <div style="margin-top:10px" id="Home">
         <ul>
           <li @click="hyjiankong" class="home-t">
             <img src="../assets/images/icon2.svg"/>
@@ -66,13 +62,6 @@
               <p class="tep color3 fontSize20">高新技术企业</p>
             </div>
           </li>
-          <li @click="bzzhiding" class="home-t">
-            <img src="../assets/images/icon6.svg"/>
-            <div class="home-r">
-              <p class="color82 fontSize18">企业建设 行业标杆</p>
-              <p class="tep color3 fontSize20">标准制定企业</p>
-            </div>
-          </li>
           <li @click="zyqiye" class="home-t">
             <img src="../assets/images/icon7.svg"/>
             <div class="home-r">
@@ -87,18 +76,22 @@
               <p class="tep color3 fontSize20">国有企业</p>
             </div>
           </li>
+          <li @click="duziqiye" class="home-t">
+            <img src="../assets/images/icon6.svg"/>
+            <div class="home-r">
+              <p class="color82 fontSize18">企业建设 行业标杆</p>
+              <p class="tep color3 fontSize20">外资企业</p>
+            </div>
+          </li>
           <li @click="wstzqiye" class="home-t">
             <img src="../assets/images/icon10.svg"/>
             <div class="home-r">
-              <p class="color82 fontSize18">合资独资 应有尽有</p>
-              <p class="tep color3 fontSize20">外商投资企业</p>
+              <p class="color82 fontSize18">合资企业 应有尽有</p>
+              <p class="tep color3 fontSize20">合资企业</p>
             </div>
           </li>
         </ul>
       </div>
-      <keep-alive>
-        <component v-bind:is="tabView"></component>
-      </keep-alive>
     </div>
   </div>
 </template>
@@ -106,6 +99,12 @@
 
 <style lang="scss">
 @import "../assets/css/home.scss";
+.imgblock{
+  display: block;
+}
+.imgnone{
+  display: none;
+}
 </style>
 
 <script>
@@ -121,18 +120,28 @@ export default {
       userRole: "",
       tabView: "mapline",
       newsDate: [],
-      arr1: []
+      arr1: [],
+      longleftrotateY:'',
     };
   },
   watch: {},
   mounted() {
+    this.longleftrotateY = localStorage.getItem("longleftrotateY")
+    window.onscroll = function () {
+      document.getElementsByClassName("long_left")[0].style.display = "none"
+      document.getElementsByClassName("long_right")[0].style.display = "none"
+      // console.log("gundong")
+    }
+    if(localStorage.getItem("longleftrotateY") == 0){
+      this.loginact()
+    }
     this.market()
     this.marquee()
     this.userRole = localStorage.getItem("userRole");
     // this.getNews();  //HTTPS
     const user = this.userRole;
     if (user == "S") {
-      this.Mgaoguantt();
+      // this.Mgaoguantt();
       // this.$router.push("/home");
     } else if (user == "A") {
       this.$router.push("/qyh");
@@ -143,46 +152,30 @@ export default {
     }
   },
   methods: {
-    //查询落地项目
-    Mgaoguantt() {
-      var self = this;
-      let params = {
-        limit: 2
-      };
-      this.axios({
-        url: this.api.luodilistapiList,
-        method: "post",
-        data: this.$qs.stringify(params),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }).then(res => {
-        self.newsDate = res.data.data;
-        // console.log(self.newsDate);
-      });
+    loginact() {
+      document.querySelector(".long_left").style.transform = 'rotateY(-90deg)'
+      document.querySelector(".long_right").style.transform = 'rotateY(-90deg)'
+      setTimeout(()=>{
+        localStorage.setItem("longleftrotateY", 1);
+        this.longleftrotateY = localStorage.getItem("longleftrotateY")
+      },1000)
     },
     market() {
       this.axios({
-        url:this.api.zhishu,
+        url:this.api.tuijianLunbo,
         method:'post'
       }).then(res =>{
         var arr1 = []
-        // console.log(res.data.data)
-        for(var j=0;j<10;j++){
+        console.log(res.data.data)
           for (var i=0;i<res.data.data.length;i++){
-            var str2 = res.data.data[i].name
-            var arr = str2.split('"')[1].split(',')
             var datas={}
-            var num = Number(arr[1])
-            datas.zhishu = arr[0]
-            datas.dianshu = num.toFixed(2)
-            datas.zhangdie = arr[3]
+            datas.name = res.data.data[i].name
+            datas.tag = res.data.data[i].tag
             arr1.push(datas)
             // console.log(arr)
-        }
-        }
+          }
         
-        console.log(arr1[6],"888")
+        console.log(arr1,"888")
         this.arr1 = arr1
       })
     },
@@ -198,6 +191,15 @@ export default {
         }
       },100)
     },
+    godetails(val){
+      var self = this
+      let routeUrl = self.$router.resolve({
+        path: "/CompanyDetails",  
+        query: { name: Base64.encode(val) }
+      });
+      window.open(routeUrl.href, "_blank");
+    },
+    
     cyljiankong() {
        this.$store.state.NavMenu = "Monitoring"
       localStorage.setItem("NavMenu", "Monitoring")
@@ -228,10 +230,10 @@ export default {
       localStorage.setItem("NavMenu", "techindustry")
       this.$router.push("/techindustry")
     },
-    bzzhiding() {
-      this.$store.state.NavMenu = "6-2"
-      localStorage.setItem("NavMenu", "6-2")
-      this.$router.push("/standardsetting")
+    duziqiye() {
+      this.$store.state.NavMenu = "home"
+      localStorage.setItem("NavMenu", "home")
+      this.$router.push("/Soleproprietorship")
     },
     zyqiye() {
       this.$store.state.NavMenu = "home"

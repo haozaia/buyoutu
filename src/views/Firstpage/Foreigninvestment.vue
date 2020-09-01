@@ -1,21 +1,20 @@
 <template>
   <div id="C_content">
     <div class="C_container">
-      <div class="C_title"><span class="Title_left"></span>外商投资企业</div>
+      <div class="C_title"><span class="Title_left"></span>合资企业</div>
       <div class="el-tab">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-            <div class="ind-title">
+            <!-- <div class="ind-title">
               <p>
                 <i class="icon icon-tips"></i>
-                <span>外商投资企业名单</span> 企业数量共
+                <span>合资企业名单</span> 企业数量共
                 <i class="icon-data">{{total}}</i>家
               </p>
-            </div>
+            </div> -->
             <div class="form-wrapper">
               <form class="form-inline" role="form">
-                <div class="form-group">
+                <div class="form-group" style="padding:10px 30px;">
                   <span class="control-label">所属省份：</span>
-                  <el-select v-model="suoshusf" placeholder="请选择所属省份">
+                  <el-select v-model="suoshusf" placeholder="请选择所属省份" style="margin-right:10px;">
                     <el-option label="选择所有" value></el-option>
                     <el-option
                       v-for="item in option"
@@ -24,22 +23,7 @@
                       :value="item.name"
                     ></el-option>
                   </el-select>
-                </div>
-                <!-- <div class="form-group">
-                  <span class="control-label">所属行业 :</span>
-
-                  <el-select v-model="suoshuhy" filterable size="small" placeholder="请选择所属行业">
-                    <el-option label="选择所有" value></el-option>
-                    <el-option
-                      v-for="item in hyoptions"
-                      :key="item.suoshuhy"
-                      :label="item.suoshuhy"
-                      :value="item.suoshuhy"
-                    ></el-option>
-                  </el-select>
-                </div> -->
-                <div class="form-group">
-                  <el-select placeholder="请选择一级行业" filterable clearable v-model="form.One" @change="getOneclass" style="margin-right:20px;">
+                  <el-select placeholder="请选择一级行业" filterable clearable v-model="form.One" @change="getOneclass" style="margin-right:10px;">
                     <el-option
                       v-for="item in OneClass"
                       :key="item.yijihy"
@@ -47,7 +31,7 @@
                       :value="item.yijihy"
                     ></el-option>
                   </el-select>
-                  <el-select placeholder="请选择二级行业" filterable clearable v-model="form.Two" @change="getTwoclass">
+                  <el-select placeholder="请选择二级行业" filterable clearable v-model="form.Two" @change="getTwoclass" style="margin-right:10px;">
                     <el-option
                       v-for="item in TwoClass"
                       :key="item.erjihy"
@@ -55,18 +39,7 @@
                       :value="item.erjihy"
                     ></el-option>
                   </el-select>
-                </div>
-                <div class="form-group">
-                  <!-- <button
-                    class="btn btn-query btn-action"
-                    @click="search()"
-                    type="button"
-                    role="button"
-                  >
-                    <span class="chaxun">查询</span>
-                    <i class="icon-loading icon-loading-white a-spin"></i>
-                  </button> -->
-                  <el-button @click="search()" type="primary">查询</el-button>
+                  <el-button @click="search()" type="primary" style="margin-bottom:7px;">查询</el-button>
                 </div>
               </form>
             </div>
@@ -133,7 +106,6 @@
               <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
             </div>
           <!-- </el-tab-pane> -->
-        </el-tabs>
       </div>
     </div>
   </div>

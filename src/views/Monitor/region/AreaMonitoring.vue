@@ -2,13 +2,20 @@
   <div id="C_content">
     <div class="C_title"><span class="Title_left"></span>区域监控
       <div class="AreaMonitoring_block">
+        <span @click="GoMapSearch" class="GoMapSearch">进入地图</span>
         <span class="demonstration">当前区域：</span>
+        <!-- <el-cascader
+          :options="options1"
+          @change="handleChange1"
+          v-model="selected"
+        ></el-cascader> -->
         <el-cascader
           ref="elcascaders"
           :options="options1"
           :props="{ checkStrictly: true }"
           @change="handleChange1"
           v-model="selected"
+          filterable
         ></el-cascader>
       </div>
     </div>
@@ -34,7 +41,6 @@
                 <span
                   :class="{suibian1:iscur==index}"
                   class="span"
-                  
                   @click="iscur=index,tabChange('select' + (index + 1))"
                 >{{tab.name}}</span>
               </li>
@@ -59,6 +65,7 @@
 
 <script>
 // import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
+// import { regionDataPlus } from 'element-china-area-data'
 // provinceAndCityData是省市二级联动数据（不带“全部”选项）
 // regionData是省市区三级联动数据（不带“全部”选项）
 // provinceAndCityDataPlus是省市区三级联动数据（带“全部”选项）
@@ -116,7 +123,7 @@ export default {
       options: [],
       options1: [],
       tongjilist: [],
-      // options: regionData,
+      // options1: regionDataPlus,
       // selectedOptions: ['310000'],
       city_sheng: '上海市',
       city_shi: '',
@@ -201,13 +208,10 @@ export default {
     // },
     xinxi() {
       var self = this
-      if(self.selected == ''){
-        this.city_sheng = '上海市'
-      }
       let params = {
         suoshusf: this.city_sheng,
         suoshucs: this.city_shi,
-        suoshuqx: this.city_qu
+        suoshuqx: this.city_qu,
       };
       this.axios({
         url: this.api.Areatongji,
@@ -228,17 +232,21 @@ export default {
       // self.xinxi();
       // self.show = false;
       // setTimeout(function() {
-      //   self.show = true;
+        //   self.show = true;
       // }, 100);
     // },
     handleChange1(value) {
       var self = this;
       // this.$refs.elcascaders.dropDownVisible = false
-      if(self.selected == ''){
+      // localStorage.setItem("AreaMonitoringSelected",self.selected)
+      if(self.selected == '上海市'){
         this.city_sheng = '上海市'
         this.city_shi = ''
         this.city_qu = ''
       } else {
+        // console.log(value[0],"1")
+        // console.log(value[1],"2")
+        // console.log(value[2],"3")
         this.city_sheng = value[0]
         this.city_shi = value[1]
         this.city_qu = value[2]
@@ -247,20 +255,26 @@ export default {
       this.$store.state.suoshusf = this.city_sheng;
       this.$store.state.suoshucs = this.city_shi;
       this.$store.state.suoshuqx = this.city_qu;
+      // this.$store.commit("suoshusf",this.city_sheng)
       localStorage.setItem("suoshusf", this.city_sheng);
-      localStorage.setItem("suoshucs", this.shi);
-      localStorage.setItem("suoshuqx", this.qu);
+      localStorage.setItem("suoshucs", this.city_shi);
+      localStorage.setItem("suoshuqx", this.city_qu);
       self.xinxi();
 
       self.show = false;
       setTimeout(function() {
         self.show = true;
       }, 100);
-      // console.log(value);
-      // console.log(this.city_sheng);
-      // console.log(this.city_shi);
-      // console.log(this.city_qu);
-    }
+    },
+    GoMapSearch() {
+      var self = this
+      console.log(JSON.stringify(self.selected),"selected")
+      var quyucity = JSON.stringify(self.selected)
+      self.$router.push({
+        path: '/mapSearch',
+        query: {quyuCity: quyucity},
+      })
+    },
   }
 };
 </script>

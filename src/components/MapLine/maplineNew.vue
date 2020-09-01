@@ -4,14 +4,15 @@
       <div class="maplineContent">
         <section class="lineWapper">
           <header class="lineHeader textAlignL BgColorF">
-            <span class="redBlock BgColorR inline"></span>
-            <span class="title inline">企业统计</span>
-            <p class="addNumCom inline">
+            <span class="redBlock BgColorR shishiinline"></span>
+            <span class="title" style="font-size:34px;">实时更新统计</span>
+            <p class="addNumCom shujuinline">
               <span
-                class="num fontSize22 colorF"
+                style="font-size:34px"
+                class="num colorF"
                 v-for=" (index, item) in addNum"
                 :key="item"
-              >{{index}}</span>
+              >{{index}}</span><span class="title" style="font-size:34px;">家企业</span>
 
               <!-- <span class="num fontSize22 colorF">2</span>
               <span class="num fontSize22 colorF">3</span>
@@ -20,11 +21,10 @@
               <span class="num fontSize22 colorF">3</span>
               <span class="num fontSize22 colorF">9</span>-->
             </p>
-            <span class="inline color3 fontSize22">覆盖的企业</span>
+            <!-- <span class="inline color3 fontSize22">覆盖的企业</span> -->
           </header>
           <div class="lineContent BgColorF">
             <div
-              class="echartsPat"
               :style="{height:'305px',width:'100%'}"
               id="chinaLine"
               ref="myMap"
@@ -74,9 +74,9 @@
                   popper-class="select-option"
                   style="width:300px;"
                 >
-                  <el-option label="高新技术企业" value="高新技术企业"></el-option>
-                  <el-option label="政府奖励企业" value="政府奖励企业"></el-option>
                   <el-option label="A股公司" value="A股公司"></el-option>
+                  <el-option label="政府奖励企业" value="政府奖励企业"></el-option>
+                  <el-option label="高新技术企业" value="高新技术企业"></el-option>
                   <el-option label="A股拟IPO公司" value="A股拟IPO公司"></el-option>
                   <el-option label="三板公司" value="三板公司"></el-option>
                   <el-option label="四板公司" value="四板公司"></el-option>
@@ -98,7 +98,7 @@
           </header>
           <div class="mapContent BgColorF">
             <div
-              class="echartsPat"
+              class="inline"
               :style="{height:'606px',width:'50%',minWidth:'840px'}"
               id="chinaMap"
               ref="chinaMap"
@@ -136,7 +136,7 @@ export default {
       chinaY: [],
       numHtml: "",
       addNum: [],
-      mapName: "高新技术企业",
+      mapName: "A股公司",
       dimension: "0"
     };
   },
@@ -145,6 +145,7 @@ export default {
     self.country();
     self.line();
     window.onresize = function() {
+      console.log('mapline')
       setTimeout(function() {
         self.changeLine();
         self.drawChinaMap();
@@ -568,7 +569,7 @@ export default {
 <style lang="scss">
 #MapLine {
   background: #f0f2f5;
-  padding: 10px 0 0;
+  // padding: 10px 0 0;
 
   .lineWapper,
   .mapWappers {
@@ -589,12 +590,13 @@ export default {
         font-size: 24px;
       }
       .addNumCom {
-        margin: 0 10px 0 42px;
+        margin: 8px 10px 0 18px;
       }
       .num {
+        // padding: 5px;
         width: 26px;
-        height: 26px;
-        line-height: 26px;
+        height: 34px;
+        line-height: 34px;
         text-align: center;
         background: rgba(207, 17, 27, 1);
         margin-right: 3px;
@@ -755,7 +757,13 @@ export default {
     display: inline-block;
     vertical-align: middle;
   }
-
+  .shishiinline{
+    display: inline-block;
+    vertical-align: sub;
+  }
+  .shujuinline{
+    display: inline-block;
+  }
   .el-select-dropdown__item {
     color: #000;
   }

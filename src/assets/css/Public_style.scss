@@ -1,10 +1,11 @@
 // 标题
-// html{
-//     overflow-y: overlay;
-// }
+html{
+    // overflow-y: overlay;
+    // user-select:none; //禁止双击网页文字变成蓝色
+}
 
-#C_content {
-    background: #f0f2f5;
+// #C_content {
+    // background: #f0f2f5;
     // padding: 15px 20px 20px 20px;
     .C_container {
         padding: 0;
@@ -36,7 +37,7 @@
         border-radius: 4px;
         margin: 10px 10px;
     }
-}
+// }
 // Tag标签
 .Public_S_P {
     margin: 10px 0;
@@ -79,15 +80,16 @@ hangyenull
 body {
     min-width: 1440px;
     background: #f0f2f5;
+    
     .el-message {
-        top: 80px !important;
-        left: 146px;
-        width: 50px;
+        // top: 80px !important;
         min-width: 250px !important;
         .el-message__content {
             padding-right: 0;
+            // font-size: 18px;
         }
     }
+
 }
 .el-table {
     font-size: 20px;
@@ -98,7 +100,12 @@ body {
 a {
     text-decoration: none;
 }
-
+.floatL{
+    float: left;
+}
+.floatR{
+    float: right;
+}
 .fontSize24 {
     font-size: 24px;
 }
@@ -117,11 +124,24 @@ a {
 .fontSize22 {
     font-size: 22px;
 }
+.fontSize30 {
+    font-size: 30px;
+}
+.fontSize26 {
+    font-size: 26px;
+}
+.fontSize28 {
+    font-size: 28px;
+}
+
 .colorR {
     background-color: #cf111b;
 }
 .colorH {
     color: #cf111b;
+}
+.colorL {
+    color: #67c23a;
 }
 .colorFA {
     background-color: #fafafa;
@@ -137,6 +157,9 @@ a {
 }
 .color9 {
     color: #999999;
+}
+.color6 {
+    color: #666666;
 }
 .BgColorR {
     background: #cf111b;
@@ -156,6 +179,12 @@ a {
 .fontB {
     font-weight: bold;
 }
+.FT400{
+    font-weight: 400;
+}
+.curPoi{
+    cursor: pointer;
+}
 input {
     outline: none;
 }
@@ -163,9 +192,18 @@ button {
     outline: none;
     cursor: pointer;
 }
+.download{
+    float: right;
+    margin-top: 12px;
+    margin-right: 20px;
+}
 .inline {
     display: inline-block;
     vertical-align: middle;
+}
+.el-tooltip__popper{max-width:20%;}
+.el-tooltip__popper,.el-tooltip__popper.is-dark{
+    font-size: 18px;
 }
 
 // *********************************************E*L*E*M*E*N*T*插*件*样*式*********************************************
@@ -221,6 +259,25 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 .el-select-dropdown__item {
     color: black;
 }
+.el-checkbox__inner {
+    width: 20px;
+    height: 20px;
+}
+.el-checkbox__label {
+    font-size: 20px;
+}
+.el-checkbox__input.is-checked+.el-checkbox__label {
+    color: #cf111b;
+}
+.el-button--text {
+    color: #cf111b;
+  }
+  .el-button--medium {
+    font-size: 20px;
+  }
+  .el-button--text:hover {
+    color: #cf111b;
+  }
 //下拉框字体
 .el-cascader-node {
     font-size: 20px;
@@ -274,6 +331,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 }
 .el-tag {
     font-size: 20px;
+    background-color: #fef0f0;
+    border-color: #fbc4c4;
+    color: #cf111b;
 }
 .el-table thead {
     color: #000;
@@ -297,6 +357,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 // .el-table__body-wrapper tbody tr td{
 //     text-align: left;
 // }
+.el-textarea {
+    font-size: 20px;
+  }
+  .el-textarea__inner:focus {
+    outline: 0;
+    border-color: #cf111b;
+  }
+  .el-textarea__inner {
+    color: #000;
+  }
 .el-dialog__body {
     font-size: 20px;
 }
@@ -444,7 +514,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
     }
 
 .query-result {
-    padding: 0 30px !important;
+    padding-left:30px !important;
+    padding-right:30px !important;
     border-radius: 4px !important;
     background: #fff;
     .table-wrapper {
@@ -472,6 +543,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
 }
 .el-tabs .form-wrapper {
     padding: 20px 30px !important;
+}
+.el-table__header {
+    line-height: 52px;
 }
 .el-table tr {
     height: 48px;

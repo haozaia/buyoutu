@@ -6,8 +6,13 @@
           <div class="block-titles fontSize20">
             <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
             <span class="inline">公司新闻</span>
+          <a class="fontSize20 floatR FT400" target="_blank" :href="href">查看更多 ></a>
           </div>
         </header>
+        <!-- <div class="iframeWapper">
+          <iframe class="iframeTable" scrolling="auto" seamless frameborder="0" :src="href"></iframe>
+        </div> -->
+        
         <div class="licenceTable lineTable el-tabs">
           <div class="table-wrapper">
             <el-table stripe :data="tableData" style="width: 100%">
@@ -79,12 +84,14 @@ export default {
       gongsiname: "",
       total: 0,
       page: 1,
-      tableData: []
+      tableData: [],
+      href: "",
     };
   },
   mounted() {
     var self = this;
     self.gongsiname = this.$route.query.name;
+    self.href = "https://www.baidu.com/s?rtt=1&bsst=1&cl=2&tn=news&word=" + Base64.decode(self.$route.query.name)
     self.getList();
   },
   methods: {
@@ -128,4 +135,20 @@ export default {
 <style lang="scss">
 @import "../../styles/css/CompanyDetails/CompanyDetails.scss";
 @import "../../styles/css/CompanyDetails/CompanyProfile.scss";
+// .iframeWapper{
+//   position: relative;;
+//   overflow: hidden;
+//   height:470px;
+//   width: 100%;
+// }
+// .iframeTable{
+//   width: calc(100% + 30px);
+//   height: 600px;
+//   position: absolute;
+//   top: -130px;
+
+// }
+// .iframeTable::-webkit-scrollbar{
+
+// }
 </style>

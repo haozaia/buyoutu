@@ -4,9 +4,10 @@
       <div>
         <section class="block box-shadow" id="recruitmentInformation" v-if="tableData != 0">
           <header class="block-header">
-            <div class="block-title">
-              <i class="icon icon-tips"></i>
-              <span>政府奖励</span>
+            <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">政府奖励</span>
+            <span class="inline colorH fontSize18">&nbsp;{{totals}}</span>
             </div>
           </header>
           <div class="licenceTable lineTable el-tabs">
@@ -29,11 +30,11 @@
               </div>
             </div>
             <el-pagination
-            v-show="total>10"
+              v-show="total>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChange"
               :page-size="10"
-              :total="total"
+              :total="totals"
               background
             ></el-pagination>
           </div>
@@ -41,9 +42,10 @@
 
         <section class="block box-shadow" id="recruitmentInformation" v-if="licenceTable != 0">
           <header class="block-header">
-            <div class="block-title">
-              <i class="icon icon-tips"></i>
-              <span>公司拥有证照</span>
+            <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">公司拥有证照</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total}}</span>
             </div>
           </header>
           <div class="licenceTable lineTable el-tabs">
@@ -60,11 +62,11 @@
               </div>
             </div>
             <el-pagination
-            v-show="totals>10"
+              v-show="totals>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChanges"
               :page-size="10"
-              :total="totals"
+              :total="totalss"
               background
             ></el-pagination>
           </div>
@@ -72,9 +74,10 @@
 
         <section class="block box-shadow" id="recruitmentInformation" v-if="tableData1 != 0">
           <header class="block-header">
-            <div class="block-title">
-              <i class="icon icon-tips"></i>
-              <span>公司制定标准</span>
+            <div class="block-titles fontSize20">
+              <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+              <span class="inline">公司制定标准</span>
+            <span class="inline colorH fontSize18">&nbsp;{{totalss}}</span>
             </div>
           </header>
           <div class="licenceTable lineTable el-tabs">
@@ -132,7 +135,7 @@
               </div>
             </div>
             <el-pagination
-              v-show="totalss>10"
+              v-show="total>10"
               layout="prev, pager, next"
               @current-change="handleCurrentChangess"
               :page-size="10"

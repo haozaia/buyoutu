@@ -2,7 +2,10 @@
 <div id="Govemment">
   <div id="C_content">
     <div class="C_container">
-      <div class="C_title"><span class="Title_left"></span>政府奖励企业</div>
+      <div class="C_title"><span class="Title_left"></span>政府奖励企业
+      <!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button></div>
+
       <div class="el-tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="国家级奖励" name="first">
@@ -262,6 +265,8 @@ export default {
     var self = this;
     self.select();
     self.tableList();
+    //条数查询
+    this.$Export()
   },
     //监测页数变化start
   watch:{
@@ -275,6 +280,13 @@ export default {
   //end
   created() {},
   methods: {
+      //导出
+    download(){
+      var self=this
+      let url = self.api.exportzhengfu +
+              "?ziduanqufen="+self.ziduanqufen +"&jianglimc="+self.jianglimc+"&gongsiname="+self.gongsiname+"&suoshudy="+self.suoshudy+"&"
+      this.$download(url)
+    },
     // 分页--回到首页按钮  start
         paginationsy() {
             if(this.page === 1) {

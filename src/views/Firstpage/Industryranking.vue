@@ -1,7 +1,8 @@
 <template>
   <div id="Park">
     <div id="C_content">
-      <div class="C_title"><span class="Title_left"></span>行业排名</div>
+      <div class="C_title"><span class="Title_left"></span>行业排名<!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button></div>
       <div class="park-content Industryranking">
         <!-- <div class="ind-title">
           <p>
@@ -26,6 +27,8 @@
                 :props="{ checkStrictly: true }"
                 @change="handleChange1"
                 v-model="selected"
+                clearable
+                filterable
               ></el-cascader>
             </div>
             <!-- <div class="form-group">
@@ -78,7 +81,7 @@
             </div>
             <!-- 高级检索 -->
             <div class="form-group">
-              <el-popover placement="top-start" title="更多" trigger="click">
+              <el-popover placement="top-start" trigger="click">
                 <el-form ref="form" label-width="100px" :model="form" :rules="rules">
                   <el-form-item label="出资类型：">
                     <el-radio-group v-model="form.qiyelx">
@@ -287,10 +290,10 @@ export default {
       OneClass:{},
       TwoClass:{},
       form:{
-        One:"机械",
+        One:"装备制造",
         Two:""
       },
-      form_One: "机械",
+      form_One: "装备制造",
       selectedOptions: "",
       tableData: [],
       loading: false,
@@ -328,6 +331,8 @@ export default {
     // this.getTwoclass();
     // this.hangyelist()
     this.city()
+     //条数查询
+    this.$Export()
   },
   watch: {
     page(val) {
@@ -353,6 +358,25 @@ export default {
     },
   },
   methods: {
+    //导出
+    download(){
+      var self=this
+      let url = self.api.exporthangyepai
+      +'?suoshusf='+self.city_sheng
+      +'&suoshucs='+self.city_shi
+      +'&suoshuqx='+self.city_qu
+      +'&rankNumber='+self.paiming
+      +'&leixing='+self.form.qiyelx
+      +'&rankRule='+self.paixu
+      +'&suoshuhy='+self.form_One
+      +'&suoshuejhy='+self.form.Two
+      +'&minAge='+self.form.styear
+      +'&maxAge='+self.form.endyear
+      +'&startNumber='+self.form.stziben
+      +'&endNumber='+self.form.endziben
+      +'&lianxidh='+self.form.dianhua+'&'
+      this.$download(url)
+    },
     city() {
       // console.log(this.options,"options")
       // this.options.splice(34,1)
@@ -389,9 +413,9 @@ export default {
       self.hangyelist(val, 20);
     },
     handleChange1(value) {
-      this.city_sheng = value[0];
-      this.city_shi = value[1];  
-      this.city_qu = value[2];
+      this.city_sheng = value[0]?value[0] : "";
+      this.city_shi = value[1]?value[1] : "";  
+      this.city_qu = value[2]?value[2] : "";
       // console.log(value)
       // console.log(this.city_sheng)
       // console.log(this.city_shi)

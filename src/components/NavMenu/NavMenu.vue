@@ -41,40 +41,40 @@
         <router-link to="/techindustry" >
           <el-menu-item  index="techindustry"  @click="addKey()">
             <img class="icons" src="../../assets/images/navIcon/icon_gaoxin_qiye.svg" />
-            高新技术企业
+            高新技术
           </el-menu-item>
         </router-link>
         
 
         <el-submenu index="6" class="oneNav">
           <template slot="title">
-            <img class="icons" src="../../assets/images/navIcon/icon_touzijiazhi.svg" /> 投资价值公司
+            <img class="icons" src="../../assets/images/navIcon/icon_touzijiazhi.svg" /> 投资价值
           </template>
           <router-link to="/government">
             <el-menu-item index="6-1">
               <p style="margin:2px;">
-                <span class="whiteBall"></span>政府奖励企业
+                <span class="whiteBall"></span>政府奖励
               </p>
             </el-menu-item>
           </router-link>
           <router-link to="/standardsetting">
             <el-menu-item index="6-2">
               <p style="margin:2px;">
-                <span class="whiteBall"></span>标准制定企业
+                <span class="whiteBall"></span>标准制定
               </p>
             </el-menu-item>
           </router-link>
           <router-link to="/majorconstruction">
             <el-menu-item index="6-3">
               <p style="margin:2px;">
-                <span class="whiteBall"></span>重大在建项目企业
+                <span class="whiteBall"></span>在建项目
               </p>
             </el-menu-item>
           </router-link>
           <router-link to="/specializedenterprises">
             <el-menu-item index="6-4">
               <p style="margin:2px;">
-                <span class="whiteBall"></span>专项证照企业
+                <span class="whiteBall"></span>专项证照
               </p>
             </el-menu-item>
           </router-link>
@@ -84,6 +84,13 @@
           <template slot="title">
             <img class="icons" src="../../assets/images/navIcon/icon_paiming_qiye.svg" /> 企业排名
           </template>
+          <router-link to="/Unicorn">
+            <el-menu-item index="12-8">
+              <p style="margin:2px;font-size:20px;">
+                <span class="whiteBall"></span>中国独角兽100强
+              </p>
+            </el-menu-item>
+          </router-link>
           <router-link to="/FortuneFv">
             <el-menu-item index="12-1">
               <p style="margin:2px;">
@@ -100,14 +107,14 @@
           </router-link>
           <router-link to="/ServiceFv">
             <el-menu-item index="12-3">
-              <p style="margin:2px;">
+              <p style="margin:2px;font-size:20px;">
                 <span class="whiteBall"></span>中国服务业500强
               </p>
             </el-menu-item>
           </router-link>
           <router-link to="/PrivateFv">
             <el-menu-item index="12-4">
-              <p style="margin:2px;">
+              <p style="margin:2px;font-size:20px;">
                 <span class="whiteBall"></span>中国民营企业500强
               </p>
             </el-menu-item>
@@ -119,10 +126,38 @@
               </p>
             </el-menu-item>
           </router-link>
+          <router-link to="/Shminying">
+            <el-menu-item index="12-12">
+              <p style="margin:2px;font-size:20px;">
+                <span class="whiteBall"></span>上海民营企业100强
+              </p>
+            </el-menu-item>
+          </router-link>
           <router-link to="/NewEconomyFv">
             <el-menu-item index="12-6">
               <p style="margin:2px;">
-                <span class="whiteBall"></span>新经济500强
+                <span class="whiteBall"></span>新经济排名
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/GlobalCar">
+            <el-menu-item index="12-9">
+              <p style="margin:2px;font-size:20px;">
+                <span class="whiteBall"></span>世界汽车零部件百强
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/ChinaAutomobile">
+            <el-menu-item index="12-10">
+              <p style="margin:2px;font-size:20px;">
+                <span class="whiteBall"></span>中国汽车零部件百强
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/ChinaCmp">
+            <el-menu-item index="12-13">
+              <p style="margin:2px;font-size:20px;">
+                <span class="whiteBall"></span>中国触摸屏行业50强
               </p>
             </el-menu-item>
           </router-link>
@@ -135,13 +170,141 @@
           </router-link>
         </el-submenu>
 
-          <el-menu-item  index="NewJJ"  @click="newjj()">
-            <img class="icons" src="../../assets/images/navIcon/icon_xinjijina.svg" />
-            新基建
+        <el-submenu index="13" class="oneNav">
+          <template slot="title">
+            <img class="icons" src="../../assets/images/navIcon/icon_xinjijina.svg" /> 新基建
+          </template>
+          <el-menu-item  index="13-1"  @click="newjj()">
+            <p style="margin:2px;">
+              <span class="whiteBall"></span>总览
+            </p>
           </el-menu-item>
+          <router-link to="/NewjjRanking">
+            <el-menu-item index="13-2">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>细分排名
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/NewjjUnicorn">
+            <el-menu-item index="13-3">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>独角兽100强
+              </p>
+            </el-menu-item>
+          </router-link>
+        </el-submenu>
+        <el-menu-item index="recommend">
+          <img class="icons" src="../../assets/images/navIcon/icon_chanyemap.svg" />
+          智能推荐
+        </el-menu-item>
+
+        <!-- <el-submenu index="14" class="oneNav"  v-if="unitCode==3||unitCode==8||unitCode==1||unitCode==2||unitCode==5||unitCode==6||unitCode==7">
+          <template slot="title">
+            <img class="icons" src="../../assets/images/navIcon/center.svg" /> 客户中枢
+          </template>
+          <router-link to="/favoriteList" v-if="unitCode==3||unitCode==8||unitCode==1">
+            <el-menu-item index="14-9">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>项目管理
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/proVisit"  v-if="unitCode==3||unitCode==8||unitCode==1">
+            <el-menu-item index="14-10">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>项目拜访
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/fiveAddTwo" v-if="unitCode==3||unitCode==8||unitCode==1||unitCode==5||unitCode==2">
+            <el-menu-item index="14-1">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>项目5+2
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/proMeeting"  v-if="unitCode==3||unitCode==8||unitCode==1||unitCode==7||unitCode==5||unitCode==6||unitCode==2">
+            <el-menu-item index="14-2">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>项目对接会
+              </p>
+            </el-menu-item>
+          </router-link>
+          
+          <router-link to="/proExamine" v-if="unitCode==3||unitCode==8||unitCode==1||unitCode==7">
+            <el-menu-item index="14-3">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>待审核项目
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/GovernmentManagement" v-if="unitCode==2||unitCode==8||unitCode==1">
+            <el-menu-item index="14-4">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>未合作客户
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/GovernmentCooperative" v-if="unitCode==2||unitCode==8||unitCode==1||unitCode==7||unitCode==5||unitCode==3||unitCode==6">
+            <el-menu-item index="14-5">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>已合作客户
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/DaiShenhe" v-if="unitCode==5||unitCode==8||unitCode==1">
+            <el-menu-item index="14-6">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>待审核客户
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/Product">
+            <el-menu-item index="14-11">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>产品管理
+              </p>
+            </el-menu-item> 
+          </router-link>
+          <router-link to="/RecommendNotDock" v-if="unitCode==8||unitCode==1||unitCode==5">
+            <el-menu-item index="14-7">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>已推荐未对接
+              </p>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/RecommendDock" v-if="unitCode==8||unitCode==1||unitCode==5">
+            <el-menu-item index="14-8">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>已推荐已对接
+              </p>
+            </el-menu-item>
+          </router-link>
+        </el-submenu> -->
+        <el-submenu index="15" class="oneNav">
+          <template slot="title">
+            <img class="icons" src="../../assets/images/navIcon/Visualized.svg" /> 数据可视化
+          </template>
+           <router-link to="/distributionMapFull">
+            <el-menu-item index="15-1" >
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>行业统计
+              </p>
+            </el-menu-item>
+        </router-link>
+          <router-link to="/distribuMapFull">
+            <el-menu-item index="15-2">
+              <p style="margin:2px;">
+                <span class="whiteBall"></span>行业分布
+              </p>
+            </el-menu-item>
+          </router-link>
+        </el-submenu>
+         <!-- <div class="divider" v-if="unitCode==3||unitCode==8||unitCode==1"></div> -->
 
         <el-submenu index="7" class="twoNav">
-          <template slot="title">
+          <template slot="title" >
             <img class="icons" src="../../assets/images/navIcon/icon_shangshi_company.svg" /> 上市公司
           </template>
           <el-submenu index="7-1">
@@ -196,18 +359,38 @@
             </template>
             <router-link to="/innovationlayer">
               <el-menu-item index="7-3-1">
-                <p style="margin: 0 0 0 -3px;">三板创新层</p>
+                <p style="margin: 0 0 0 -3px;">创新层</p>
               </el-menu-item>
             </router-link>
             <router-link to="/listedcompany">
               <el-menu-item index="7-3-2">
-                <p style="margin: 0 0 0 -3px;">三板拟挂牌公司</p>
+                <p style="margin: 0 0 0 -3px;">拟挂牌</p>
+              </el-menu-item>
+            </router-link>
+          </el-submenu>
+          <el-submenu index="7-4">
+            <template slot="title">
+              <span class="whiteBall"></span>投资机构
+            </template>
+            <router-link to="/Declareipo">
+              <el-menu-item index="7-4-1">
+                <p style="margin: 0 0 0 -3px;">申报IPO公司</p>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/localfinancing">
+              <el-menu-item index="7-4-2">
+                <p style="margin: 0 0 0 -3px;">地方融资平台</p>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/lp">
+              <el-menu-item index="7-4-2">
+                <p style="margin: 0 0 0 -3px;">私募基金专区</p>
               </el-menu-item>
             </router-link>
           </el-submenu>
         </el-submenu>
 
-        <el-submenu index="8" class="twoNav">
+        <!-- <el-submenu index="8" class="twoNav">
           <template slot="title">
             <img class="icons" src="../../assets/images/navIcon/icon_touzi_jigou.svg" /> 投资机构
           </template>
@@ -268,13 +451,16 @@
                 <p style="margin: 0 0 0 -3px;">申报IPO公司</p>
               </el-menu-item>
             </router-link>
-            <router-link to="/privatePlacement">
-              <el-menu-item index="8-3-3">
-                <p style="margin: 0 0 0 -3px;">融资事件</p>
-              </el-menu-item>
-            </router-link>
           </el-submenu>
-        </el-submenu>
+        </el-submenu> -->
+        
+
+        <!-- <el-menu-item index="distributionMap">
+          <img class="icons" src="../../assets/images/navIcon/icon_chanyemap.svg" />
+          产业分布地图
+        </el-menu-item> -->
+
+
       </el-menu>
     </el-col>
   </div>
@@ -288,14 +474,21 @@ export default {
       total: 0,
       key:0,
       activeIndex: "home",
-      RM1: "新基建"
+      RM1: "新基建",
+      unitCode:'',
     };
+  },
+  created(){
+    this.unitCode = localStorage.getItem("unitCode");
   },
   mounted() {
     var self = this;
+
     self.activeIndex = localStorage.getItem("NavMenu")
       ? localStorage.getItem("NavMenu")
       : "home";
+       console.log(self.activeIndex)
+   
   },
   watch: {
     "$store.state.NavMenu": function(val) {
@@ -303,6 +496,7 @@ export default {
       //你需要执行的代码
       // console.log(123)
       self.activeIndex = val;
+       console.log(self.activeIndex)
     }
   },
   methods: {

@@ -56,7 +56,7 @@
                 <div class="query-result">
                 <div class="table-wrapper">
                     <el-table :empty-text="tishi" stripe :data="waishanglst" v-loading="loading">
-                    <el-table-column prop="name" width="350" label="企业名称">
+                    <el-table-column prop="name" width="450" label="企业名称">
                         <template slot-scope="scope">
                         <router-link
                             target="_blank"

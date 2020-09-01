@@ -1,11 +1,13 @@
 <template>
-  <div slot="danger_rgc">
+  <div slot="danger_rgc" class="danger_rgc">
     <div class="companyContent">
       <div class="table-list" v-if="tableData2 != 0">
-        <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>法律诉讼</span>
+        <header class="block-header">
+          <div class="block-titles fontSize20">
+            <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+            <span class="inline">法律诉讼</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total2}}</span>
+
           </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -18,44 +20,34 @@
                 <el-table-column prop="anjiansf" label="案件身份"></el-table-column>
                 <el-table-column prop="anjianmc" label="案件名称">
                   <template slot-scope="scope">
-                    <span v-if='scope.row.beizhu4 '>
-                  <a
-                    target="_blank"
-                    v-if="toRescue(scope.row.beizhu4)"
-                    :href="scope.row.beizhu4"
-                  >{{scope.row.anjianmc}}</a>
-                  <a
-                    target="_blank"
-                    v-else-if="toRescues(scope.row.beizhu4)"
-                    :href="scope.row.beizhu4"
-                  >{{scope.row.anjianmc}}</a>
-                  <a
-                    target="_blank"
-                    v-else
-                    :href="'http://'+scope.row.beizhu4"
-                  >{{scope.row.anjianmc}}</a>
-                  
+                    <span v-if="scope.row.beizhu4 ">
+                      <a
+                        target="_blank"
+                        @click="handleTarget(scope.row.beizhu4)"
+                      >{{scope.row.anjianmc}}</a>
                     </span>
                     <span v-else>{{scope.row.anjianmc}}</span>
-                 </template>
+                  </template>
                 </el-table-column>
               </el-table>
             </div>
           </div>
           <el-pagination
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange2"
-          :page-size="20"
-          :total="total2"
-          background
-        ></el-pagination>
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange2"
+            :page-size="20"
+            :total="total2"
+            background
+          ></el-pagination>
         </div>
       </div>
       <div class="table-list" v-if="tableData1 != 0">
-        <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>开庭公告</span>
+        <header class="block-header">
+          <div class="block-titles fontSize20">
+            <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+            <span class="inline">开庭公告</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total1}}</span>
+
           </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -63,9 +55,7 @@
             <div class="table-wrapper">
               <el-table stripe :data="tableData1" style="width: 100%">
                 <el-table-column prop="kaitingrq" label="开庭日期" width="180">
-                  <template slot-scope="scope">
-                  {{scope.row.kaitingrq.substring(0, 11)}}
-                </template>
+                  <template slot-scope="scope">{{scope.row.kaitingrq.substring(0, 11)}}</template>
                 </el-table-column>
                 <el-table-column prop="anhao" label="案号"></el-table-column>
                 <el-table-column prop="yuangao/ssr" label="原告/上诉人"></el-table-column>
@@ -75,20 +65,21 @@
             </div>
           </div>
           <el-pagination
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange1"
-          :page-size="20"
-          :total="total1"
-          background
-        ></el-pagination>
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange1"
+            :page-size="20"
+            :total="total1"
+            background
+          ></el-pagination>
         </div>
       </div>
-      
+
       <div class="table-list" v-if="tableData != 0">
-        <header>
-          <div class="block-title">
-            <i class="icon icon-tips"></i>
-            <span>金融监管处罚</span>
+        <header class="block-header">
+          <div class="block-titles fontSize20">
+            <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
+            <span class="inline">金融监管处罚</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total}}</span>
           </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -103,16 +94,16 @@
               </el-table>
             </div>
             <el-pagination
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange"
-          :page-size="20"
-          :total="total"
-          background
-        ></el-pagination>
+              layout="prev, pager, next"
+              @current-change="handleCurrentChange"
+              :page-size="20"
+              :total="total"
+              background
+            ></el-pagination>
           </div>
         </div>
       </div>
-      
+
       <!-- <div class="table-list">
         <header>
           <div class="block-title">
@@ -136,7 +127,19 @@
           </div>
           <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
         </div>
-      </div> -->
+      </div>-->
+      <el-dialog
+        :title=" Base64.decode($route.query.name) +'- 风险合规'"
+        :visible.sync="dialogVisible"
+        width="938px"
+      >
+        <div class="iframeWappers">
+          <iframe class="iframeTables" scrolling="auto" seamless frameborder="0" :src="href"></iframe>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>  
@@ -145,7 +148,8 @@
 export default {
   data() {
     return {
-        gongsiname: "",
+      dialogVisible: false,
+      gongsiname: "",
       total: 0,
       total1: 0,
       total2: 0,
@@ -155,6 +159,7 @@ export default {
       tableData: [],
       tableData1: [],
       tableData2: [],
+      href: ""
     };
   },
   mounted() {
@@ -165,6 +170,11 @@ export default {
     self.getList2();
   },
   methods: {
+    handleTarget(url) {
+      var self = this;
+      self.href = url;
+      self.dialogVisible = true;
+    },
     toRescue(url) {
       if (url) {
         console.log(url.substr(0, 7).toLowerCase() == "http://", 222);
@@ -254,7 +264,7 @@ export default {
         self.tableData2 = res.data.data;
         self.total2 = res.data.count;
       });
-    },
+    }
   }
 };
 </script>  
@@ -262,4 +272,18 @@ export default {
 <style lang="scss">
 @import "../../styles/css/CompanyDetails/CompanyDetails.scss";
 @import "../../styles/css/CompanyDetails/CompanyProfile.scss";
+.danger_rgc {
+  .iframeWappers {
+    position: relative;
+    overflow: hidden;
+    height: 470px;
+    width: 100%;
+  }
+  .iframeTables {
+    width: calc(100% + 30px);
+    height: 624px;
+    position: absolute;
+    top: -130px;
+  }
+}
 </style>

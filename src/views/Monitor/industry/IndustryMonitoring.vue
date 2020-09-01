@@ -10,7 +10,8 @@
     </div>
     <div class="OneclassList">
       <!-- <a :href="'#active'+index" class="OneClass color3 fontSize20" v-for="(item,index) in arr" :key="index">{{ item }}</a> -->
-      <a @click="changeHash('#active'+index)" class="OneClass color3 fontSize22" v-for="(item,index) in arr" :key="index">{{ item }}</a>
+      <a @click="changeHash('#active'+index)" class="OneClass color3 fontSize22" v-for="(item,index) in TopList" :key="index">{{ item }}</a>
+      <i @click="changeHash('#active'+16)" class="fontSize22 OneclassListTei">其它</i>
     </div>
     <div class="cylx" v-if="hhh">
       <!-- <ul class="cylx_ul">
@@ -30,16 +31,38 @@
       </ul> -->
       <!-- 循环div，div内头部P标签赋值一级行业，内层ul li  将li进行循环赋值二级行业 -->
       
-      <div class="Hangye_box" :id="'active'+index" v-for="(item,index) in arr" :key="index">
+      <!-- <div class="Hangye_box" :id="'active'+index" v-for="(item,index) in arr" :key="index">
         <div class="Hangye_icons">
           <img class="Hangye_img" src="../../../assets/images/Hangye_red.png" alt="">
-          <img class="Hangye_icon" :src='"../../../assets/images/IndustryIcon/IndustryIcon"+ add(index) +".svg"' alt="">
+          <img class="Hangye_icon" :src='"../../../assets/images/IndustryIcon/IndustryIcon"+add(index<33? index : Math.floor(Math.random()*33)) +".svg"' :onerror="errorImg01"  alt="">
         </div>
         <i class="Hangye_i fontSize22 colorH">{{ item }}</i>
         <ul class="Hangye_ul">
-          <li @click="Hangye_li_click(item2)" class="Hangye_li fontSize20" v-for="(item2,index) in arr1[index]" :key="index">{{ item2 }}</li>
+          <li @click="Hangye_li_click(item2)" class="Hangye_li fontSize20" v-for="(item2,index) in arr1[index]" :key="index">{{ item2 }}
+            <div v-if="item3[0] == '2'" class="subdivide" v-for="(item3,index) in arrFlag[index]" :key="index">
+              <p>{{ SanJiHangYe[index].sanjihy }}</p>
+            </div>
+          </li>
+        </ul>
+      </div> -->
+
+      <div class="Hangye_box" :id="'active'+index" v-for="(item,index) in result" :key="index">
+        <div class="Hangye_icons">
+          <img class="Hangye_img" src="../../../assets/images/Hangye_red.png" alt="">
+          <img class="Hangye_icon" :src='"../../../assets/images/IndustryIcon/IndustryIcon"+add(index<33? index : Math.floor(Math.random()*33)) +".svg"' :onerror="errorImg01"  alt="">
+        </div>
+        <i class="Hangye_i fontSize22 colorH">{{ item.name }}</i>
+        <ul class="Hangye_ul">
+          <li @click="Hangye_li_click(_item.erjihy,_item.flag)" class="Hangye_li fontSize20" v-for="(_item,_index) in item.value" :key="_index">
+            {{ _item.erjihy }}
+            <div class="subdivide" v-if=" _item.flag == '2'">
+              <p class="sub_p" @click.stop="Hangye_li_click(__item)" v-for="(__item,__index) in _item.sanjihy" :key="__index">{{__item}}</p>
+            </div>
+          </li>
         </ul>
       </div>
+
+
       <div style="width:1px;height:1px"></div>
     </div>
     <div class="hysearch" v-else>
@@ -59,8 +82,12 @@
 export default {
   data() {
     return {
+      ceshi: false,
       arr: [],
       arr1: [],
+      arrFlag: [],
+      result:[],
+      // SanJiHangYe: [],
       // rm1: [],
       // rm2: [],
       // rmname1: [],
@@ -69,10 +96,13 @@ export default {
       hhh: true,
       searchArr: [],
       Go_Top: false,
+      TopList:"",
+      errorImg01: 'this.src="' + require('../../../assets/images/IndustryIcon/IndustryIcon1.svg') + '"'
     };
   },
   mounted() {
     this.IndustryMonitoring();
+    this.TopIndustry()
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
@@ -88,7 +118,20 @@ export default {
         this.Go_Top = false
       }
     },
-    Hangye_li_click(value) {
+    TopIndustry() {
+      this.axios({
+        url: this.api.IndustryTop,
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        // console.log(res)
+        this.TopList = res.data.data
+      })
+    },
+    Hangye_li_click(value,flag) {
+      if(flag == 2) return
       // console.log(value)
       var self = this
       self.$router.push({
@@ -98,10 +141,8 @@ export default {
     },
     changeHash(idName) {
       document.querySelector(idName).scrollIntoView(true);
-      // console.log(idName.offsetTop,"offset")
-      // console.log(setTop,"setTop")
-      // console.log(document.documentElement.scrollTop,"scrolltop")
       document.documentElement.scrollTop = document.documentElement.scrollTop-110
+      // console.log(idName)
     },
     IndustryMonitoring() {
       var self = this;
@@ -113,26 +154,57 @@ export default {
         }
       }).then(res => {
         // console.log(res.data.data)
+        this.result = res.data.data
         // console.log(res.data.data[0].name)
         // this.rmname1 = res.data.data[0].name
         // this.rmname2 = res.data.data[1].name
         // this.rm1 = res.data.data[0].value
         // this.rm2 = res.data.data[1].value
-        var arr = [];
-        var arr1 = [];
-
-        for (let i = 0; i < res.data.data.length; i++) {
-          let str = res.data.data[i].name;
-          arr.push(str);
-          var arr2 = [];
-          for (let j = 0; j < res.data.data[i].value.length; j++) {
-            let haha = res.data.data[i].value[j].erjihy;
-            arr2.push(haha);
-          }
-          arr1.push(arr2);
-        }
-        this.arr = arr;
-        this.arr1 = arr1;
+        // var arr = [];
+        // var arr1 = [];
+        // var arrFlag = [];
+        // var SanJiHangYe = [];
+        // res.data.data.forEach(item=>item.value.forEach(_item=>SanJiHangYe.push(_item.sanjihy[0])))
+        // console.log( SanJiHangYe )
+        // console.log("%c","background:#f00;color:#fff;font-size:30px;");
+        // 这代码就像诗一样
+        // for (let i = 0; i < res.data.data.length; i++) {
+        //   let str = res.data.data[i].name;
+        //   arr.push(str);
+        //   var arr2 = [];
+        //   var arr3 = [];
+        //   var there1 = [];
+        //   // var arr4 = [];
+        //   for (let j = 0; j < res.data.data[i].value.length; j++) {
+        //     let haha = res.data.data[i].value[j].erjihy;
+        //     let flag = res.data.data[i].value[j].flag;
+        //     let there = res.data.data[i].value[j]
+        //     arr2.push(haha);
+        //     arr3.push(flag);
+        //     there1.push(there);
+        //     // var arr4 = []
+        //     // arr4.push(arr4)
+        //     // for (let s = 0; s < res.data.data[i].value[j].sanjihy.length; s++){
+        //     //   let SanJiHangYe = res.data.data[i].value[j].sanjihy[s]
+        //     //   arr4.push(SanJiHangYe)
+        //     // }
+        //   }
+        //   arr1.push(arr2);
+        //   arrFlag.push(arr3);
+        //   SanJiHangYe.push(there1);
+        //   // SanJiHangYe.push(arr4);
+        // }
+        // console.log(SanJiHangYe,"SanJiHangYe")
+        // for(let i = 0; i< SanJiHangYe.sanjihy.length; i++){
+        //   let threeHangye = SanJiHangYe.sanjihy[i].value
+        //   console.log(threeHangye,"threeHangye")
+        // }
+        // this.arr = arr;
+        // this.arr1 = arr1;
+        // this.arrFlag = arrFlag;
+        // this.SanJiHangYe = SanJiHangYe;
+        // console.log(this.arrFlag,"this.arrFlag")
+        // console.log(this.SanJiHangYe,"this.SanJiHangYe")
         setTimeout(function() {
           self.click();
         }, 200);
@@ -249,6 +321,14 @@ export default {
 .OneclassList{
   background: #fff;
   padding: 30px 30px 38px 30px;
+  .OneclassListTei{
+    font-weight: 600;
+    margin: 0 12px;
+  }
+  .OneclassListTei:hover{
+    cursor: pointer;
+    color: #CF111B;
+  }
   .OneClass{
     display: inline-block;
     margin: 0 12px;
@@ -440,11 +520,35 @@ export default {
           margin: 0 10px 20px 10px;
           padding: 0 15px;
 
+          .subdivide{
+            display: none;
+            z-index:4;
+            position: absolute;
+            min-width: 200px;
+            background:#fff;
+            box-shadow:0px 0px 6px 0px rgba(0,0,0,0.2);
+            border-radius:4px;
+            border: 1px solid #ccc;
+            .sub_p{
+              line-height: 30px;
+              padding: 5px 10px;
+              // min-width:200px;
+              // float:left;
+            }
+            .sub_p:hover{
+              color:#fff;
+              background:#CF111B;
+            }
+          }
         }
         .Hangye_li:hover{
           color: #fff;
           background: #CF111B;
           cursor: pointer;;
+          .subdivide{
+            color: #000;
+            display: block;
+          }
         }
       }
     }

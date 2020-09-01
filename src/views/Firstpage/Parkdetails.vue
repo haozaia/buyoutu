@@ -2,43 +2,15 @@
   <div id="Parkdetails">
     <div id="C_content">
       <div class="C_title">
-        <span class="Title_left"></span>园区详情 - {{this.parkname}}
+        <span class="Title_left"></span>{{this.parkname}} 
         <!-- <div class="container_message fontSize20"> -->
             <!-- <img src="../../assets/images/Hangye_tishi.svg" alt /> -->
-            <p style="display:inline-block;font-size:20px;color:#000;margin-left:10px;"> 共为您查询到企业<span class="colorH"> {{ this.total }} </span>家
-            <span class="GoMap" @click="GoMap" v-show="location != 'null'">点击进入地图版</span></p>
+            <p style="display:inline-block;font-size:20px;color:#000;margin-left:10px;">共<span class="colorH"> {{ this.total }} </span>家&nbsp;&nbsp;<span v-show="this.mianji != 'null'">占地:<span class="colorH"> {{ this.mianji }} </span>(公顷)</span> <span v-show="this.zhudaocy != 'null'">主导产业:<span class="colorH"> {{ this.zhudaocy }} </span>&nbsp;&nbsp;</span>
+            <span class="GoMap" @click="GoMap" v-show="location != 'null'">进入地图版</span></p>
           <!-- </div> -->
         <el-button class="rtPark" @click="rtPark" type="primary">返回</el-button>
       </div>
-      <!-- 搜索、查询 -->
-      <!-- <div class="Five">
-      <div class="search_l">
-        <i class="iconfont icon-sousuo"></i>
-        <input id="code" type="text" v-model="gongsiname" placeholder="该功能暂未完善,敬请期待..." autocomplete="off" />
-      </div>
-      <div class="search_r">
-        <i class="iconfont icon-sousuo"></i>
-        <input id="shareholder" type="text" v-model="gudongmc" placeholder="该功能暂未完善,敬请期待..." autocomplete="off" />
-      </div>
-      <div class="query">
-        <button @click="tablelist()">查询</button>
-      </div>
-      </div>-->
       <div class="park-content">
-        <!-- <div class="ind-title">
-          <p>
-            <i class="icon icon-tips"></i>
-            <span>{{this.parkname}}</span> 为您查询到企业
-            <span id="Tag">{{ this.total }}</span> 个
-          </p>
-        </div> -->
-        <!-- <div class="container_top">
-          <div class="container_message fontSize20">
-            <img src="../../assets/images/Hangye_tishi.svg" alt />
-            共为您查询到企业<span class="colorH"> {{ this.total }} </span>家
-            <span class="GoMap" @click="GoMap" v-show="location != 'null'">点击进入地图版</span>
-          </div>
-        </div> -->
         <div class="chaxun">
           <div class="form-wrapper">
             <div class="form-group ChaXun">
@@ -71,17 +43,15 @@
                   placeholder="选择日期"
                 ></el-date-picker>
               </div>
-              <div class="form-group JyFw">
+              <!-- <div class="form-group JyFw">
                 <span class="control-label jyfw">经营范围：</span>
                 <input class="input_k" v-model="jingyingfw" type="text" placeholder="计算机/电子设备/制造" />
-              </div>
+              </div> -->
               <el-button @click="searchlist(1,20)" type="primary">查询</el-button>
-              <el-button @click="Ex_port()" type="primary">导出</el-button>
+              <el-button v-if="unitCode == 3" @click="Ex_port()" type="primary">导出</el-button>
             </div>
           </div>
         </div>
-        <!-- <div class="map_body"> -->
-        <!-- <div id="map_left"> -->
         <div class="el-tabs">
           <div class="query-result">
             <div class="table-wrapper">
@@ -97,11 +67,6 @@
                     >{{scope.row.name}}</router-link>
                   </template>
                 </el-table-column>
-                <!-- <el-table-column prop="suoshuzbsc" align="center" label="所属资本市场">
-                  <template slot-scope="{row}">
-                    {{ row.suoshuzbsc || '-' }}
-                  </template>
-                </el-table-column> -->
                 <el-table-column prop="fadingdbr" align="center" label="法定代表人">
                   <template slot-scope="{row}">
                     {{ row.fadingdbr || '-' }}
@@ -134,12 +99,6 @@
           ></el-pagination>
           <el-button size="small" :disabled="suibian" class="paginationsy" @click="paginationsy">首页</el-button>
         </div>
-        <!-- <div class="FYbottom" style="height:30px;" v-if="FYbottom"></div> -->
-        <!-- 分页dom end -->
-        <!-- </div> -->
-        <!-- 地图 -->
-        <!-- <div id="container"></div> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -152,6 +111,7 @@ export default {
     return {
       // FenYe: true, //隐藏分页器
       // FYbottom: false,
+      unitCode: "",
       parkname: "",
       parkid: "",
       gongsiname: "",
@@ -171,19 +131,30 @@ export default {
       username: "",
       telphone: "",
       location: "",
+      zhudaocy: "",
+      mianji: "",
+      selected: "", //Park用户选择的地区信息
       // MapHidden: true,
     };
   },
   mounted() {
     var self = this
+    this.unitCode = localStorage.getItem("unitCode");
     this.location = Base64.decode(this.$route.query.location);
-    console.log(this.location);
-    var yuanquname = this.$route.query.yuanquname;
-    this.parkname = Base64.decode(yuanquname);
+    // console.log(this.location,1)
+    this.mianji = Base64.decode(this.$route.query.mianji);
+    // console.log(this.mianji,1)
+    this.zhudaocy = Base64.decode(this.$route.query.zhudaocy);
+    // console.log(this.zhudaocy,1)
+    this.parkname = Base64.decode(this.$route.query.yuanquname);
+    // console.log(this.parkname,1)
+    this.parkid = Base64.decode(this.$route.query.Park_Id);2
+    // console.log(this.parkid,1)
     // this.blockY();
     self.username = localStorage.getItem("userName");
     self.telphone = localStorage.getItem("mobile");
-    this.parkid = this.$route.query.park; 
+    self.selected = localStorage.getItem("selected");//获取Park页面存储的地区信息
+    // this.parkid = this.$route.query.park; 
     this.map();
     this.companylist();
     this.Exportcount();
@@ -305,6 +276,7 @@ export default {
     },
     companylist() {
       var self = this;
+      console.log("执行了")
       // self.FenYe = true
       var right = document.getElementsByClassName("btn-next");
         right[0].disabled = "";
@@ -354,7 +326,7 @@ export default {
       self.companylist();
     },
     rtPark() {
-      window.history.go(-1);
+      window.history.back(-1);
     },
     
     GoMap() {
@@ -375,7 +347,7 @@ export default {
     text-align: left !important;
   }
   .rtPark {
-    float: right;
+    // float: right;
     margin-top: 12px;
     background: #fff;
     border: 1px solid #c03532;
@@ -413,7 +385,7 @@ export default {
   .GoMap{
         cursor: pointer;
         font-weight: 600;
-        color: #cf111b;
+        // color: #cf111b;
         margin-left: 5px;
       }
   .container_top {
@@ -429,7 +401,7 @@ export default {
       .GoMap{
         cursor: pointer;
         font-weight: 600;
-        color: #cf111b;
+        // color: #cf111b;
         margin-left: 10px;
       }
       height: 40px;
@@ -498,4 +470,9 @@ export default {
     
   }
 }
+</style>
+<style lang="scss" scoped>
+.rtPark {
+    float: right;
+  }
 </style>

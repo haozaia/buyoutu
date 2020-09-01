@@ -8,12 +8,13 @@
           <div class="controlCity inline">
             <p>
               <span class="control colorH fontSize20">选择城市：</span>
+
               <el-cascader
                 ref="refHandle"
                 style="width:200px;"
                 v-model="city_search"
                 :options="city_data"
-                :props="{ checkStrictly: true }"
+                :props="{ checkStrictly: true}"
                 @change="handleChange"
                 clearable
                 filterable
@@ -26,6 +27,12 @@
             type="primary"
             @click="openDialog"
           >查看详情</el-button>
+          <el-button
+            v-show="dialogTable"
+            style="margin-top:-6px;"
+            type="primary"
+            @click="deleteDialog"
+          >清除</el-button>
         </div>
 
         <div class="search_r">
@@ -41,8 +48,9 @@
       <div class="allmapWapper">
         <div id="allmap"></div>
       </div>
+      
     </div>
-    <el-dialog title :visible.sync="dialogTableVisible" @close="handleClose" width="80%">
+    <el-dialog title :visible.sync="dialogTableVisible" @close="handleClose" width="1500px">
       <div slot="title" class="header-title fontSize24">
         <img class="gpsImg inline" src="../../assets/images/mapSearch/gps.svg" />
         <p class="inline">
@@ -50,6 +58,22 @@
           <span class="colorH">{{address}}</span>
           &nbsp;&nbsp; 附近{{distance}}KM 以内公司
         </p>
+        <div class="form-group inline" style="margin-left:20px">
+          <el-switch
+            style="margin-top:-4px;"
+            v-model="isOld"
+            inactive-text="切换行业 :"
+            @change="handleCHANGEradio"
+            active-color="#CF111B"
+          ></el-switch>
+        </div>
+        <el-button
+          v-show="total"
+          @click="TipsB"
+          style="float: right; margin-right: 50px;"
+          type="primary"
+          v-if="unitCode==3"
+        >导出</el-button>
       </div>
       <div class="Maptop">
         <!-- <div class="container_message fontSize20">
@@ -58,11 +82,9 @@
           <span class="colorH">{{ total }}</span>
           家
         </div>-->
-        <span class="fontSize20">查找范围：</span>
-
         <el-cascader
           placeholder="行业类型"
-          ref="refHandle"
+          ref="refHandles"
           style="width:138px;"
           v-model="hangye_search"
           :options="hangye_data"
@@ -127,10 +149,50 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <span style="margin-left:50px;">
+        <el-popover title trigger="click" width="520">
+          <el-form ref="form" label-width="112px" :model="form" :rules="rules">
+            <el-form-item label="成立年限：" prop="styear">
+              <el-col :span="11">
+                <el-form-item prop="styear">
+                  <el-input style="width:auto;" v-model="form.styear" placeholder="最小年限"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col style="text-align: center;" :span="2">-</el-col>
+              <el-col :span="11">
+                <el-form-item prop="endyear">
+                  <el-input style="width:auto;" v-model="form.endyear" placeholder="最大年限"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-form-item>
+            <el-form-item label="注册资本：">
+              <el-col :span="11">
+                <el-form-item prop="stziben">
+                  <el-input style="width:auto;" v-model="form.stziben" placeholder="最小注册资本(万)"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col style="text-align: center;" :span="2">-</el-col>
+              <el-col :span="11">
+                <el-form-item prop="endziben">
+                  <el-input style="width:auto;" v-model="form.endziben" placeholder="最大注册资本(万)"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-form-item>
+
+            <div style="text-align:center">
+              <el-button size="mini" type="primary" @click="submitForm('form')">确定</el-button>&nbsp;&nbsp;
+              <el-button size="mini" type="primary" @click="delForm('form')">清空</el-button>
+            </div>
+          </el-form>
+          <el-tag
+            style="display:inline-block;  margin-right:10px;  vertical-align: middle;  cursor:pointer; font-size:20px;"
+            slot="reference"
+            type="danger"
+          >更多</el-tag>
+        </el-popover>
+        <span style="margin-left:20px;">
           共
           <span class="colorH">{{ total }}</span>
-          家企业
+          家
         </span>
       </div>
       <div class="tableWapper" v-show="total !=0">
@@ -226,7 +288,6 @@
             </el-table>
           </div>
         </div>
-
       </div>
     </el-dialog>
 
@@ -238,6 +299,62 @@
 // import BMap from "BMap";
 export default {
   data() {
+    var styear = (rule, value, callback) => {
+      if (value === "") {
+        callback();
+      } else {
+        if (Number.isInteger(Number(value)) && Number(value) > 0) {
+          callback();
+        } else {
+          callback(new Error("请输入大于0的整数"));
+        }
+      }
+    };
+    var endyear = (rule, value, callback) => {
+      var self = this;
+      if (self.form.styear != "") {
+        if (Number.isInteger(Number(value)) && Number(value) > 0) {
+          if (value === "") {
+            callback(new Error("请输入大于开始年限的整数"));
+          } else if (value * 1 <= self.form.styear) {
+            callback(new Error("请输入大于开始年限的整数"));
+          } else if (value.length > 9) {
+            callback(new Error("请输入十位以内整数"));
+          } else {
+            callback();
+          }
+          callback();
+        } else {
+          callback(new Error("请输入大于0的整数"));
+        }
+      } else if (value != "") {
+        callback(new Error("请输入最小年限"));
+      } else {
+        callback();
+      }
+    };
+    var endziben = (rule, value, callback) => {
+      var self = this;
+      if (self.form.stziben != "") {
+        if (Number.isInteger(Number(value)) && Number(value) > 0) {
+          if (value === "") {
+            callback(new Error("请输入大于最小资本的整数"));
+          } else if (value * 1 <= self.form.stziben) {
+            callback(new Error("请输入大于最小的整数"));
+          } else if (value.length > 9) {
+            callback(new Error("请输入十位以内整数"));
+          } else {
+            callback();
+          }
+        } else {
+          callback(new Error("请输入大于0的整数"));
+        }
+      } else if (value != "") {
+        callback(new Error("请输入最小资本"));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogTableVisible: false,
       dialogTable: "",
@@ -248,10 +365,11 @@ export default {
       loading: true,
       city_data: [],
       hangye_data: [],
-      city_search: "",
+      city_search: [],
       sheng: "",
       shi: "",
-      hangye_search: "",
+      qu: "",
+      hangye_search: [],
       yiji: "",
       erji: "",
       name: "",
@@ -262,8 +380,22 @@ export default {
       chenglisj: "",
       phone: "",
       gaoxinqy: "",
-      zibenscdy :'',
-      
+      zibenscdy: "",
+      shengyu: 0,
+      count: "",
+      form: {
+        styear: "",
+        endyear: "",
+        stziben: "",
+        endziben: ""
+      },
+      rules: {
+        styear: [{ validator: styear, trigger: "blur" }],
+        endyear: [{ validator: endyear, trigger: "blur" }],
+        stziben: [{ validator: styear, trigger: "blur" }],
+        endziben: [{ validator: endziben, trigger: "blur" }]
+      },
+
       leixing: "",
       options: [
         {
@@ -327,10 +459,6 @@ export default {
       ],
       options4: [
         {
-          value: "1",
-          label: "大陆企业"
-        },
-        {
           value: "2",
           label: "港澳台企业"
         },
@@ -361,7 +489,11 @@ export default {
           label: "已私募"
         }
       ],
-      showTable: true
+      showTable: true,
+      username: "",
+      telphone: "",
+      isOld: false,
+      unitCode: ""
     };
   },
   watch: {
@@ -370,34 +502,204 @@ export default {
     },
     shi() {
       this.getCity();
+    },
+    qu() {
+      // console.log(123)
+      this.getCity();
+    },
+    city_search(value) {
+      var self = this;
+      // console.log(value);/
+      self.sheng = value[0] ? value[0] : "";
+      self.shi = value[1] ? value[1] : "";
+      self.qu = value[2] ? value[2] : "";
     }
   },
   created() {},
   mounted() {
     var self = this;
+    self.username = localStorage.getItem("userName");
+    self.telphone = localStorage.getItem("mobile");
+    self.unitCode = localStorage.getItem("unitCode");
+    console.log(this.$route.query.quyuCity);
+    if (this.$route.query.quyuCity) {
+      if (this.$route.query.quyuCity === '"上海市"') {
+        console.log("上海");
+        self.city_search = ["上海市"];
+        setTimeout(() => {
+          self.citySearch(1);
+        }, 100);
+      } else {
+        self.city_search = this.$route.query.quyuCity
+          ? JSON.parse(this.$route.query.quyuCity)
+          : [];
+        setTimeout(() => {
+          self.citySearch(1);
+        }, 100);
+      }
+    }
+    // console.log( self.city_search)
     self.drawMap();
     self.citylist();
-    self.hangyelist();
-
+    self.Exportcount();
     document.getElementById("allmap").style.minHeight =
       document.getElementById("leftNav").offsetHeight - 102 + "px";
-    console.log(document.getElementById("allmap").style.minHeight, "ddd");
   },
   methods: {
-    openDialog(){
-      var self=this
-      self.dialogTableVisible = true
-       self.getMapCompanyLists();
-        self.Rightlist();
-        self.Leftlist();
-    },
-    handleSelect() {
+    submitForm(formName) {
       var self = this;
-      console.log(123);
+      self.isCountData = true;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (self.form.styear) {
+            self.chenglisj = "";
+          } else if (self.form.stziben) {
+            self.zhucezb = "";
+          }
+          setTimeout(() => {
+            self.page = 1;
+            self.Leftlist();
+            self.Rightlist();
+            self.getMapCompanyLists();
+          }, 100);
+        } else {
+          this.$message("请正确填写相应信息");
+        }
+      });
+    },
+    delForm(formName) {
+      var self = this;
+      this.$refs[formName].resetFields();
       self.page = 1;
       self.Leftlist();
       self.Rightlist();
       self.getMapCompanyLists();
+    },
+    handleCHANGEradio() {
+      var self = this;
+      (self.erji = ""),
+        (self.yiji = ""),
+        (self.hangye_search = []),
+        // this.$refs.refHandles.getCheckedNodes()=[]
+        self.Leftlist(),
+        self.getMapCompanyLists();
+      self.Rightlist();
+      self.hangyelist();
+    },
+    TipsB() {
+      var self = this;
+      this.$prompt(
+        "请输入导出条数(剩余额度" + this.shengyu + "条)",
+        "导出向导(自动过滤已导出数据)",
+        {
+          confirmButtonText: "导出",
+          showCancelButton: false,
+          inputPattern: /^(0\.0[1-9]|0\.[1-9]\d|[1-9]\d?(\.\d\d)?|[1-4]\d\d(\.\d\d)?|500)$/,
+          inputErrorMessage: "请输入1-500之间的整数"
+        }
+      )
+        .then(({ value }) => {
+          console.log(value);
+          if (value > self.shengyu) {
+            this.$message.error("导出数量超出今日额度");
+          } else {
+            console.log(222);
+            self.count = value;
+            let url =
+              self.api.exportbyqiyesearchesapi +
+              "?type=" +
+              self.zhucezb +
+              "&longitude=" +
+              self.longitude +
+              "&latitude=" +
+              self.latitude +
+              "&distance=" +
+              self.distance +
+              "&oldhangye=" +
+              self.yiji +
+              "&oldejhangye=" +
+              self.erji +
+              "&lianxidh=" +
+              self.phone +
+              "&leixing=" +
+              self.leixing +
+              "&isGx=" +
+              self.gaoxinqy +
+              "&age=" +
+              self.chenglisj +
+              "&zibenscdy=" +
+              self.zibenscdy +
+              "&username=" +
+              self.username +
+              "&telphone=" +
+              self.telphone +
+              "&isOld=" +
+              self.isOld +
+              "&count=" +
+              self.count;
+            window.location.href = url; //  跳转链接
+            setTimeout(function() {
+              self.Exportcount();
+            }, 2000);
+          }
+        })
+        .catch(value => {
+          console.log(value);
+          this.$message({
+            type: "info",
+            message: "取消导出"
+          });
+        });
+    },
+    Exportcount() {
+      var self = this;
+      let params = {
+        username: self.username,
+        telphone: self.telphone
+      };
+      this.axios({
+        url: this.api.Exportcount,
+        method: "post",
+        data: this.$qs.stringify(params),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        self.shengyu = res.data.data[0].shengyu;
+        // self.yidao = res.data.data[0].yidao;
+      });
+    },
+    openDialog() {
+      var self = this;
+      self.dialogTableVisible = true;
+      self.getMapCompanyLists();
+      self.Rightlist();
+      self.hangyelist();
+      self.Leftlist();
+    },
+    deleteDialog() {
+      var self = this;
+      self.map.clearOverlays();
+      self.dialogTable = false;
+    },
+    handleSelect() {
+      var self = this;
+      console.log(self.zhucezb);
+
+      if (self.chenglisj) {
+        self.form.styear = "";
+        self.form.endyear = "";
+      }
+      if (self.zhucezb) {
+        self.form.stziben = "";
+        self.form.endziben = "";
+      }
+      setTimeout(() => {
+        self.page = 1;
+        self.Leftlist();
+        self.Rightlist();
+        self.getMapCompanyLists();
+      }, 100);
     },
     handleClose() {
       var self = this;
@@ -411,14 +713,20 @@ export default {
       self.erji = "";
       self.zibenscdy = "";
       self.showTable = true;
+      self.page = 1;
+      self.isOld = false;
+      this.$refs["form"].resetFields();
     },
 
     handleChange(value) {
       var self = this;
+      console.log(self.city_search);
       self.sheng = value[0] ? value[0] : "";
       self.shi = value[1] ? value[1] : "";
+      self.qu = value[2] ? value[2] : "";
       console.log(self.sheng);
       console.log(self.shi);
+      console.log(self.qu);
       this.page = 1;
       // this.Gongxinjsqy()
     },
@@ -456,7 +764,9 @@ export default {
       var self = this;
       self.map.clearOverlays();
       self.dialogTable = false;
-      if (self.shi) {
+      if (self.qu) {
+        self.map.centerAndZoom(self.qu, 13);
+      } else if (self.shi) {
         self.map.centerAndZoom(self.shi, 10);
       } else if (self.sheng) {
         self.map.centerAndZoom(self.sheng, 7);
@@ -466,10 +776,9 @@ export default {
     },
     drawMap() {
       var self = this;
-
       // 百度地图API功能
-      var map = new BMap.Map("allmap");
-      self.map = new BMap.Map("allmap");
+      var map = new BMap.Map("allmap", { enableMapClick: false });
+      self.map = new BMap.Map("allmap", { enableMapClick: false });
       self.getCity(map);
 
       // 定义一个控件类,即function
@@ -501,17 +810,81 @@ export default {
           strokeOpacity: 0.3
         }
       });
+      var overlay = null; //圆覆盖物
+      var label = null; //显示半径信息
+      var overlaycomplete = function(e) {
+        centerPoint = null;
+        map.removeOverlay(label);
+      };
+      //添加鼠标绘制工具监听事件，用于获取绘制结果
+      drawingManager.addEventListener("overlaycomplete", overlaycomplete);
+      var centerPoint = null; //圆心
+      self.map.addEventListener("mousemove", showInfo);
+      function showInfo(e) {
+        //判断当前是画圆的模式
+        if (drawingManager._mask != null) {
+          // console.log(123);
+          drawingManager._mask.addEventListener("mousedown", getCenter);
+          map.removeEventListener("mousemove", showInfo);
+        }
+      }
+
+      var getCenter = function(e) {
+        if (centerPoint == null) {
+          centerPoint = e.point;
+          drawingManager._mask.addEventListener("mousemove", showRadis);
+        }
+      };
+      var showRadis = function(e) {
+        var radius = drawingManager._map.getDistance(centerPoint, e.point);
+        if (!isNaN(radius)) {
+          self.map.removeOverlay(label); //取消上一个显示半径的label
+          //添加文字标签
+          var opts = {
+            position: e.point, // 指定文本标注所在的地理位置（当前鼠标的位置）
+            offset: new BMap.Size(0, 0) //设置文本偏移量
+          };
+          label = new BMap.Label(
+            "当前半径：" + (radius / 1000).toFixed(2) + "公里",
+            opts
+          );
+          // 创建文本标注对象
+          label.setStyle({
+            border: "1px solid #ccc",
+            maxWidth: "none "
+          });
+          self.map.addOverlay(label); //添加label
+        }
+      };
+
       // 创建地理编码实例
       var myGeo = new BMap.Geocoder();
-
       //添加鼠标绘制工具监听事件，用于获取绘制结果
       drawingManager.addEventListener("circlecomplete", function(e, overlay) {
         self.map.clearOverlays();
-        var circleLay = overlay;
-        self.map.addOverlay(circleLay);
-        drawingManager.close();
-        var radius = parseInt(e.getRadius());
         var center = e.getCenter();
+
+        var radius = 0;
+        if (parseInt(e.getRadius()) > 1500000) {
+          radius = 1500000;
+          self.$message({
+            message: "最大只能选取1500公里内的公司！",
+            type: "warning"
+          });
+        } else {
+          radius = parseInt(e.getRadius());
+        }
+
+        let point = new BMap.Point(center.lng, center.lat); // 创建点坐标
+        var circle = new BMap.Circle(point, radius, {
+          strokeColor: "#afbfdc",
+          strokeWeight: 1,
+          fillColor: "#00a0e9",
+          fillOpacity: 0.15
+        }); //创建圆
+        self.map.addOverlay(circle);
+
+        drawingManager.close();
         console.log(center);
         self.distance = radius / 1000;
         self.dialogTable = true;
@@ -520,7 +893,6 @@ export default {
           result
         ) {
           if (result) {
-            // alert(result.address);
             self.address = result.address;
           }
         });
@@ -528,6 +900,7 @@ export default {
         self.latitude = center.lat;
         self.getMapCompanyList(self.map);
         self.getMapCompanyLists();
+        self.hangyelist();
         self.Rightlist();
         self.Leftlist();
         self.dialogTableVisible = true;
@@ -541,7 +914,7 @@ export default {
     citylist() {
       var self = this;
       this.axios({
-        url: this.api.LXshengshiapi,
+        url: this.api.LXshengshiquapi,
         method: "post",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -554,36 +927,63 @@ export default {
     //请求行业列表
     hangyelist() {
       var self = this;
-      this.axios({
-        url: this.api.Industrysapi,
-        method: "post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }).then(res => {
-        // console.log(JSON.stringify(res.data.data));
-        self.hangye_data = res.data.data;
-      });
-    },
-    //查询框
-    citySearch() {
-      var self = this;
       let params = {
-        province: self.sheng ? self.sheng : "全国",
-        city: self.shi,
-        keyword: self.name
+        isOld: self.isOld
       };
       this.axios({
-        url: this.api.CokeywordsearchapimKebilist,
+        url: this.api.Industrysapi,
         data: this.$qs.stringify(params),
         method: "post",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        self.punctuation(res.data.data);
-        // self.city_data = res.data.data;
+        self.hangye_data = res.data.data;
       });
+    },
+    //查询框
+    citySearch(sourceModule) {
+      var self = this;
+      if (self.name == "" && !sourceModule) {
+        this.$message.error({
+          message: "请输入搜索关键字~",
+          duration: 3000,
+          center: true
+        });
+      } else {
+        let params = {
+          province: self.sheng ? self.sheng : "全国",
+          city: self.shi,
+          area: self.qu,
+          keyword: self.name,
+          sourceModule: sourceModule
+        };
+        this.axios({
+          url: this.api.CokeywordsearchapimKebilist,
+          data: this.$qs.stringify(params),
+          method: "post",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }).then(res => {
+          console.log(res.data.data.length == 0);
+          if (res.data.data.length == 0) {
+            this.$message.error({
+              message: "暂无数据~",
+              duration: 3000,
+              center: true
+            });
+            self.map.clearOverlays();
+            self.dialogTable = false;
+          } else {
+            self.map.clearOverlays();
+            self.punctuation(res.data.data);
+            self.dialogTable = false;
+          }
+
+          // self.city_data = res.data.data;
+        });
+      }
     },
     //请求dian
     getMapCompanyList() {
@@ -618,9 +1018,14 @@ export default {
         leixing: self.leixing,
         isGx: self.gaoxinqy,
         age: self.chenglisj,
-        zibenscdy:self.zibenscdy,
+        zibenscdy: self.zibenscdy,
         page: self.page,
-        limit: 10
+        limit: 10,
+        isOld: self.isOld,
+        minAge: self.form.styear,
+        maxAge: self.form.endyear,
+        minNumber: self.form.stziben,
+        maxNumber: self.form.endziben
       };
       this.axios({
         url: this.api.Park_MapList,
@@ -652,7 +1057,33 @@ export default {
         var marker = new BMap.Marker(
           new BMap.Point(data_info[i].location.lon, data_info[i].location.lat)
         ); // 创建标注
-        var content = `<a style="cursor:pointer;color:#cf111b;font-weight:600;display:inline-block;margin-bottom:6px;" class="GoDetails">${data_info[i].name}</a></br><a>地址：${data_info[i].zhucedz}</a>`;
+        var content = `<a style="cursor:pointer;color:#cf111b;width:100%;font-weight:600;margin-bottom:6px;display:inline-block;" class="GoDetails">${
+          data_info[i].name
+        }</a>${
+          data_info[i].fadingdbr
+            ? "</br><a>法定代表人：" + data_info[i].fadingdbr
+            : ""
+        }</a>${
+          data_info[i].chenglisj
+            ? "</br><a>成立时间：" + data_info[i].chenglisj
+            : ""
+        }</a>${
+          data_info[i].zhucezbint
+            ? "</br><a>注册资本(万元)：" + data_info[i].zhucezbint
+            : ""
+        }</a>${
+          data_info[i].suoshuejhy
+            ? "</br><a>主营业务：" + data_info[i].suoshuejhy
+            : ""
+        }</a>${
+          data_info[i].dianhua
+            ? "</br><a>联系电话：" + data_info[i].dianhua
+            : ""
+        }</a></br><a href="https://api.map.baidu.com/marker?location=${
+          data_info[i].location.lat
+        },${data_info[i].location.lon}&title=${data_info[i].name}&content=${
+          data_info[i].zhucedz
+        }&output=html" target="_blank">地址：${data_info[i].zhucedz}</a>`;
         self.map.addOverlay(marker); // 将标注添加到地图中
         self.addClickHandler(content, marker);
       }
@@ -663,7 +1094,7 @@ export default {
       marker.addEventListener("click", function(e) {
         var p = e.target;
         var opts = {
-          width: 250, // 信息窗口宽度
+          width: 300, // 信息窗口宽度
           enableMessage: true //设置允许信息窗发送短息
         };
         var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
@@ -695,7 +1126,14 @@ export default {
         type: self.zhucezb,
         lianxidh: self.phone,
         leixing: self.leixing,
-        age: self.chenglisj
+        isGx: self.gaoxinqy,
+        age: self.chenglisj,
+        zibenscdy: self.zibenscdy,
+        isOld: self.isOld,
+        minAge: self.form.styear,
+        maxAge: self.form.endyear,
+        minNumber: self.form.stziben,
+        maxNumber: self.form.endziben
       };
       this.axios({
         url: this.api.Park_leftBing,
@@ -770,7 +1208,14 @@ export default {
         type: self.zhucezb,
         lianxidh: self.phone,
         leixing: self.leixing,
-        age: self.chenglisj
+        isGx: self.gaoxinqy,
+        age: self.chenglisj,
+        zibenscdy: self.zibenscdy,
+        isOld: self.isOld,
+        minAge: self.form.styear,
+        maxAge: self.form.endyear,
+        minNumber: self.form.stziben,
+        maxNumber: self.form.endziben
       };
       this.axios({
         url: this.api.Park_rightBing,
@@ -780,14 +1225,14 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
-        console.log(res.data.data, "chartleft");
+        // console.log(res.data.data, "chartleft");
         self.righttableData = res.data.data;
         self.ChartsR();
       });
     },
     ChartsR() {
       var self = this;
-      console.log(self.righttableData, "self.righttableData");
+      // console.log(self.righttableData, "self.righttableData");
       self.charts1 = this.$echarts.init(document.getElementById("ChartsR"));
       var option1 = {
         title: {
@@ -850,6 +1295,10 @@ export default {
     margin: 0;
     font-family: "微软雅黑";
   }
+  .el-dialog__wrapper {
+    z-index: 2000 !important;
+  }
+
   #allmap {
     width: 100%;
   }
@@ -889,6 +1338,9 @@ export default {
   }
   .el-dialog__headerbtn .el-dialog__close {
     color: #000;
+  }
+  .el-dialog__headerbtn .el-dialog__close:hover {
+    color: #cf111b;
   }
   .gpsImg {
     width: 19px;
@@ -989,51 +1441,50 @@ export default {
     .el-select .el-input .el-select__caret {
       color: #000;
     }
-    
   }
   .el-dialog__header {
-      padding: 10px 20px;
-      background: #eee !important;
-      border-radius: 6px 6px 0 0;
-    }
-    /* 消息内容 */
-.BMap_bubble_content {
-	background-color:#fffdf5;
-	padding-left:10px;
-	padding-right:10px;
-	padding-top:5px;
-	padding-bottom:10px;
-}
-/* 内容 */
-.BMap_pop div:nth-child(9) {
-	top:35px !important;
-	border-radius:7px;
-}
-.BMap_top {
-	display:none;
-}
-.BMap_bottom {
-	display:none;
-}
-.BMap_center {
-	display:none;
-}
-/* 隐藏边角 */
-.BMap_pop div:nth-child(1) div {
-	display:none;
-}
-.BMap_pop div:nth-child(3) {
-	display:none;
-}
-.BMap_pop div:nth-child(5) {
-	display:none;
-}
-.BMap_pop div:nth-child(7) {
-	display:none;
-}
-.BMap_shadow div:nth-child(7) {
-	display:none;
-}
+    padding: 10px 20px;
+    background: #eee !important;
+    border-radius: 6px 6px 0 0;
+  }
+  /* 消息内容 */
+  .BMap_bubble_content {
+    background-color: #fffdf5;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  /* 内容 */
+  .BMap_pop div:nth-child(9) {
+    top: 35px !important;
+    border-radius: 7px;
+  }
+  .BMap_top {
+    display: none;
+  }
+  .BMap_bottom {
+    display: none;
+  }
+  .BMap_center {
+    display: none;
+  }
+  /* 隐藏边角 */
+  .BMap_pop div:nth-child(1) div {
+    display: none;
+  }
+  .BMap_pop div:nth-child(3) {
+    display: none;
+  }
+  .BMap_pop div:nth-child(5) {
+    display: none;
+  }
+  .BMap_pop div:nth-child(7) {
+    display: none;
+  }
+  .BMap_shadow div:nth-child(7) {
+    display: none;
+  }
 }
 .el-dropdown,
 .el-dropdown-menu__item {
@@ -1042,5 +1493,8 @@ export default {
 }
 .el-input__icon {
   line-height: 36px;
+}
+.v-modal {
+  z-index: 1999 !important;
 }
 </style>

@@ -4,6 +4,8 @@
       <div class="C_title">
         <span class="Title_left"></span>
         行业龙头
+        <!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button>
       </div>
       <div class="tab-box">
         <ul>
@@ -102,8 +104,18 @@ export default {
   },
   mounted() {
     this.enterpriselist('国内第一名');
+                 //条数查询
+    this.$Export()
   },
   methods: {
+                  //导出
+    download(){
+      var self=this
+      let leixing = self.activelx == '大科技各分支龙头'?'A大科技各分支龙头':self.activelx
+      let url = self.api.exportfive+
+              "?leixing="+  leixing+'&'
+      this.$download(url)
+    },
     toRescue(url) {
       if (url) {
         console.log(url.substr(0, 7).toLowerCase() == "http://", 222);

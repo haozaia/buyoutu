@@ -2,7 +2,10 @@
 <div id="standardsetting">
   <div id="C_content">
     <div class="C_container">
-      <div class="C_title"><span class="Title_left"></span>标准制定企业</div>
+      <div class="C_title"><span class="Title_left"></span>标准制定企业
+        <!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button>
+      </div>
       <div class="el-tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="国家标准" name="first">
@@ -144,7 +147,7 @@
                     <i class="icon-loading icon-loading-white a-spin"></i>
                   </button>
                 </div> -->
-                <el-button @click="tablelist()" type="primary">查询</el-button>
+                <el-button @click="search()" type="primary">查询</el-button>
               </form>
             </div>
             <div class="query-result">
@@ -238,7 +241,7 @@
                     <i class="icon-loading icon-loading-white a-spin"></i>
                   </button>
                 </div> -->
-                <el-button @click="tablelist()" type="primary">查询</el-button>
+                <el-button @click="search()" type="primary">查询</el-button>
               </form>
             </div>
             <div class="query-result">
@@ -331,7 +334,7 @@
                     <i class="icon-loading icon-loading-white a-spin"></i>
                   </button>
                 </div> -->
-                <el-button @click="tablelist()" type="primary">查询</el-button>
+                <el-button @click="search()" type="primary">查询</el-button>
               </form>
             </div>
             <div class="query-result">
@@ -423,7 +426,7 @@
                     <i class="icon-loading icon-loading-white a-spin"></i>
                   </button>
                 </div> -->
-                <el-button @click="tablelist()" type="primary">查询</el-button>
+                <el-button @click="search()" type="primary">查询</el-button>
               </form>
             </div>
             <div class="query-result">
@@ -494,6 +497,8 @@ export default {
     var self = this;
     self.select();
     self.tableList();
+      //条数查询
+    this.$Export()
   },
    watch:{
     page(val) {
@@ -506,6 +511,13 @@ export default {
   //end
   created() {},
   methods: {
+          //导出
+    download(){
+      var self=this
+      let url = self.api.exportbiaozhu +
+              "?ziduanqufen="+self.ziduanqufen +"&faburq="+self.faburq+"&gongsiname="+self.gongsiname+'&'
+      this.$download(url)
+    },
      // 分页--回到首页按钮  start
         paginationsy() {
             if(this.page === 1) {

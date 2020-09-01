@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    name:"",
+    name: "",
     suoshusf: "",
     suoshucs: "",
     suoshuqx: "",
@@ -13,9 +13,14 @@ export default new Vuex.Store({
     City: "",
     Ctry: "",
     Country: false,
-    NavMenu:'home',
+    NavMenu: 'home',
+    username: '',
+    mobile: "",
+    unitCode: "",
     // loading: true,
   },
-  mutations: {},
+  mutations: {
+    // increment(state, payload)
+  },
   actions: {}
 });

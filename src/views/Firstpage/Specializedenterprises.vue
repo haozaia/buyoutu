@@ -2,7 +2,8 @@
 <div id="specializedenterprises">
   <div id="C_content">
     <div class="C_container">
-      <div class="C_title"><span class="Title_left"></span>专项证照企业</div>
+      <div class="C_title"><span class="Title_left"></span>专项证照企业 <!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button></div>
       <div class="el-tab">
         <el-tabs  @tab-click="handleClick">
           <div class="ind-title">
@@ -92,6 +93,8 @@ export default {
     var self = this;
     self.select();
     self.tableList();
+        //条数查询
+    this.$Export()
   },
     watch:{
     page(val) {
@@ -103,6 +106,13 @@ export default {
   },
   created() {},
   methods: {
+       //导出
+    download(){
+      var self=this
+      let url = self.api.exportzhuanxiang +
+              "?zhengzhaolx="+self.zhengzhaolx +"&gongsiname="+self.gongsiname+'&'
+      this.$download(url)
+    },
        // 分页--回到首页按钮  start
         paginationsy() {
             if(this.page === 1) {

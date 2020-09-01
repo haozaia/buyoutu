@@ -14,7 +14,7 @@
             <template>
                 <div class="table-wrapper">
                     <el-table :empty-text="tishi" :data="tableData" v-loading="loading" stripe style="width: 100%">
-                        <el-table-column prop="name" label="公司名称" align="center">
+                        <el-table-column prop="name" label="公司名称" width="500" align="center">
                             <template slot-scope="scope">
                                 <router-link
                                 target="_blank"
@@ -128,7 +128,7 @@ export default {
                 this.total = res.data.count
                 this.loading=false
                 //分页--总条数<=20，禁用右按钮  start
-                var cot = parseInt(self.total / 20) + 1;
+                var cot = Math.ceil(self.total / 20);
                 if (cot <= self.page) {
                 right[0].disabled = "disabled";
                 } else if (self.page == 1) {

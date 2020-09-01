@@ -46,13 +46,20 @@
     }
 }
 .AreaMonitoring_block{
-  border-bottom: 1px solid #e9edef;
+  // border-bottom: 1px solid #e9edef;
   float: right;
   margin-right: 20px;
   .demonstration{
       font-size: 20px;
       margin-right: 10px;
       font-weight: 400;
+  }
+  .GoMapSearch{
+      font-size: 20px;
+      margin-right: 20px;
+      font-weight: 600;
+      color: #cf111b;
+      cursor: pointer;
   }
 }
         #particulars {

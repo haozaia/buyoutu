@@ -14,7 +14,7 @@
             <template>
                 <div class="table-wrapper">
                 <el-table :empty-text="tishi" :data="tableData" v-loading="loading" stripe style="width: 100%">
-                    <el-table-column prop="name" label="公司名称" width="300" align="left">
+                    <el-table-column prop="name" label="公司名称" width="500" align="left">
                         <template slot-scope="scope">
                             <router-link
                             target="_blank"

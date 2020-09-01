@@ -81,7 +81,7 @@
                   <el-switch
                    style="margin-top:-4px;"
                     v-model="IsZz"
-                    inactive-text="证监会行业 :"
+                    inactive-text="注册行业 :"
                     @change="handleCHANGEradio"
                     active-color="#CF111B">
                   </el-switch>

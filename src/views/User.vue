@@ -5,8 +5,9 @@
         </div>
         <div class="User">
             <div class="user-t">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576665478113&di=20ceef5455e9ac55abca24d9be62aadb&imgtype=0&src=http%3A%2F%2Fpic13.nipic.com%2F20110312%2F5544694_112052409186_2.jpg" alt="">
+                <!-- <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576665478113&di=20ceef5455e9ac55abca24d9be62aadb&imgtype=0&src=http%3A%2F%2Fpic13.nipic.com%2F20110312%2F5544694_112052409186_2.jpg" alt=""> -->
                 <!-- <i></i> -->
+                <img src="../assets/images/UserVIP.jpg" alt="">
                 <span>付费用户</span>
                 <span>有效期：{{ StartTime }}&nbsp;&nbsp; 至 &nbsp;&nbsp;{{ EndTime }}</span>
                 <p>请完善以下信息，方便我们更好的为您提供服务。</p>

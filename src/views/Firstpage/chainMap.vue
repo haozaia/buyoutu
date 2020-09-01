@@ -32,10 +32,17 @@
                 {{LocationProvince}}
               </p>
               <div class="shengfenList">
-                <p class="hotCyl" v-for="(item,index) in chainShenfen" :key="index">
-                  <!-- <img src="../../styles/imagesRed/h10.png" class="monitImg" alt /> -->
-                  <span class="redBlock inline"></span>
-                  <span class="fontSize20 inline">{{item.chanye1}}</span>
+                <p class="inline" v-for="(item,index) in chainShenfen" :key="index">
+                   <span class="hotCyl" v-if="item.chanye1!== '精细化工'">
+                    <span class="redBlock inline"></span>
+                    <span class="fontSize20 inline">{{item.chanye1}}</span>
+                   </span>
+                </p>
+                <p class="inline" v-for="(item,index) in chainShenfen" :key="index">
+                   <span class="hotCyl" v-if="item.chanye1== '精细化工'">
+                    <span class="redBlock inline"></span>
+                    <span class="fontSize20 inline">{{item.chanye1}}</span>
+                   </span>
                 </p>
               </div>
 
@@ -78,12 +85,24 @@
                 <!-- <p v-if="index!=0" class="inline shengfenName fontSize20">{{item.name}}:</p> -->
                 <div class="shengfenList">
                   <p
-                    class="hotCyl"
+                    class="inline"
                     v-for="(itemList,Listindex) in chainListChild.value"
                     :key="Listindex"
                   >
+                  <span class="hotCyl" v-if="itemList.name!== '精细化工'">
                     <span class="redBlock inline"></span>
                     <span class="fontSize20">{{itemList.name}}</span>
+                  </span>
+                  </p>
+                  <p
+                    class="inline"
+                    v-for="(itemList,Listindex) in chainListChild.value"
+                    :key="Listindex"
+                  >
+                  <span class="hotCyl" v-if="itemList.name== '精细化工'">
+                    <span class="redBlock inline"></span>
+                    <span class="fontSize20">{{itemList.name}}</span>
+                  </span>
                   </p>
                 </div>
               </div>
@@ -91,9 +110,17 @@
                 <!-- <p class="shengfenName fontSize18">{{input}}:</p> -->
                 <div class="inline" v-for="(itemList,Listindex) in chainList" :key="Listindex">
                   <div v-if="input==itemList.name">
-                    <p class="hotCyl" v-for="(item,List) in itemList.value" :key="List">
-                      <span class="redBlock inline"></span>
-                      <span class="fontSize20">{{item.name}}</span>
+                    <p class="inline" v-for="(item,List) in itemList.value" :key="List">
+                       <span  class="hotCyl" v-if="item.name!== '精细化工'">
+                        <span class="redBlock inline"></span>
+                        <span class="fontSize20">{{item.name}}</span>
+                       </span>
+                    </p>
+                    <p class="inline" v-for="(item,List) in itemList.value" :key="List">
+                       <span  class="hotCyl" v-if="item.name== '精细化工'">
+                        <span class="redBlock inline"></span>
+                        <span class="fontSize20">{{item.name}}</span>
+                       </span>
                     </p>
                   </div>
                 </div>
@@ -144,12 +171,13 @@
         :xianqu="LocationQuXian"
         :ParkId="ParkId"
       ></component>
+      
     </el-dialog>
   </div>
 </template>
 
 <script>
-import BMap from "BMap";
+// import BMap from "BMap";
 import "../../../node_modules/echarts/map/js/china";
 import "../../../node_modules/echarts/map/js/province/anhui";
 import "../../../node_modules/echarts/map/js/province/aomen";

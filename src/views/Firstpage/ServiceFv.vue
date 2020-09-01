@@ -1,7 +1,8 @@
 <template>
 <div id="fortuneFv">
   <div id="C_content">
-    <div class="C_title"><span class="Title_left"></span>中国服务业500强企业名单</div>
+    <div class="C_title"><span class="Title_left"></span>中国服务业500强企业名单<!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button></div>
     <!-- 搜索、查询 -->
     <!-- <div class="Five">
       <div class="search_l">
@@ -98,8 +99,17 @@ export default {
   },
   mounted() {
     this.enterpriselist()
+                   //条数查询
+    this.$Export()
   },
   methods: {
+                 //导出
+    download(){
+      var self=this
+      let url = self.api.exportfive+
+              "?leixing=中国服务业500强&"
+      this.$download(url)
+    },
     toRescue(url) {
       if (url) {
         console.log(url.substr(0, 7).toLowerCase() == "http://", 222);

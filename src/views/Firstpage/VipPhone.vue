@@ -19,7 +19,7 @@
           <p class="PS_te"><i>Ps: </i>1、本功能可通过上传企业名录，导出对应企业的联系电话、邮箱等信息</p>
           <p>2、查找需按照固定格式进行数据查找（可点击上方“模板下载”查看数据格式）</p>
           <p>3、查找到的数据会展示在之后的页面中，VIP用户可将数据导出</p>
-          <p>4、当前仅支持.xls、.xlsx格式的文件，导出数据文件格式为.xlsx</p>
+          <p>4、当前仅支持.xls、.xlsx格式的文件</p>
         </div>
       </div>
       <div v-if="this.gsxx == true" class="query-result">
@@ -81,7 +81,7 @@ export default {
 #VIPphone{
   width: 100%;
   min-height: 643px;
-  background: #c3c3c380;
+  // background: #c3c3c380;
   .VIPphone_content{
     .VIPphone_dow{
       text-align: center;

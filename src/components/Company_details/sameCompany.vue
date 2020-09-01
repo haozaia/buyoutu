@@ -7,6 +7,7 @@
           <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">A股公司</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total}}</span>
             </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -50,6 +51,8 @@
           <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">三板公司</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total1}}</span>
+
             </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -93,6 +96,8 @@
           <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">四板公司</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total2}}</span>
+
             </div>
         </header>
         <div class="licenceTable lineTable el-tabs">
@@ -137,6 +142,8 @@
           <div class="block-titles fontSize20">
               <img class="icon icon-tips inline" src="../../assets/images/companyIcon/title.svg" />
               <span class="inline">已私募公司</span>
+            <span class="inline colorH fontSize18">&nbsp;{{total3}}</span>
+
             </div>
         </header>
         <div class="licenceTable lineTable el-tabs">

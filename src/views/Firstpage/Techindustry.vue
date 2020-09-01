@@ -2,7 +2,8 @@
 <div id="Techindustry">
   <div id="C_content">
     <div class="C_container">
-      <div class="C_title"> <span class="Title_left"></span>高新技术企业</div>
+      <div class="C_title"> <span class="Title_left"></span>高新技术企业
+      </div>
       <div class="el-tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="高新技术企业列表" name="first">
@@ -31,16 +32,17 @@
 
                 <div class="form-group">
                   <span class="control-label">地域 ：</span>
-                  <el-select v-model="suoshusf" placeholder="请选择省份">
-                    <el-option label="选择所有" value></el-option>
-                    <el-option
-                      v-for="item in options"
-                      :key="item.suoshusf"
-                      :label="item.suoshusf"
-                      :value="item.suoshusf"
-                    ></el-option>
-                  </el-select>
+                   <el-cascader
+                ref="refHandle"
+                v-model="city_search"
+                :options="city_data"
+                :props="{ checkStrictly: true }"
+                @change="handleChange"
+                clearable
+                filterable
+              ></el-cascader>
                 </div>
+
                 <div class="form-group">
                   <div class="ui-input ui-input-search PuKey">
                     <input
@@ -54,6 +56,9 @@
                 </div>
                 <div class="form-group">
                   <el-button @click="Gongxinjsqy(1, 20)" type="primary">查询</el-button>
+                    <!-- 导出按钮 -->
+                    <el-button  class="floatR" type="primary" @click="download()" v-if="unitCode==3">导出</el-button>
+
                 </div>
               </form>
             </div>
@@ -125,11 +130,14 @@ export default {
       name: "",
       activeName: "first",
       options: [],
+      city_search: "",
+       city_data: [],
       years: [],
       tableData: [],
       ProfileData: [],
       echartsList: [],
       loading: true,
+      suoshucs:"",
       suibian:true    //分页变量3
     };
   },
@@ -138,6 +146,10 @@ export default {
     self.Gongxinjsqy(1, 20);
     self.dateapi();
     self.shengfenapi();
+    self.citylist();
+    self.unitCode = localStorage.getItem("unitCode");
+    //条数查询
+    this.$Export()
   },
   //监测页数变化start
   watch:{
@@ -146,11 +158,40 @@ export default {
             if(val == 1){
                 self.suibian=true
             }
-        }
+        },
   },
   //end
   created() {},
   methods: {
+    //导出
+    download(){
+      var self=this
+      let url = self.api.exportgaoxin +
+              "?suoshusf="+self.suoshusf+"&suoshucs="+self.suoshucs +"&huogxrzdnf="+self.year+"&gongsiname="+self.name+'&'
+      this.$download(url)
+    },
+    //请求城市列表
+    citylist() {
+      var self = this;
+      this.axios({
+        url: this.api.LXshengshiapi,
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(res => {
+        // console.log(JSON.stringify(res.data.data));
+        self.city_data = res.data.data;
+      });
+    },
+    handleChange(value) {
+      var self = this;
+      console.log(value);
+      self.suoshusf = value[0] ? value[0] : "";
+      self.suoshucs = value[1] ? value[1] : "";
+      this.page = 1;
+      // this.Gongxinjsqy()
+    },
     selectYear(selVal) {
       // console.log(this.value3)
       this.fenbuapi();
@@ -182,6 +223,7 @@ export default {
         page: page,
         limit: limit,
         suoshusf: self.suoshusf,
+        suoshucs:self.suoshucs,
         huogxrzdnf: self.year,
         gongsiname: self.name
       };
@@ -205,7 +247,6 @@ export default {
                     self.suibian=true
                 }
                 // 分页--下一页disabled
-                
       });
     },
     //获取年份
@@ -323,7 +364,7 @@ export default {
           //   },
           //   },
             formatter: function(params) {
-              console.log(params,"22")
+              // console.log(params,"22")
               var arr = [
                   params.name,
                   params.value 
@@ -355,7 +396,7 @@ export default {
                 }
               }
             },
-            data: this.ProfileData
+            data: this.ProfileData,
           }
         ]
       });

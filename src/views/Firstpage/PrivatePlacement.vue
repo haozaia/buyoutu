@@ -76,7 +76,7 @@
                   </el-table-column>
                   <!-- <el-table-column prop="gongsijc" label="公司简称" width="150">
                   </el-table-column> -->
-                  <el-table-column prop="touzif" label="投资方"></el-table-column>
+                  <el-table-column prop="touzif" label="投资方"  :show-overflow-tooltip="true"></el-table-column>
                   <el-table-column prop="touzisj" label="投资时间"></el-table-column>
                   <el-table-column prop="touzixzlc" label="投资性质、轮次"></el-table-column>
                   <el-table-column prop="touzije" label="投资金额"></el-table-column>

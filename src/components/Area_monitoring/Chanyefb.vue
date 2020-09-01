@@ -16,10 +16,13 @@
       <div class="title_h">
         <!-- <i class="icon icon-tips"></i> -->
         <span class="fontSize20">{{ this.suoshusf }} {{ this.suoshucs }} {{ this.suoshuqx }}&nbsp;&nbsp;&nbsp;{{ this.paramsName }}</span>
+        <!-- 导出按钮 -->
+                    <el-button class="download"  type="primary" @click="download()" v-if="this.$store.state.unitCode==3">导出</el-button>
       </div>
       <div class="close" @click="dialog_close">×</div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="A股公司" name="2">
+        <el-tab-pane :disabled="total2 == 0" label="A股公司" name="2">
+        <!-- <el-tab-pane label="A股公司" name="2"> -->
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
               <el-table-column prop="name" label="公司名称" width="500" align="center">
@@ -54,7 +57,8 @@
             </div>
           <!-- 分页dom end -->
         </el-tab-pane>
-        <el-tab-pane label="三板公司" name="3">
+        <el-tab-pane :disabled="total3 == 0" label="三板公司" name="3">
+        <!-- <el-tab-pane label="三板公司" name="3"> -->
           <!-- <div class="title_h">
             <i class="icon icon-tips"></i>
             <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;三板公司列表</span>
@@ -93,7 +97,8 @@
             </div>
           <!-- 分页dom end -->
         </el-tab-pane>
-        <el-tab-pane label="四板公司" name="4">
+        <el-tab-pane :disabled="total4 == 0" label="四板公司" name="4">
+        <!-- <el-tab-pane label="四板公司" name="4"> -->
           <!-- <div class="title_h">
             <i class="icon icon-tips"></i>
             <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;四板公司列表</span>
@@ -118,12 +123,6 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!-- <el-pagination
-              layout="prev, pager, next"
-              @current-change="handleCurrentChange"
-              :page-size="10"
-              :total="total"
-            ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
             <div id="Pagination"  v-show="total > 10">
@@ -132,11 +131,8 @@
             </div>
           <!-- 分页dom end -->
         </el-tab-pane>
-        <el-tab-pane label="已私募融资公司" name="5">
-          <!-- <div class="title_h">
-            <i class="icon icon-tips"></i>
-            <span class="fontSize20">{{ this.paramsName }}&nbsp;&nbsp;&nbsp;私募公司列表</span>
-          </div> -->
+        <el-tab-pane :disabled="total5 == 0 " label="已私募融资公司" name="5">
+        <!-- <el-tab-pane label="已私募融资公司" name="5"> -->
           <template>
             <el-table :data="tableData" v-loading="loading" stripe style="width: 100%">
               <el-table-column prop="name" label="公司名称" width="500" align="center">
@@ -157,14 +153,6 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!-- <el-pagination+63
-
-
-              layout="prev, pager, next"
-              @current-change="handleCurrentChange"
-              :page-size="10"
-              :total="total"
-            ></el-pagination> -->
           </template>
           <!-- 分页dom start -->
               <div id="Pagination"  v-show="total > 10">
@@ -202,6 +190,7 @@ export default {
   props: ["sfvalue"],
   data() {
     return {
+      isdisabled: false,
       name: "chanyefb",
       option: "",
       suoshusf: "",
@@ -211,9 +200,11 @@ export default {
       loading1: true,
       paramsName: "",
       dialogVisible: false,
-      activeName: "2",
+      activeName: "",
       tableData: [],
       suoshuzbsc: "",
+      starts: "",
+      end: "",
       page: 1,
       total: 0,
       arrx: [],
@@ -225,20 +216,34 @@ export default {
       qufenziduan: "",
       flag: true,
       suibian:true,    //分页变量3
+      total2: "",
+      total3: "",
+      total4: "",
+      total5: "",
     };
   },
   mounted() {
     var self = this
-    this.suoshusf = this.$store.state.suoshusf;
-    this.suoshucs = this.$store.state.suoshucs;
-    this.suoshuqx = this.$store.state.suoshuqx;
-    this.echartlist();
+    // this.suoshusf = this.$store.state.suoshusf;
+    // this.suoshucs = this.$store.state.suoshucs;
+    // this.suoshuqx = this.$store.state.suoshuqx;
+    
+    // if(localStorage.getItem("suoshucs") == undefined){
+    //   this.suoshucs = ''
+    //   this.suoshuqx = ''
+    // }
+
     this.echart();
+    setTimeout(function() {
+       self.echartlist();
+      }, 200);
     window.onresize = function() {
       setTimeout(function() {
         self.echart();
       }, 500);
     };
+    //条数查询
+    this.$Export()
   },
   destroyed(){
     window.onresize = null;
@@ -253,12 +258,34 @@ export default {
     }
   },
   methods: {
+    //导出
+    download(){
+      var self=this
+      let url = self.api.exportquyu
+      +'?suoshusf='+self.suoshusf
+      +'&suoshucs='+self.suoshucs
+      +'&suoshucyl='+self.paramsName
+      +'&zibenscdy='+self.suoshuzbsc
+      +'&suoshuqx='+self.suoshuqx+'&'
+      console.log(url)
+      this.$download(url)
+    },
     echartlist() {
       var self = this;
+      this.suoshusf = localStorage.getItem("suoshusf");
+      this.suoshucs = localStorage.getItem("suoshucs");
+      this.suoshuqx = localStorage.getItem("suoshuqx");
+      if(this.suoshucs == "undefined"){
+        this.suoshucs = ''
+        this.suoshuqx = ''
+      }
+      if(this.suoshuqx == "undefined"){
+        this.suoshuqx = ''
+      }
       let params = {
         suoshusf: self.suoshusf,
         suoshucs: self.suoshucs,
-        suoshuqx: self.suoshuqx
+        suoshuqx: self.suoshuqx,
       };
       this.axios({
         url: this.api.Chanyefb,
@@ -304,6 +331,21 @@ export default {
           setTimeout(function() {
             self.echart();
           }, 100);
+          // console.log(res.data.data.length,"dsf")
+          if(res.data.data.length>=50) {
+            self.end = 14
+          }else if(res.data.data.length<50 && res.data.data.length>=40){
+            self.end = 20
+          }else if(res.data.data.length <40 && res.data.data.length>=30){
+            self.end = 26
+          }else if(res.data.data.length <30 && res.data.data.length>=20){
+            self.end = 45
+          }else if(res.data.data.length <20 && res.data.data.length>10){
+            self.end = 65
+          }else if(res.data.data.length <=10){
+            self.end = 100
+          }
+
         }
       });
     },
@@ -348,44 +390,20 @@ export default {
           },
           formatter: function (params) {
           //  console.log(params)
-           let series0;
-           let series1;
-           let series2;
-           let series3;
-            if(params[0].value){
-              if(params[0].value< 7){
-              // console.log("小于7")
-              let number1=params[0].value*1-1
-              series0 = params[0].seriesName + ' : ' + number1;
+           let series0 ='';
+
+            // var series0=''
+          for(var i=0; i<params.length; i++){
+            if(params[i].value){
+              if(params[i].value< 7){
+              let number1=params[i].value*1-1
+              series0 += params[i].seriesName + ' : ' + number1+"<br/>";
               }else {
-              series0 = params[0].seriesName + ' : ' +params[0].value
+              series0 += params[i].seriesName + ' : ' + params[i].value+"<br/>"
               }
             }
-            if(params[1].value){
-              if(params[1].value< 7){
-              let number2=params[1].value*1-1
-                series1 = params[1].seriesName + ' : ' + number2;
-              }else {
-                series1 = params[1].seriesName + ' : ' +params[1].value
-              }
-            }
-            if(params[2].value){
-              if(params[2].value< 7){
-              let number3=params[2].value*1-1
-                series2 = params[2].seriesName + ' : ' + number3;
-              }else {
-                series2 = params[2].seriesName + ' : ' +params[2].value
-              }
-            }
-            if(params[3].value){
-              if(params[3].value< 7){
-              let number4=params[3].value*1-1
-                series3 = params[3].seriesName + ' : ' + number4;
-              }else {
-                series3 = params[3].seriesName + ' : ' +params[3].value
-              }
-            }
-            return series0 + '<br/>' + series1 + '<br/>' + series2 + '<br/>' + series3
+          }
+            return series0
           },
           textStyle: {
             fontSize: 20,
@@ -428,13 +446,23 @@ export default {
           },
           axisLabel: {
             interval: 0,
-            // rotate: 40,
+            rotate: 40,
             textStyle: {
               padding:[12,0,0,0],
               fontFamily: "Microsoft YaHei",
               fontSize:20,
               lineHeight: 24,
-            }
+            },
+            // formatter : function(params){
+            //   // var newParamsName = "";// 最终拼接成的字符串
+            //   console.log(params.length)
+            //   var paramsNameNumber = params.length;// 实际标签的个数
+            //   var provideNumber = 4;
+            // }
+            // formatter:function(value)  
+            //   {  
+            //       return value.split("").join("\n");  
+            //   }
           }
         },
 
@@ -472,22 +500,28 @@ export default {
         dataZoom: [
           {
             show: true,
-            height: 12,
+            height: 20,
             xAxisIndex: [0],
             bottom: "8%",
             // 滚动条
-            start: 87,
-            end: 100,
+            // start: self.starts,
+            // end: 102,
+            start: 0,
+            end: self.end,
             handleIcon:
               "path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z",
-            handleSize: "80%",
-            handleStyle: {
-              color: "#d3dee5"
+            // handleSize: "80%",
+            handleStyle: { //滚动条Style
+              color: "#cf111b",
+              borderColor: "#cf111b",
             },
             textStyle: {
               color: "transparent",
+              // color: "#cf111b",
+              fontSize:20,
             },
-            borderColor: "#90979c"
+            borderColor: "#90979c",
+            // backgroundColor: "#cf111b",
           },
           // 图表可滚轮放大缩小
           // {
@@ -508,11 +542,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#D5D5D5"
+                    color: "#EA6167"
                   },
                   {
                     offset: 1,
-                    color: "#A2A2A2"
+                    color: "#CF111B"
                   }
                 ]),
                 barBorderRadius: 12
@@ -572,11 +606,11 @@ export default {
                   
                   {
                     offset: 0,
-                    color: "#EA6167"
+                    color: "#61EAA5"
                   },
                   {
                     offset: 1,
-                    color: "#CF111B"
+                    color: "#18B566"
                   }
                 ]),
                 barBorderRadius: 11
@@ -591,24 +625,99 @@ export default {
       myChart.setOption(option, true);
 
       myChart.on("click", function(params) {
+        console.log(params,"params")
         self.paramsName = params.name;
         self.click();
       });
     },
     click() {
       var self = this;
-      self.activeName = "2";
+      // self.activeName = "";
       self.dialogVisible = true;
       self.page = 1
-      self.qufenziduan = "2"
       this.request("2");
+      this.request("3");
+      this.request("4");
+      this.request("5");
+
+      setTimeout(function(){
+        if(self.total2 != 0){
+          self.activeName = "2"
+          self.request("2")
+          self.qufenziduan = "2"
+        }else if(self.total3 !=0){
+          self.activeName = "3"
+          self.request("3")
+          self.qufenziduan = "3"
+        }else if(self.total4 !=0){
+          self.activeName = "4"
+          self.request("4")
+          self.qufenziduan = "4"
+        }else if(self.total5 != 0){
+          self.activeName = "5"
+          self.request("5")
+          self.qufenziduan = "5"
+        }
+        // console.log(document.getElementById("tab-5").style,"hhhhhh")
+        var Agu = document.getElementById("tab-2")
+        var Sanban = document.getElementById("tab-3")
+        var Siban = document.getElementById("tab-4")
+        var Yisimu = document.getElementById("tab-5")
+        if(self.total2 == 0){
+          Agu.style.color = "#999"
+        }else {
+          Agu.style.color = "#000"
+        }
+        if(self.total3 == 0){
+          Sanban.style.color = "#999"
+        }else{
+          Sanban.style.color = "#000"
+        }
+        if (self.total4 == 0){
+          Siban.style.color = "#999"
+        }else{
+          Siban.style.color = "#000"
+        }
+        if(self.total5 == 0){
+          Yisimu.style.color = "#999"
+        }else{
+          Yisimu.style.color = "#000"
+        }
+        // if(self.total2 != 0){
+        //   self.activeName = "2"
+        //   self.request("2")
+        // }else{
+        //   Agu.style.color = "#999"
+        // }
+        // if(self.total3 !=0){
+        //   self.activeName = "3"
+        //   self.request("3")
+        // }else {
+        //   Sanban.style.color = "#999"
+        // }
+        // if(self.total4 !=0){
+        //   self.activeName = "4"
+        //   self.request("4")
+        // }else {
+        //   Siban.style.color = "#999"
+        // }
+        // if(self.total5 != 0){
+        //   self.activeName = "5"
+        //   self.request("5")
+        // }else{
+        //   Yisimu.style.color = "#999"
+        // }
+      },300)
     },
     handleClick(tab, event) {
       var self = this;
-      // console.log(tab.name,"name");
+      // if(slef.total2 == 0){
+      //   this.$message("暂无数据")
+      // }
       self.page = 1;
       this.request(tab.name);
       this.qufenziduan = tab.name;
+      console.log(this.qufenziduan,"tab.name")
     },
       // 分页--回到首页按钮  start
     paginationsy() {
@@ -625,12 +734,13 @@ export default {
       self.page = val;
        //分页--判断当前页是否为最后一页，禁用右按钮  start
         var cot =  Math.ceil(self.total/10)
-        self.suibian=false  //是否禁用首页按钮
+        self.suibian= false  //是否禁用首页按钮
         //分页--判断当前页是否为最后一页，禁用右按钮  end
       // console.log(self.page);
       if(self.qufenziduan == ''){
         self.request("2");
       }
+      
       if(self.qufenziduan != ''){
         console.log(self.qufenziduan,"字段不为空的时候")
         self.request(self.qufenziduan);
@@ -643,7 +753,7 @@ export default {
       if(self.paramsName){
         self.paramsName = self.paramsName.replace("\n","")
       }
-      // console.log(this.paramsName,"sszbsc")
+      console.log(suoshuzbsc,"sszbsc")
       self.loading = true;
       let params = {
         page: this.page,
@@ -665,29 +775,32 @@ export default {
         // console.log(suoshuzbsc,"name")
         var right = document.getElementsByClassName('btn-next')
         right[0].disabled=''
-        self.tableData = res.data.data;
-        this.total = res.data.count;
+        this.total = res.data.count; 
         // 下一页disabled --start
         var cot =  Math.ceil(self.total/10)
         if(suoshuzbsc == 2){
+          self.total2 =res.data.count
           if(cot <= self.page){
             right[0].disabled="disabled"
           }else {
             right[0].disabled=""
           }
         } else if(suoshuzbsc == 3){
+          self.total3 =res.data.count
           if(cot <= self.page){
             right[1].disabled="disabled"
           }else {
             right[1].disabled=""
           }
         }else if(suoshuzbsc == 4){
+          self.total4 =res.data.count
           if(cot <= self.page){
             right[2].disabled="disabled"
           }else{
             right[2].disabled=""
           }
         }else if(suoshuzbsc == 5){
+          self.total5 =res.data.count
           if(cot <= self.page){
             right[3].disabled="disabled"
           }else{
@@ -695,8 +808,9 @@ export default {
           }
         }
         if(self.page==1){
-            self.suibian=true
+          self.suibian=true
         }
+        self.tableData = res.data.data;
         // 下一页disabled --end
         self.loading = false;
       });
@@ -707,3 +821,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+#chanyefb{
+  .header-cell-class-name{
+    color: #ccc !important;
+  }
+  
+}
+</style>
