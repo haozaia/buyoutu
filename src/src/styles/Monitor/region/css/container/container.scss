@@ -1,0 +1,11 @@
+.container{
+    background: #fff;
+    .block-title{
+        border-bottom: 1px solid #e9edef;
+        span{
+            line-height: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+}

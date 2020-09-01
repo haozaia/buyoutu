@@ -1,0 +1,235 @@
+p{
+    margin: 0;
+}
+    .el-tabs {
+        margin-bottom: 10px;
+
+        .el-tabs__nav {
+            .el-tabs__item {
+                font-size: 22px;
+                width: 50%;
+                text-align: center;
+                border-right: 2px solid #eee;
+                padding: 0 ;
+                height: auto;
+                margin: 14px 0;
+                line-height: 14px;
+            }
+            .el-tabs__item:last-child{
+                border-right:none;
+            }
+
+            .el-tabs__active-bar {
+                background-color: #CF111B;
+                height: 2px;
+            }
+        }
+        .el-tabs__header {
+            margin: 0 0 5px;
+        }
+
+        .el-tabs__content {
+            border: 1px solid #e9edef;
+            background-color: #fff;
+            padding-bottom: 10px;
+        }
+
+        .ind-title {
+            border-bottom: 1px solid #e9edef;
+            padding-left: 10px;
+            height: 50px;
+            span {
+                color: #333;
+                line-height: 50px;
+                white-space: nowrap;
+                font-weight: 700;
+                margin-right: 5px;
+            }
+
+            .icon-data {
+                margin: 0 5px;
+                padding: 1px 5px;
+                color: #fff;
+                font-size: 20px;
+                line-height: 1.2;
+                background-color: #CF111B;
+                border-radius: 4px;
+                margin-left: 10px;
+                font-weight: 400;
+            }
+        }
+
+
+        .form-wrapper {
+            padding: 14px 10px 0;
+            padding: 20px 10px;
+
+            .form-inline .form-group,
+            .form-inline .ui-input {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        .form-group {
+            // margin-bottom: 10px;
+            margin-right: 10px;
+
+            input {
+                outline: none;
+            }
+            .el-icon-search{
+                position: absolute;
+                top: 7px;
+                left: 5px;
+            }
+            img{
+                width: 25px;
+                height: 25px;
+            }
+            // button {
+            //     outline: none;
+            //     span{
+            //         color: #fff;
+            //     }
+            // }
+            .chaxun{
+                margin-right: 0 !important;
+            }
+            .form-inline .sy-select {
+                width: auto;
+            }
+
+            // span {
+            //     font-size: 20px;
+            //     margin-right: 5px;
+            //     color: #666;
+            // }
+
+            .sy-select {
+                display: inline-block;
+                position: relative;
+                span {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 2px 26px 2px 10px;
+                    line-height: 1.71428571;
+                    width: 100%;
+                    white-space: nowrap;
+                }
+                .listYear {
+                    width: 150px;
+                    height: 34px;
+                    font-size: 14px;
+                    border-radius: 4px;
+                    border: 1px solid #ccc;
+                    padding-left: 4px;
+                    color: #000;
+                    outline: none;
+                    /* 清除默认的箭头样式 */
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    background: url('../../../src/assets/images/icon-xiala.png') 120px center no-repeat;
+                }
+
+            }
+
+            .form-inline .sy-select,
+            .sy-select select {
+                display: inline-block;
+            }
+
+            .ui-input fieldset,
+            .ui-input input,
+            .ui-input textarea {
+                font-size: 14px;
+                line-height: 1.71428571;
+                border-radius: 4px;
+                border: 1px solid transparent;
+            }
+
+            .ui-input {
+                width: 240px;
+                margin-right: 5px;
+                position: relative;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 6px 23px;
+                input {
+                    width: 100%;
+                }
+            }
+
+            .btn {
+                border: 1px solid transparent;
+                padding: 2px 10px;
+                font-size: 20px;
+                line-height: 1.71428571;
+                border-radius: 4px;
+                background-color: #CF111B;
+            }
+        }
+        .form-group.profileList{
+            border-bottom: 1px solid #E9EDEF;
+            padding: 12px;
+        }
+        .query-result {
+            padding-left: 10px;
+            padding-right: 10px;
+            border: none;
+            .table-wrapper {
+                            th {
+                                text-align: center;
+                            }
+
+                .el-table__body-wrapper {
+                    tbody {
+                        tr {
+                            td {
+                                text-align: center;
+                                border: none;
+
+                                .cell {
+                                    a:hover {
+                                        color: #CF111B !important;
+                                        text-decoration: underline !important;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+.el-tabs__item.is-active,.el-tabs__item:hover {
+    color: #CF111B;
+}
+
+.el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+}
+.el-pagination{
+    text-align: right;
+    margin: 10px 5px 0 0;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: #CF111B;
+    color: #FFF;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+    color: #fff;
+    background-color: #CF111B;
+}
+.el-pager li.active {
+    color: #CF111B;
+}
+.el-pager li:hover {
+    color: #CF111B;
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="tree">
+        <ul>
+            <li>
+                <a href="#">parent</a>
+                <ul>
+                    <li>
+                        <a href="#">child</a>
+                        <ul>
+                            <li>
+                                <a href="#">Grant child</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">child</a>
+                        <ul>
+                            <li><a href="#">Grant child</a></li>
+                            <li>
+                                <a href="#">Grant child</a>
+                                <ul>
+                                    <li><a href="#">Great Grant child</a></li>
+                                    <li><a href="#">Great Grant child</a></li>
+                                    <li><a href="#">Great Grant child</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Grant child</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">child3</a>
+                        <ul>
+                            <li><a href="#">Grant child</a></li>
+                            <li>
+                                <a href="#">Grant child</a>
+                                <ul>
+                                    <li><a href="#">Great Grant child</a></li>
+                                    <li><a href="#">Great Grant child</a></li>
+                                    <li><a href="#">Great Grant child</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Grant child</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .tree ul {
+        padding-top: 20px;
+        position: relative;
+        webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        transition: all .3s;
+    }
+
+    .tree li {
+        float: left;
+        list-style: none;
+        text-align: center;
+        position: relative;
+        padding: 20px 5px 0 5px;
+        webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        transition: all .3s;
+    }
+
+    /*利用::before,::after作分支线*/
+    .tree li::before,
+    .tree li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 50%;
+        width: 50%;
+        height: 20px;
+        border-top: 1px solid #ccc;
+    }
+
+    .tree li:after {
+        right: auto;
+        left: 50%;
+        border-left: 1px solid #ccc;
+    }
+
+    .tree li:first-child::before,
+    .tree li:last-child::after {
+        border: 0 none;
+    }
+
+    .tree li:last-child::before {
+        border-right: 1px solid #ccc;
+        -webkit-border-radius: 0 10px 0 0;
+        -moz-border-radius: 0 10px 0 0;
+        border-radius: 0 10px 0 0;
+    }
+
+    .tree li:first-child::after {
+        -webkit-border-radius: 10px 0 0 0;
+        -moz-border-radius: 10px 0 0 0;
+        border-radius: 10px 0 0 0;
+    }
+
+    /*删除仅只有一个分支的分支线*/
+    .tree li:only-child::before,
+    .tree li:only-child::after {
+        border: none;
+    }
+
+    .tree li:only-child {
+        padding-top: 0;
+    }
+
+    /*添加仅只有一个分支的下分支线*/
+    .tree ul ul::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #ccc;
+        width: 0;
+        height: 20px;
+    }
+
+    .tree a {
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        color: #666;
+        text-decoration: none;
+        padding: 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        transition: all .3s;
+    }
+
+    /*添加选中状态*/
+    .tree li a:hover,
+    .tree li a:hover+ul li a {
+        background-color: #c8e4f8;
+        color: #000;
+        border: 1px solid #94a0b4;
+    }
+
+    .tree li a:hover+ul li:after,
+    .tree li a:hover+ul li:before,
+    .tree li a:hover+ul::before,
+    .tree li a:hover+ul ul::before {
+        border-color: #94a0b4;
+    }
+</style>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <marquee behavior="behavior" width="200" loop="-1">
+        <li>1.文字如果超出了</li>
+        <li>2.文字如果超出了</li>
+        <li>3.文字如果超出了</li>
+        <li>4.文字如果超出了</li>
+        <li>5.文字如果超出了</li>
+    </marquee>
+
+    <marquee behavior="behavior" width="900" loop="-1">
+        <div class="wapper">
+            <span class="red parallelogram">111111111111冒泡排序</span>
+            <span class="green parallelogram">冒泡排队</span>
+            <span class="red parallelogram">冒泡排队</span>
+            <span class="green parallelogram">冒泡排队</span>
+            <span class="red parallelogram">冒泡排队</span>
+            <span class="green parallelogram">冒泡排队</span>
+            <span class="red parallelogram">冒泡排队</span>
+            <span class="green parallelogram">冒泡排队</span>
+            <span class="red parallelogram">冒泡排队</span>
+            <span class="green parallelogram">冒泡排队</span>
+            <span class="green parallelogram">冒泡排队</span>
+        </div>
+    </marquee>
+
+
+    <div class="loading"></div>
+    <!-- <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script> -->
+    <script>
+
+        // alert(returnCitySN['cip'] + returnCitySN['cname']);
+
+        let SortArray = [10, 25, 30, 19, 26, 27, 28, 62]
+        //冒泡排序(后面会先排好)
+        function BubbleSort(arr) {
+            let len = arr.length
+            for (let i = 0; i < len; i++) {
+                for (let j = 0; j < len - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        let temp = arr[j + 1]
+                        arr[j + 1] = arr[j]
+                        arr[j] = temp
+                    }
+                }
+            }
+            return arr
+        }
+        // console.log(BubbleSort(BullleArray), '冒泡排队')
+    </script>
+    <style>
+        li {
+            display: inline-block;
+        }
+
+        .parallelogram {
+            position: relative;
+            padding: 10px 20px;
+            font-size: 18px;
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            margin-right: 1px;
+        }
+
+        .parallelogram::before {
+            content: '';
+            /* To generate the box */
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            transform: skew(45deg);
+        }
+
+        .green::before {
+            background: green;
+        }
+
+        .red::before {
+            background: red;
+        }
+
+        .loading:after {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+            content: "\2026";
+            -webkit-animation: ellipsis 2s infinite;
+        }
+
+        /* // 动画部分 */
+        @-webkit-keyframes ellipsis {
+            from {
+                width: 2px;
+            }
+
+            to {
+                width: 15px;
+            }
+        }
+    </style>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js继承</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    //最简单应用，可以互相调用
+    function Animal(name, age) {
+        this.name = 'name';
+        this.age = 'age';
+        console.log(this)
+    }
+    //在原型中添加属性
+    Animal.prototype.eat = function () {
+        console.log("面向对象编程")
+        console.log(this)
+        this.play()
+    }
+    Animal.prototype.play = function () {
+        console.log("面向对象")
+        console.log(this)
+    }
+    // var arr=new Animal()
+    // arr.eat()
+
+
+    //组合继承
+    function callPerson(name, age, sex, weight) {
+        this.name = name
+        this.age = age
+        this.sex = sex
+        this.weight = weight
+    }
+    callPerson.prototype.eat = function () {
+        console.log('call继承测试')
+    }
+    //1.利用 call 借用构造函数继承  继承属性
+    function callChild(name, age, sex, weight, score) {
+        callPerson.call(this, name, age, sex, weight)
+        this.score = score
+        console.log(this)
+    }
+    //2.利用prototype进行继承方法
+    callChild.prototype = new callPerson()
+    callChild.prototype.sayHi = function () {
+        console.log('prototype继承测试')
+    }
+    // var stu1=new callChild('李华','25','男','180kg','100')
+    //  stu1.eat()
+    //  stu1.sayHi()
+
+    //2、寄生组合继承
+    function supertop(name, age) {
+        this.name = name
+        this.age = age
+    }
+    supertop.prototype.sayHi = function () {
+        console.log(123)
+    }
+
+    function tops(name, age, tap) {
+        supertop.call(this, name, age)
+        this.tap = tap
+    }
+    tops.prototype = Object.create(supertop.prototype, {
+        constructor: {
+            value: tops,
+            enumerable: false,
+            writable: true,
+            configurable: true
+        }
+    })
+    const top1 = new tops(1,2,3)
+
+    top1.sayHi()
+    console.log(top1)
+
+    //3.class继承
+
+
+</script>
+
+</html>

@@ -1,0 +1,53 @@
+.User{
+    background: #fff;
+    padding: 10px 15px;
+    .user-t{
+        color: #666;
+        img{
+            width: 40px;
+            height: 30px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        i{
+            display: inline-block;
+            vertical-align: middle;
+            width: 50px;
+            height: 50px; 
+        }
+        span{
+            margin-right: 20px;
+        }
+        p{
+            line-height: 35px;
+            padding: 0 10px;
+            border: 1px solid #e9edef;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+    }
+    .user-c{
+        h2{
+            font-size: 18px;
+        }
+        .information{
+            .el-input__inner{
+                width: 500px;
+            }
+            .button{
+                text-align: right;
+                .el-button{
+                    margin-right: 240px;
+                    background: #c03532;
+                    border: 1px solid #c03532;
+                }
+                .el-button:hover{
+                    background: #b40a07; 
+                }
+            }
+        }
+    }
+    .user-b{}
+}

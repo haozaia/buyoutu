@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#Rectangle-2_6_);}
+	.st1{fill:url(#Rectangle-2_7_);}
+	.st2{fill:url(#Rectangle-2_8_);}
+	.st3{fill:url(#Rectangle-2_9_);}
+	.st4{fill:url(#Rectangle-2_10_);}
+	.st5{fill:url(#Rectangle-2_11_);}
+	.st6{fill:none;stroke:#768197;stroke-width:2;}
+	.st7{fill:#FFFFFF;stroke:#768197;stroke-width:2;}
+	.st8{fill:#768197;}
+</style>
+<title>navtab2</title>
+<desc>Created with Sketch.</desc>
+<g id="navtab2">
+	<g transform="translate(2.000000, 4.000000)">
+		<g id="Group-9" transform="translate(3.000000, 6.000000)">
+			
+				<linearGradient id="Rectangle-2_6_" gradientUnits="userSpaceOnUse" x1="-215.4305" y1="392.7922" x2="-215.4305" y2="391.5181" gradientTransform="matrix(4 0 0 -20 870 7863)">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2" x="6.1" y="14" class="st0" width="4.4" height="22"/>
+			
+				<linearGradient id="Rectangle-2_7_" gradientUnits="userSpaceOnUse" x1="-215.0881" y1="395.2243" x2="-215.0881" y2="393.9502" gradientTransform="matrix(4 0 0 -23 884 9093)">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2_1_" x="21.5" y="10.7" class="st1" width="4.4" height="25.3"/>
+			
+				<linearGradient id="Rectangle-2_8_" gradientUnits="userSpaceOnUse" x1="-215.2593" y1="399.0074" x2="-215.2593" y2="397.7333" gradientTransform="matrix(4 0 0 -30 877 11963)">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2_2_" x="13.8" y="3" class="st2" width="4.4" height="32.9"/>
+			
+				<linearGradient id="Rectangle-2_9_" gradientUnits="userSpaceOnUse" x1="-214.9168" y1="400.4698" x2="-214.9168" y2="399.1958" gradientTransform="matrix(4 0 0 -34 891 13603)">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2_3_" x="29.1" y="-1.4" class="st3" width="4.4" height="37.3"/>
+			
+				<linearGradient id="Rectangle-2_10_" gradientUnits="userSpaceOnUse" x1="-214.7456" y1="394.4873" x2="-214.7456" y2="393.2132" gradientTransform="matrix(4 0 0 -22 898 8683)">
+				<stop  offset="0" style="stop-color:#FFFFFF"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2_4_" x="36.8" y="11.8" class="st4" width="4.4" height="24.2"/>
+			
+				<linearGradient id="Rectangle-2_11_" gradientUnits="userSpaceOnUse" x1="-215.6017" y1="386.577" x2="-215.6017" y2="385.3029" gradientTransform="matrix(4 0 0 -15 863 5813)">
+				<stop  offset="0" style="stop-color:#707E91;stop-opacity:0.4"/>
+				<stop  offset="1" style="stop-color:#707E91;stop-opacity:0"/>
+			</linearGradient>
+			<rect id="Rectangle-2_5_" x="-1.6" y="19.4" class="st5" width="4.4" height="16.5"/>
+		</g>
+		<polyline id="Path-2" class="st6" points="4.7,26 8.5,29.8 21.2,17.3 25.5,21.7 39.5,7.9 44.2,13 		"/>
+		<circle id="Oval-4" class="st7" cx="2.5" cy="24.3" r="3.3"/>
+		<path id="Rectangle-41" class="st8" d="M45.3,4.6h-2.2V0.2H3.6v16.5H1.4V-2h43.9V4.6z M45.3,32v9.9H1.4V32h2.2v7.7h39.5V32H45.3z"
+			/>
+	</g>
+</g>
+</svg>
